@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """生成 机甲对决 MECH DUEL 的品牌素材(favicon / 图标 / OG 分享图)。
 
-产物(仓库根目录):
+产物(assets/ 目录):
   favicon.svg  favicon.ico  apple-touch-icon.png  icon-192.png  icon-512.png  og-image.png
 
 像素画为 16x16 网格,颜色取自 index.html 中机甲的 P1/P2 调色板:
@@ -15,6 +15,7 @@ import struct
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ASSETS = os.path.join(ROOT, "assets")
 
 PALETTES = {
     # 与 index.html PAL.p1 / PAL.p2 一致
@@ -269,26 +270,28 @@ def build_og_image():
     vig.putalpha(Image.eval(k, lambda v: v * 100 // 255))
     img = Image.alpha_composite(img, vig)
 
-    img.convert("RGB").save(os.path.join(ROOT, "og-image.png"), optimize=True)
+    img.convert("RGB").save(os.path.join(ASSETS, "og-image.png"), optimize=True)
 
 
 # ---------------------------------------------------------------- main
 def main():
+    os.makedirs(ASSETS, exist_ok=True)
+
     # favicon.svg
-    with open(os.path.join(ROOT, "favicon.svg"), "w") as f:
+    with open(os.path.join(ASSETS, "favicon.svg"), "w") as f:
         f.write(svg_favicon(PALETTES["p1"]))
 
     # favicon.ico:16 / 32 / 48 各自独立渲染
-    write_ico(os.path.join(ROOT, "favicon.ico"),
+    write_ico(os.path.join(ASSETS, "favicon.ico"),
               [make_icon(PALETTES["p1"], s) for s in (16, 32, 48)])
 
     # iOS 主屏图标(全出血深色底,iOS 自行裁圆角)
     make_icon(PALETTES["p1"], 180, radius=0, scale=9).save(
-        os.path.join(ROOT, "apple-touch-icon.png"))
+        os.path.join(ASSETS, "apple-touch-icon.png"))
 
     # PWA / Android 图标
-    make_icon(PALETTES["p1"], 192, radius=0).save(os.path.join(ROOT, "icon-192.png"))
-    make_icon(PALETTES["p1"], 512, radius=0).save(os.path.join(ROOT, "icon-512.png"))
+    make_icon(PALETTES["p1"], 192, radius=0).save(os.path.join(ASSETS, "icon-192.png"))
+    make_icon(PALETTES["p1"], 512, radius=0).save(os.path.join(ASSETS, "icon-512.png"))
 
     build_og_image()
     print("done: favicon.svg favicon.ico apple-touch-icon.png icon-192.png icon-512.png og-image.png")
