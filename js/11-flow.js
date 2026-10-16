@@ -143,7 +143,7 @@ const game={
     this.setAnn('训练开始 — 靶机受击掉血,血量触底后回满',17,1.7,'#7dff9a'); sfx.round();
   },
   /* ---- 观赏模式:随机两位电脑角色自动对战 ---- */
-  beginSpectate(){         // 标题进入:随机抽两位已解锁机体对峙
+  beginSpectate(){         // 标题进入:随机抽两位机体对峙(含隐藏机体)
     this.mode=3; this.storyMode=false;
     this.mechs=[]; bullets=[]; particles=[]; dmgTexts=[];
     fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
@@ -153,19 +153,27 @@ const game={
     this.ladderOpen=false;                      // 面板默认收起(ESC 唤出)
     this.select.t=1.2; this.state='vs'; sfx.ui();
   },
-  pickSpectators(){        // 从已解锁机体中随机取两位(尽量不同)
-    const pool=CHARS.map((c,i)=>i).filter(charUnlocked);
+  pickSpectators(){        // 从全部机体中随机取两位(尽量不同;隐藏机体与其他机体等权参与)
+    const pool=CHARS.map((c,i)=>i);
     let a=pool[ri(0,pool.length-1)], b=pool[ri(0,pool.length-1)];
     if(pool.length>1) while(b===a) b=pool[ri(0,pool.length-1)];
     this.select.idx1=a; this.select.idx2=b;
   },
-  nextSpectators(){        // 胜者留场守擂,负者随机换一位新机体,立即展开下一场
+  nextSpectators(){        // 胜者留场守擂,负者随机换新机体;擂主连守满 SPECTATE_STREAK_CAP 场则强制退位重抽
     const S=this.select, w=this.spectateWinner;
-    const pool=CHARS.map((c,i)=>i).filter(charUnlocked);
+    const pool=CHARS.map((c,i)=>i);
     const champSlot = w ? w.id : 0;                            // 胜者槽位:0=左,1=右
     if(champSlot!==this.spectateLastSlot) this.spectateStreak=0;   // 挑战者夺擂 → 连胜重新计
     this.spectateStreak++; this.spectateLastSlot=champSlot;
     const keepIdx = champSlot===0 ? S.idx1 : S.idx2;           // 擂主保留原机体
+    if(this.spectateStreak>=SPECTATE_STREAK_CAP){              // 任期满 → 擂主退位,双方重新抽签,避免强机体无限守擂
+      const retired=CHARS[keepIdx].name, streak=this.spectateStreak;
+      this.spectateStreak=0; this.spectateLastSlot=-1;
+      this.pickSpectators();
+      this.mapIdx=ri(0,MAPS.length-1); this.setupMatch();
+      this.setAnn('擂主 '+retired+' 达成 '+streak+' 连胜,封入名人堂 — 双方重新抽签',16,2.3,'#ffd76a');
+      return;
+    }
     let n; do{ n=pool[ri(0,pool.length-1)]; }while(pool.length>1 && n===keepIdx);
     if(champSlot===0) S.idx2=n; else S.idx1=n;                 // 只替换负者一侧
     this.mapIdx=ri(0,MAPS.length-1); this.setupMatch();

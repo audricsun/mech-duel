@@ -16,6 +16,7 @@ const JUMPV = 250;                 // 起跳速度
 const ATK_TIME = 0.32;             // 挥砍动画时长(默认光刃;具体武器见 MELEE_WEP)
 const BULLET_DMG = 7, MELEE_DMG = 12, ENERGY_COST = 25;
 const ROUND_TIME = 60;             // 回合限时(秒)
+const SPECTATE_STREAK_CAP = 5;     // 观赏模式:擂主连守达到此场数即强制退位,双方重新抽签(避免强机体无限守擂)
 
 /* 动态相机:zoom 按战场单位包围盒连续平滑追踪(不再量化,避免阶梯跳变) */
 const CAM={ zoom:1, zEff:1, cx:W/2, cy:H/2 };

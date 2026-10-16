@@ -98,7 +98,8 @@ function drawHUD(){
   // 底部操作提示
   g.globalAlpha=0.55;
   if(game.mode===3){
-    text('观赏模式 · 双方皆由电脑操控自动对战 · [ESC] 胜率天梯',240,H-9,7,'#7df9ff','center');
+    const cs=game.spectateStreak||0;
+    text('观赏模式 · 电脑自动对战 · [ESC] 胜率天梯'+(cs>0?'   ·   擂主 '+cs+' 连胜,再守 '+(SPECTATE_STREAK_CAP-cs)+' 场封入名人堂':''),240,H-9,7,'#7df9ff','center');
   }else if(game.mode===2){
     text('训练模式 · 靶机受击掉血,血量触底后回满,便于观察技能伤害',12,H-9,7,'#8affa0');
     text('P/ESC暂停  R返回标题',W-12,H-9,7,'#8a94b8','right');
@@ -399,7 +400,7 @@ function drawEnd(){
     const w3=game.spectateWinner||wnr;
     shadowText('胜 者 守 擂',240,86,24,'#7df9ff','center');
     shadowText(mechLabel(w3)+' '+w3.ch.name+' 获胜 · 守擂 '+(game.spectateStreak||1)+' 连胜',240,124,13,w3.pal.light,'center');
-    text('负者随机换新机体上场续战 · [J] 立即下一场 · [ESC] 胜率天梯',240,158,9,'#8a94b8','center');
+    text('负者随机换新机体上场续战 · 擂主连守满 '+SPECTATE_STREAK_CAP+' 场即封入名人堂重抽 · [J] 立即下一场 · [ESC] 胜率天梯',240,158,9,'#8a94b8','center');
   }else if(game.mode===1){                          // 挑战 AI:走到这里只可能是玩家落败
     shadowText('CHALLENGE OVER',240,82,24,'#ff5b5b','center');
     shadowText('连胜 '+game.challengeStreak+' 场',240,118,16,'#ffe27a','center');
