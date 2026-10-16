@@ -13,8 +13,10 @@
  *   带 patch/chars 的调参调用会自动退回单进程(函数无法跨进程传递)。
  *
  * 原理:
- *   直接读取同目录上层的 index.html,抽出其中的 <script> 源码,在 Node 中
- *   用一个极简的 DOM/Canvas 桩环境执行它,再从沙箱里取回 { game, updateGame }。
+ *   读取同目录上层的 index.html,按文档顺序收集其中的游戏 <script> 源码
+ *   (内联块直接取用,<script src> 则读取 js/ 下的模块文件;SEO 用的
+ *   application/ld+json 数据块会被跳过),拼成单一源码后,在 Node 中用一个
+ *   极简的 DOM/Canvas 桩环境执行它,再从沙箱里取回 { game, updateGame }。
  *   随后把 game.mode 置为 3(观赏模式:双方 CPU、无地图机关、无回合倒计时),
  *   以固定步长 updateGame(1/60) 驱动直到分出胜负 —— 即真实游戏引擎的结算,
  *   不使用任何解析近似模型。
@@ -97,6 +99,33 @@ function makeCanvasEl() {
 }
 
 /**
+ * 按文档顺序收集 index.html 中的游戏脚本源码并拼接为单一源码串。
+ * - 内联 <script>…</script>:直接取其正文
+ * - 外链 <script src="…">:读取相对 index.html 的模块文件
+ * - <script type="application/ld+json"> 等数据块:跳过
+ * 拼接后的源码与原单文件脚本处于同一（全局）作用域,行为等价。
+ */
+function collectGameSource(html) {
+  const parts = [];
+  const re = /<script\b([^>]*)>([\s\S]*?)<\/script>/g;
+  let m;
+  while ((m = re.exec(html))) {
+    const attrs = m[1] || '';
+    if (/type\s*=\s*["']application\/ld\+json["']/i.test(attrs)) continue;
+    const src = attrs.match(/src\s*=\s*["']([^"']+)["']/);
+    if (src) {
+      const file = path.resolve(ROOT, src[1]);
+      if (!fs.existsSync(file)) throw new Error('index.html 引用的脚本不存在: ' + src[1]);
+      parts.push(fs.readFileSync(file, 'utf8'));
+    } else {
+      parts.push(m[2]);
+    }
+  }
+  if (!parts.length) throw new Error('未能在 index.html 中找到游戏 <script> 源码');
+  return parts.join('\n;\n');
+}
+
+/**
  * 载入游戏源码并返回沙箱 API。
  * @param {object} [opts]
  * @param {number} [opts.seed] 初次播种的随机种子(影响地图等一次性随机)
@@ -104,9 +133,7 @@ function makeCanvasEl() {
 function loadGame(opts) {
   opts = opts || {};
   const html = fs.readFileSync(GAME_HTML, 'utf8');
-  const m = html.match(/<script>([\s\S]*?)<\/script>/);
-  if (!m) throw new Error('未能在 index.html 中找到 <script> 源码块');
-  const SRC = m[1];
+  const SRC = collectGameSource(html);
 
   // 注入沙箱的 Math:原型沿用真实 Math,仅 random 可被替换,保证确定性
   const MathStub = Object.create(Math);

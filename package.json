@@ -2,7 +2,7 @@
   "name": "mech-duel",
   "version": "1.0.0",
   "private": true,
-  "description": "机甲对决 —— 单文件像素机甲对战 Demo (index.html) 及配套平衡性模拟器",
+  "description": "机甲对决 —— 像素机甲对战 Demo (index.html + js/ 模块) 及配套平衡性模拟器",
   "scripts": {
     "sim": "node tools/balance-sim.js",
     "sim:quick": "node tools/balance-sim.js --runs 40 --quiet",
