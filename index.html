@@ -3848,22 +3848,28 @@ function drawLadder(){
   const L=game.ladderData(), N=CHARS.length;
   let sumN=0; for(let i=0;i<N;i++) for(let j=0;j<N;j++) sumN+=L[i][j].n;
   const total=Math.round(sumN/2);                       // 每场对局在对称两格各计一次
+  // 各机体总战绩(其余格已同时含该机体的胜场与负场),按总胜率实时排序行列顺序
+  const ord=[]; for(let i=0;i<N;i++){ let rw=0, rn=0; for(let j=0;j<N;j++){ rw+=L[i][j].w; rn+=L[i][j].n; } ord.push({i,rw,rn,r:rn>0?rw/rn:-1}); }
+  ord.sort((a,b)=>b.r-a.r||b.rn-a.rn||a.i-b.i);         // 胜率高者在前;同率按场次多者优先;无战绩者置末尾
+  const RI=k=>ord[k].i;                                 // 第 k 行/列对应的机体下标
   const pw=400, ph=230, x0=(W-pw)/2, y0=(H-ph)/2;
   px(x0,y0,pw,ph,'rgba(8,10,20,.46)');                  // 半透明面板:不遮挡对战
   const bd='rgba(125,249,255,.5)';
   px(x0,y0,pw,1,bd); px(x0,y0+ph-1,pw,1,bd); px(x0,y0,1,ph,bd); px(x0+pw-1,y0,1,ph,bd);
   shadowText('对 战 天 梯 · 胜 率 矩 阵',240,y0+5,10,'#7df9ff','center');
-  text('本会话共 '+total+' 场 · 按 [ESC] 收起(对战继续)',240,y0+18,6.5,'#a8b8dd','center');
+  text('本会话共 '+total+' 场 · 行列按总胜率实时排序 · [ESC] 收起(对战继续)',240,y0+18,6.5,'#a8b8dd','center');
   const gx=x0+8, hw=22, cw=(pw-16-hw)/N, gy=y0+30, hh=20, rh=(ph-56-hh)/N;
   // 左上角:标注 行=胜方 / 列=负方
   text('行=胜',gx+hw/2,gy+6,5,'#9dff9d','center','middle');
   text('列=负',gx+hw/2,gy+14,5,'#ff9a9a','center','middle');
-  for(let j=0;j<N;j++) text(CHARS[j].name,gx+hw+j*cw+cw/2,gy+hh/2,5.5,'#93a3c8','center','middle');   // 列头:角色名(负方)
+  for(let j=0;j<N;j++) text(CHARS[RI(j)].name,gx+hw+j*cw+cw/2,gy+hh/2,5.5,'#93a3c8','center','middle');   // 列头:角色名(负方)
   for(let i=0;i<N;i++){
-    const ry=gy+hh+i*rh;
-    text(CHARS[i].name,gx+hw/2,ry+rh/2,5.5,'#c3cfec','center','middle');                            // 行头:角色名(胜方)
+    const ry=gy+hh+i*rh, st=ord[i], rr=st.rn>0?st.r:0;
+    text(CHARS[st.i].name,gx+hw/2,ry+rh/2-2.7,5.5,'#c3cfec','center','middle');                     // 行头:角色名(胜方)
+    text(st.rn>0?Math.round(rr*100)+'%':'-',gx+hw/2,ry+rh/2+3,4.8,
+      st.rn>0?'hsl('+Math.round(120*rr)+',70%,72%)':'#4a5678','center','middle');                   // 行头:该机体总胜率
     for(let j=0;j<N;j++){
-      const cx=gx+hw+j*cw, rec=L[i][j];
+      const cx=gx+hw+j*cw, rec=L[st.i][RI(j)];
       let bg='rgba(18,22,34,.62)', fg='#4a5678', lab='-';
       if(i!==j&&rec.n>0){                               // 行=列(同型对局)不展示数据
         const r=clamp(rec.w/rec.n,0,1), hue=Math.round(120*r);
@@ -3880,7 +3886,7 @@ function drawLadder(){
   for(let k=0;k<lw;k++) px(lx+k,ly,1,6,'hsla('+Math.round(120*k/(lw-1))+',62%,32%,.85)');
   text('低 0%',lx-6,ly+3,6,'#ff9a9a','right','middle');
   text('100% 高',lx+lw+6,ly+3,6,'#9dff9d','left','middle');
-  text('单元格 = 该行角色(胜)击败该列角色(负)的胜率 · 斜向格与冷色格暂无数据',240,y0+ph-11,6,'#7d8cb0','center');
+  text('格=行(胜)击败列(负)胜率 · 行名下方=该机体总胜率 · 斜向格不入表',240,y0+ph-11,6,'#7d8cb0','center');
 }
 
 /* ---------------- 主循环 ---------------- */
