@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://audricsun.github.io/mech-duel/sitemap.xml
