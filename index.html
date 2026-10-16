@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>机甲对决 MECH DUEL — 免费网页像素机甲对战游戏</title>
-<meta name="description" content="机甲对决 MECH DUEL 是一款单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、4 张动态战场,支持双人同屏对战、人机挑战、训练与观赏模式,打开浏览器即玩,免费无需下载。">
+<meta name="description" content="机甲对决 MECH DUEL 是一款单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、7 张动态战场,支持双人同屏对战、人机挑战、训练与观赏模式,打开浏览器即玩,免费无需下载。">
 <meta name="keywords" content="机甲对决,MECH DUEL,像素机甲,机甲对战,格斗游戏,双人游戏,网页游戏,HTML5 游戏,浏览器游戏,免费小游戏,pixel mech fighting game">
 <meta name="author" content="audricsun">
 <meta name="robots" content="index, follow">
@@ -19,7 +19,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="机甲对决 MECH DUEL">
 <meta property="og:title" content="机甲对决 MECH DUEL — 免费网页像素机甲对战游戏">
-<meta property="og:description" content="14 台机甲 × 4 张动态战场 · 双人同屏 / 人机对战 · 单文件 HTML5 像素机甲格斗,打开浏览器即玩,免费无需下载。">
+<meta property="og:description" content="14 台机甲 × 7 张动态战场 · 双人同屏 / 人机对战 · 单文件 HTML5 像素机甲格斗,打开浏览器即玩,免费无需下载。">
 <meta property="og:url" content="https://audricsun.github.io/mech-duel/">
 <meta property="og:image" content="https://audricsun.github.io/mech-duel/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -29,7 +29,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="机甲对决 MECH DUEL — 免费网页像素机甲对战游戏">
-<meta name="twitter:description" content="14 台机甲 × 4 张动态战场 · 双人同屏 / 人机对战 · 打开浏览器即玩,免费无需下载。">
+<meta name="twitter:description" content="14 台机甲 × 7 张动态战场 · 双人同屏 / 人机对战 · 打开浏览器即玩,免费无需下载。">
 <meta name="twitter:image" content="https://audricsun.github.io/mech-duel/assets/og-image.png">
 <meta name="twitter:image:alt" content="机甲对决 MECH DUEL:蓝红两台像素机甲对峙">
 <!-- 结构化数据 -->
@@ -41,7 +41,7 @@
   "alternateName": "MECH DUEL",
   "url": "https://audricsun.github.io/mech-duel/",
   "image": "https://audricsun.github.io/mech-duel/assets/og-image.png",
-  "description": "单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、4 张动态战场,支持双人同屏、人机挑战、训练与观赏模式,打开浏览器即玩。",
+  "description": "单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、7 张动态战场,支持双人同屏、人机挑战、训练与观赏模式,打开浏览器即玩。",
   "genre": ["Fighting", "Action", "Mecha", "Pixel Art"],
   "gamePlatform": ["Web browser"],
   "operatingSystem": "Web",
@@ -75,7 +75,7 @@
 </head>
 <body>
 <h1 class="sr">机甲对决 MECH DUEL — 像素风机甲对战游戏</h1>
-<p class="sr">机甲对决 MECH DUEL 是一款单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、4 张动态战场,支持本地双人同屏对战、人机挑战、训练与观赏模式,打开浏览器即玩,无需下载安装。</p>
+<p class="sr">机甲对决 MECH DUEL 是一款单文件 HTML5 像素风机甲对战游戏:14 台可选机甲、7 张动态战场,支持本地双人同屏对战、人机挑战、训练与观赏模式,打开浏览器即玩,无需下载安装。</p>
 <noscript><p class="nojs">机甲对决 MECH DUEL 需要启用 JavaScript 才能运行,请在浏览器设置中开启后刷新页面。</p></noscript>
 <div class="stage">
   <div class="frame">
@@ -270,6 +270,10 @@ const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 const rnd   = (a,b)=>a+Math.random()*(b-a);
 const ri    = (a,b)=>Math.floor(rnd(a,b+1));
 
+/* 选人 / 选图界面布局(机体 5×3 格、地图 4×2 格,末格均为"随机") */
+const SEL_COLS=5, SEL_CX=18, SEL_CY=42, SEL_GX=90, SEL_GY=56, SEL_CW=84, SEL_CH=52;
+const MAPSEL_COLS=4, MAPSEL_CX=16, MAPSEL_CY=64, MAPSEL_GX=116, MAPSEL_GY=76, MAPSEL_CW=104, MAPSEL_CH=60;
+
 const cv = document.getElementById('cv');
 const g  = cv.getContext('2d');
 
@@ -359,8 +363,10 @@ const CHARS=[
    lore:'灾厄的具现,传闻它能将一切存在抹为虚无。当它睁开猩红的目镜,战场便不再有明天。',
    skills:{nJ:'oblivion', nK:'rocketsalvo', fJ:'mortarBarrage', fK:'lightning', bJ:'fortify', bK:'healDrone'}},
 ];
-/* 训练模式靶机:不会死亡、持续回血的特殊敌人 —— 用于自由练习各机体技能。
- * 速度/跳跃/攻击全为 0 且被动,完全挨打;invincible 使其血量见底即回满。 */
+/* 训练模式靶机:不会死亡的特殊敌人 —— 用于自由练习各机体技能。
+ * 速度/跳跃/攻击全为 0 且被动,完全挨打;受击正常掉血但血量下限锁定 DUMMY_HP_FLOOR,
+ * 触底后停留 1 秒,再快速回满,以便直观展示各技能的伤害强度。 */
+const DUMMY_HP_FLOOR=10;         // 靶机血量下限(不会低于此值)
 const TRAIN_DUMMY={
   name:'训练靶机', tag:'训练用', hp:520, spd:0, jump:0, atk:0, bullet:0, regen:0, size:1.25,
   weapon:'rifle', meleeW:'saber',
@@ -463,8 +469,8 @@ function mechLabel(m){
   return m.id===0?'P1':(m.ctrl==='cpu'?'AI':'P2');
 }
 
-/* ---------------- 2. 音效(WebAudio 方波/噪声,复古芯片音) ---------------- */
-let AC = null, noiseBuf = null;
+/* ---------------- 2. 音效 & 背景音乐(WebAudio 复古芯片音 + 多轨音序器) ---------------- */
+let AC = null, noiseBuf = null, MGAIN = null;
 function initAudio(){
   if(AC) return;
   try{
@@ -472,6 +478,8 @@ function initAudio(){
     noiseBuf = AC.createBuffer(1, AC.sampleRate*0.5, AC.sampleRate);
     const d = noiseBuf.getChannelData(0);
     for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    MGAIN = AC.createGain(); MGAIN.gain.value = 0.5; MGAIN.connect(AC.destination);
+    musicResume();                          // 首帧输入前若已在某界面,补起对应音轨
   }catch(e){}
 }
 function tone(type,f0,f1,dur,vol){
@@ -490,17 +498,285 @@ function noise(dur,vol,f){
   gn.gain.setValueAtTime(vol,t); gn.gain.exponentialRampToValueAtTime(0.001,t+dur);
   s.connect(fl).connect(gn).connect(AC.destination); s.start(t); s.stop(t+dur);
 }
+/* 音效:在原有主音之上再叠低频"体感层"与高频"亮边层",打击更厚实 */
 const sfx = {
-  shoot(){ tone('square',760,180,0.09,0.10); },
-  swing(){ tone('sawtooth',300,900,0.08,0.05); },
-  hit(){ noise(0.10,0.20,2500); tone('square',150,60,0.10,0.14); },
-  guard(){ tone('triangle',210,160,0.06,0.14); noise(0.04,0.08,4000); },
-  jump(){ tone('square',180,420,0.08,0.05); },
-  boom(){ noise(0.55,0.32,900); tone('sawtooth',120,40,0.5,0.18); },
-  ko(){ tone('sawtooth',420,55,0.7,0.16); noise(0.4,0.2,1200); },
-  round(){ tone('square',523,523,0.09,0.09); setTimeout(()=>tone('square',784,784,0.14,0.09),110); },
-  ui(){ tone('square',880,880,0.05,0.06); }
+  shoot(){ tone('square',900,180,0.07,0.09); tone('sawtooth',1500,320,0.05,0.045); noise(0.05,0.09,5200); },
+  swing(){ noise(0.09,0.07,3600); tone('sawtooth',260,1100,0.09,0.055); },
+  hit(){ noise(0.11,0.24,2600); tone('square',190,58,0.11,0.16); tone('triangle',95,30,0.13,0.11); tone('square',820,240,0.05,0.06); },
+  guard(){ tone('triangle',230,150,0.07,0.15); tone('square',1150,700,0.05,0.05); noise(0.05,0.10,4200); },
+  jump(){ tone('square',200,470,0.09,0.055); tone('triangle',120,300,0.09,0.04); },
+  boom(){ noise(0.6,0.34,1000); tone('sawtooth',130,38,0.55,0.20); tone('sine',70,32,0.6,0.16); },
+  ko(){ tone('sawtooth',450,50,0.75,0.17); tone('square',700,120,0.5,0.08); noise(0.45,0.22,1300); },
+  round(){ tone('square',523,523,0.09,0.09); tone('triangle',262,262,0.2,0.06); setTimeout(()=>tone('square',784,784,0.14,0.09),110); },
+  ui(){ tone('square',880,880,0.05,0.06); tone('square',1320,1320,0.05,0.03); },
+  cast(){ tone('square',340,780,0.13,0.07); tone('triangle',680,1560,0.13,0.05); noise(0.09,0.045,3200); },
+  beam(){ tone('sawtooth',1400,340,0.34,0.09); tone('square',700,180,0.34,0.05); noise(0.2,0.05,6000); },
+  missile(){ noise(0.28,0.10,3200); tone('sawtooth',520,900,0.22,0.05); },
+  heal(){ tone('sine',660,1320,0.16,0.10); tone('triangle',440,880,0.24,0.04); setTimeout(()=>tone('sine',990,1980,0.2,0.09),90); },
+  shield(){ tone('sine',300,900,0.22,0.09); tone('triangle',600,1800,0.24,0.06); noise(0.12,0.04,5000); }
 };
+/* 技能 id → 专属音色(叠加在通用施放音上,突出技能类型) */
+const SKILL_SFX={ healDrone:'heal', eshield:'shield', fortify:'shield', cloak:'shield', cover:'shield',
+  twinlaser:'beam', judgement:'beam', arcburst:'beam', lightning:'beam',
+  missileSalvo:'missile', hellfire:'missile', rocketsalvo:'missile', rocketBarrage:'missile',
+  mortarBarrage:'missile', incendiary:'missile' };
+
+/* ---------------- 2b. 多轨 MIDI 音序器(纯 WebAudio 合成,无外部素材/库) ----------------
+ * 贴合游戏叙事:title 序章静谧 / menu 机库电子 / story 荒原叙事 / battle 遭遇战 /
+ * boss 隐藏机体决战 / spectate 观赏守擂。每轨由若干 part 构成,part.seq 为空格分隔
+ * 步进记号:'.' 休止、'-' 延长上一音、k/s/h/H 鼓(底鼓/军鼓/闭镲/开镲)、音名如
+ * A4 / C#3,'+' 连接表示和弦同时发音。步长 = 60/bpm/div,以 0.35s 前瞻调度。 */
+const SEMI={C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+function mNote(nm){
+  const m=/^([A-G][#b]?)(-?\d)$/.exec(nm); if(!m) return 0;
+  return 440*Math.pow(2,((parseInt(m[2],10)+1)*12+SEMI[m[1]]-69)/12);
+}
+function mADSR(g,t,dur,a,dec,peak){
+  peak=Math.max(0.0002,peak);
+  const ta=t+Math.max(0.001,Math.min(a,dur*0.45));
+  const td=ta+Math.max(0.001,Math.min(dec,dur*0.3));
+  const tr=Math.max(td+0.0005,t+dur*0.8);
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(peak,ta);
+  g.gain.exponentialRampToValueAtTime(Math.max(0.0002,peak*0.6),td);
+  g.gain.setValueAtTime(Math.max(0.0002,peak*0.6),tr);
+  g.gain.linearRampToValueAtTime(0.0001,t+dur);
+}
+function mVoice(type,f,t,dur,vol,opt){
+  opt=opt||{};
+  if(!AC||!f) return;
+  const g=AC.createGain(), a=opt.a||0.008, dec=opt.dec||Math.min(0.14,dur*0.4);
+  const node=AC.createOscillator(); node.type=type; node.frequency.setValueAtTime(f,t);
+  let tail=node;
+  if(opt.lp){ const fl=AC.createBiquadFilter(); fl.type='lowpass'; fl.frequency.setValueAtTime(opt.lp,t); node.connect(fl); tail=fl; }
+  tail.connect(g); g.connect(MGAIN||AC.destination);
+  mADSR(g,t,dur,a,dec,vol); node.start(t); node.stop(t+dur+0.02);
+  if(opt.detune){                          // 第二振荡器微失谐 → 声部加厚
+    const n2=AC.createOscillator(), g2=AC.createGain();
+    n2.type=type; n2.frequency.setValueAtTime(f,t); n2.detune.setValueAtTime(opt.detune,t);
+    g2.gain.value=0.6; n2.connect(g2); g2.connect(g); n2.start(t); n2.stop(t+dur+0.02);
+  }
+}
+function mKick(t,vol){
+  if(!AC) return;
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(150,t); o.frequency.exponentialRampToValueAtTime(42,t+0.13);
+  g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.2);
+  o.connect(g); g.connect(MGAIN||AC.destination); o.start(t); o.stop(t+0.22);
+}
+function mSnare(t,vol){
+  if(!AC) return;
+  const s=AC.createBufferSource(), fl=AC.createBiquadFilter(), g=AC.createGain();
+  s.buffer=noiseBuf; fl.type='highpass'; fl.frequency.value=1400;
+  g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.14);
+  s.connect(fl).connect(g).connect(MGAIN||AC.destination); s.start(t); s.stop(t+0.15);
+  const o=AC.createOscillator(), g2=AC.createGain();
+  o.type='triangle'; o.frequency.setValueAtTime(200,t); o.frequency.exponentialRampToValueAtTime(120,t+0.1);
+  g2.gain.setValueAtTime(vol*0.7,t); g2.gain.exponentialRampToValueAtTime(0.001,t+0.12);
+  o.connect(g2); g2.connect(MGAIN||AC.destination); o.start(t); o.stop(t+0.13);
+}
+function mHat(t,vol,open){
+  if(!AC) return;
+  const d=open?0.16:0.045;
+  const s=AC.createBufferSource(), fl=AC.createBiquadFilter(), g=AC.createGain();
+  s.buffer=noiseBuf; fl.type='highpass'; fl.frequency.value=7200;
+  g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.001,t+d);
+  s.connect(fl).connect(g).connect(MGAIN||AC.destination); s.start(t); s.stop(t+d+0.01);
+}
+const INST={
+  lead:(f,t,d,v)=>mVoice('square',f,t,d,v,{detune:8,lp:2600,a:0.006}),
+  pluck:(f,t,d,v)=>mVoice('sawtooth',f,t,Math.min(d,0.26),v,{lp:1900,a:0.004,dec:0.1}),
+  pad:(f,t,d,v)=>mVoice('sawtooth',f,t,d,v,{detune:9,lp:820,a:0.28,dec:0.3}),
+  bass:(f,t,d,v)=>mVoice('square',f,t,d,v,{lp:560,a:0.006,dec:0.08}),
+  stab:(f,t,d,v)=>mVoice('square',f,t,Math.min(d,0.14),v,{lp:3000,a:0.004,dec:0.06}),
+  bell:(f,t,d,v)=>{ mVoice('sine',f,t,Math.min(d,1.2),v,{a:0.005,dec:0.5});
+                    mVoice('sine',f*2.76,t,Math.min(d,0.6),v*0.22,{a:0.004,dec:0.3}); }
+};
+const MUSIC={
+  title:{ bpm:74, div:4, parts:[
+    {inst:'pad',  vol:0.20, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - C3+G3+E4 - - - - - - -'},
+    {inst:'bass', vol:0.22, seq:'D2 - - - - - - - A#1 - - - - - - - F2 - - - - - - - C2 - - - - - - -'},
+    {inst:'bell', vol:0.16, seq:'- - - - F5 - - - - - - - D5 - - - - - - - C5 - - - - - - A4 - - - -'}
+  ]},
+  menu:{ bpm:106, div:4, parts:[
+    {inst:'pad',  vol:0.14, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
+    {inst:'bass', vol:0.22, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .'},
+    {inst:'pluck',vol:0.13, seq:'A3 C4 E4 A4 E4 C4 A3 E4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 D4 B3 G3 D4'},
+    {inst:'drum', vol:0.09, seq:'h . h . h . h . h . h . h . h . h . h . h . h . h . h . h . h .'}
+  ]},
+  story:{ bpm:80, div:4, parts:[
+    {inst:'pad',  vol:0.18, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - G2+D3+A#3 - - - - - - - A2+E3+C#4 - - - - - - -'},
+    {inst:'bass', vol:0.20, seq:'D2 - - - D2 - - - A#1 - - - A#1 - - - G1 - - - G1 - - - A1 - - - A1 - - -'},
+    {inst:'bell', vol:0.15, seq:'- D5 - - F5 - - - - - E5 - - D5 - - - - - A#4 - - A4 - - - - - C#5 - - -'}
+  ]},
+  battle:{ bpm:140, div:4, parts:[
+    {inst:'bass', vol:0.26, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . E2 . E2 . E2 . E2 .'},
+    {inst:'drum', vol:0.30, seq:'k . h . s . h k k . h . s . h . k . h . s . h k k . h . s . h .'},
+    {inst:'lead', vol:0.16, seq:'A4 . C5 E5 . D5 C5 A4 F4 . A4 C5 . A4 F4 D4 E4 . G4 C5 . B4 G4 E4 D4 . F4 A4 . G#4 A4 B4'},
+    {inst:'stab', vol:0.12, seq:'A3+C4+E4 . . . . . . . F3+A3+C4 . . . . . . . C4+E4+G4 . . . . . . . E3+G#3+B3 . . . . . . .'}
+  ]},
+  boss:{ bpm:152, div:4, parts:[
+    {inst:'drum', vol:0.32, seq:'k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h s'},
+    {inst:'bass', vol:0.28, seq:'D2 . D2 . D2 . D2 . G#2 . G#2 . G#2 . G#2 . D2 . D2 . D2 . D2 . A2 . A2 . A2 . A2 .'},
+    {inst:'lead', vol:0.16, seq:'D5 . D5 F5 . E5 D5 C#5 G#4 . G#4 B4 . A#4 G#4 G4 D5 . D5 F5 . A5 G#5 G5 F5 . E5 D5 . C#5 D5 A4'},
+    {inst:'pad',  vol:0.14, seq:'D3+A3+F4 - - - - - - - G#2+D3+B3 - - - - - - - D3+A3+F4 - - - - - - - A2+C#3+E3 - - - - - - -'}
+  ]},
+  spectate:{ bpm:124, div:4, parts:[
+    {inst:'bass', vol:0.22, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .'},
+    {inst:'pad',  vol:0.12, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
+    {inst:'drum', vol:0.24, seq:'k . h . s . h . k . h . s . h H k . h . s . h . k . h . s . h H'},
+    {inst:'pluck',vol:0.12, seq:'A3 C4 E4 A4 E4 C4 A3 C4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 B4 D4 G3 B3'}
+  ]},
+/* —— 选人界面专属 BGM(明快、充满期待感,呼应"挑选出击机体") —— */
+  select:{ bpm:120, div:4, parts:[
+    {inst:'bass', vol:0.24, seq:'A2 . A2 . F2 . F2 . C3 . C3 . G2 . G2 . A2 . A2 . F2 . F2 . C3 . C3 . E2 . E2 .'},
+    {inst:'pad',  vol:0.13, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
+    {inst:'pluck',vol:0.13, seq:'A3 C4 E4 A4 C5 A4 E4 C4 F3 A3 C4 F4 A4 F4 C4 A3 C4 E4 G4 C5 E5 C5 G4 E4 G3 B3 D4 G4 B4 G4 D4 B3'},
+    {inst:'drum', vol:0.12, seq:'k . h . s . h . k . h . s . h . k . h . s . h . k . h . s . h H'}
+  ]},
+/* —— 各战场专属 mini 音轨:16 步短循环,按地图风格设计 —— */
+  map0:{ bpm:136, div:4, parts:[   // 夜幕都市:合成器浪潮
+    {inst:'bass', vol:0.24, seq:'A1 A1 . A1 F1 F1 . F1 C2 C2 . C2 G1 G1 . G1'},
+    {inst:'pad',  vol:0.12, seq:'A2+E3+C4 - - - F2+C3+A3 - - - C3+G3+E4 - - - G2+D3+B3 - - -'},
+    {inst:'lead', vol:0.13, seq:'A4 . C5 . E5 . C5 . F4 . A4 . C5 . A4 .'},
+    {inst:'drum', vol:0.14, seq:'k . h . s . h . k . h . s . h h'}
+  ]},
+  map1:{ bpm:116, div:4, parts:[   // 荒漠遗址:异域干燥
+    {inst:'bass', vol:0.22, seq:'D2 . . D2 . A1 . . A#1 . . A#1 . C2 . .'},
+    {inst:'pluck',vol:0.13, seq:'D3 F3 A3 D4 A3 F3 D3 F3 A#2 D3 F3 A#3 F3 D3 A#2 D3'},
+    {inst:'bell', vol:0.12, seq:'. . A4 . . . F4 . . . D4 . . . C4 .'},
+    {inst:'drum', vol:0.10, seq:'k . . h s . . h k . . h s . h .'}
+  ]},
+  map2:{ bpm:108, div:4, parts:[   // 冰原哨站:清冷氛围
+    {inst:'pad',  vol:0.16, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - -'},
+    {inst:'bass', vol:0.20, seq:'D2 - - - - - - - A#1 - - - - - - -'},
+    {inst:'bell', vol:0.15, seq:'- - D5 - - - F5 - - - A4 - - - D5 -'},
+    {inst:'drum', vol:0.08, seq:'. . h . . . h . . . h . . . h .'}
+  ]},
+  map3:{ bpm:148, div:4, parts:[   // 熔岩工厂:工业重击
+    {inst:'drum', vol:0.18, seq:'k h s h k h s h k h s h k h s H'},
+    {inst:'bass', vol:0.26, seq:'E1 . E1 . E1 E1 . E1 G1 . G1 . G1 G1 . G1'},
+    {inst:'stab', vol:0.12, seq:'E3+G3+B3 . . . . . . . G2+B2+D3 . . . . . . .'},
+    {inst:'lead', vol:0.13, seq:'E4 . G4 . B4 . G4 E4 D4 . F#4 . A4 . F#4 D4'}
+  ]},
+  map4:{ bpm:124, div:4, parts:[   // 轨道残骸:失重空灵
+    {inst:'pad',  vol:0.15, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - -'},
+    {inst:'bass', vol:0.20, seq:'A1 . . . . . F1 . . . . . C2 . . .'},
+    {inst:'bell', vol:0.14, seq:'- A5 - - E5 - - - - C5 - - A4 - - -'},
+    {inst:'drum', vol:0.08, seq:'. . h . . . h . . . h . . . h H'}
+  ]},
+  map5:{ bpm:92, div:4, parts:[    // 远古神殿:空灵圣咏
+    {inst:'pad',  vol:0.17, seq:'D3+A3+F4 - - - - - - - C3+G3+E4 - - - - - - -'},
+    {inst:'bass', vol:0.19, seq:'D2 - - - - - - - C2 - - - - - - -'},
+    {inst:'bell', vol:0.15, seq:'D5 - - F5 - - A4 - C5 - - E5 - - D5 -'}
+  ]},
+  map6:{ bpm:150, div:4, parts:[   // 数据深渊:故障电子
+    {inst:'drum', vol:0.18, seq:'k . h h s . h h k . h h s . h H'},
+    {inst:'bass', vol:0.25, seq:'F1 F1 . F1 C2 C2 . C2 G#1 G#1 . G#1 D#2 D#2 . D#2'},
+    {inst:'pluck',vol:0.13, seq:'F4 A4 C5 F5 C5 A4 F4 A4 C4 E4 G4 C5 G4 E4 C4 E4'},
+    {inst:'stab', vol:0.11, seq:'F3+A3+C4 . . . . . . . C#3+F3+G#3 . . . . . . .'}
+  ]},
+/* —— 隐藏机体专属 BGM:优先级 湮灭 > 天罚 > 地图 mini 音轨 —— */
+  judgement:{ bpm:148, div:4, parts:[   // 天罚:审判降临(庄严金调)
+    {inst:'drum', vol:0.30, seq:'k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h H'},
+    {inst:'bass', vol:0.28, seq:'D2 . D2 . D2 . D2 D2 G2 . G2 . G2 . G2 G2 A#2 . A#2 . A#2 . A#2 A#2 C3 . C3 . C3 . C3 C3'},
+    {inst:'lead', vol:0.16, seq:'D5 . F5 . A5 . G5 F5 E5 . D5 . C5 . D5 . D5 . F5 . A5 . C6 A5 G5 . F5 . E5 . F5 G5'},
+    {inst:'pad',  vol:0.15, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - A2+E3+C#4 - - - - - - -'},
+    {inst:'bell', vol:0.13, seq:'- - - - A5 - - - - - - - F5 - - - - - - - D5 - - - - - - - C#5 - - -'}
+  ]},
+  oblivion:{ bpm:158, div:4, parts:[    // 湮灭:终焉具现(最高优先级,暗黑压迫)
+    {inst:'drum', vol:0.32, seq:'k k h k s s h k k . h k s . h s k k h k s s h k k . h k s . h H'},
+    {inst:'bass', vol:0.28, seq:'C2 . C2 C2 C2 . C2 . G#1 . G#1 G#1 G#1 . G#1 . A#1 . A#1 A#1 A#1 . A#1 . D#2 . D#2 D#2 D#2 . D#2 D#2'},
+    {inst:'lead', vol:0.16, seq:'C5 . D#5 . G5 . A#5 . C6 A#5 G5 D#5 C5 . D#5 . C5 . D#5 . G5 . C6 . A#5 G5 F5 D#5 D5 D#5 C5 D#5'},
+    {inst:'pad',  vol:0.16, seq:'C3+G3+D#4 - - - - - - - G#2+D#3+C4 - - - - - - - A#2+F3+D4 - - - - - - - D#3+A#3+G4 - - - - - - -'},
+    {inst:'stab', vol:0.12, seq:'C4+D#4+G4 . . . . . . . G#3+C4+D#4 . . . . . . . A#3+D4+F4 . . . . . . . D#4+G4+A#4 . . . . . . .'}
+  ]}
+};
+const MUS={track:null,name:'',want:'',step:0,nextT:0,timer:null};
+function mCompile(tr){
+  if(tr._steps) return tr._steps;
+  const steps=[]; let len=0;
+  tr.parts.forEach(p=>{
+    const tk=p.seq.trim().split(/\s+/); if(tk.length>len) len=tk.length;
+    let i=0;
+    while(i<tk.length){
+      const s=tk[i];
+      if(s==='.'||s==='-'){ i++; continue; }
+      let n=1; while(i+n<tk.length&&tk[i+n]==='-') n++;
+      (steps[i]=steps[i]||[]).push({t:s,inst:p.inst,vol:p.vol,len:n});
+      i+=n;
+    }
+  });
+  tr._steps=steps; tr._len=len;
+  return steps;
+}
+function mPlay(ev,t,sd){
+  const dur=Math.max(sd*ev.len*0.94,sd*0.5);
+  if(ev.inst==='drum'){
+    if(ev.t==='k') mKick(t,ev.vol);
+    else if(ev.t==='s') mSnare(t,ev.vol);
+    else if(ev.t==='h') mHat(t,ev.vol,false);
+    else if(ev.t==='H') mHat(t,ev.vol,true);
+    return;
+  }
+  const fn=INST[ev.inst]; if(!fn) return;
+  ev.t.split('+').forEach(nm=>{ const f=mNote(nm); if(f) fn(f,t,dur,ev.vol); });
+}
+function mStart(name){
+  const tr=MUSIC[name]; if(!tr||!AC) return;
+  if(MUS.name===name&&MUS.timer) return;      // 已在播放同一轨 → 不打断
+  mCompile(tr);
+  MUS.track=tr; MUS.name=name; MUS.step=0; MUS.nextT=AC.currentTime+0.06;
+  if(!MUS.timer) MUS.timer=setInterval(musicTick,25);
+}
+function musicSet(name){
+  if(!name||MUS.want===name) return;
+  MUS.want=name;
+  if(AC) mStart(name);                        // AC 未就绪时仅记录,待 musicResume 补起
+}
+function musicResume(){ if(AC&&MUS.want) mStart(MUS.want); }
+function musicTick(){
+  if(!AC||!MUS.track) return;
+  const tr=MUS.track, sd=60/tr.bpm/(tr.div||4), ahead=AC.currentTime+0.35;
+  if(MUS.nextT<AC.currentTime-0.05) MUS.nextT=AC.currentTime+0.02;   // 切后台回来时重新对齐
+  let guard=0;
+  while(MUS.nextT<ahead&&guard++<240){
+    const bucket=tr._steps[MUS.step];
+    if(bucket) for(let e=0;e<bucket.length;e++) mPlay(bucket[e],MUS.nextT,sd);
+    MUS.step=(MUS.step+1)%tr._len;
+    MUS.nextT+=sd;
+  }
+}
+function isBossWave(){ const w=game.storyWaves&&game.storyWaves[game.storyWave]; return !!(w&&w.boss); }
+function heroMusic(){                    // 隐藏机体专属 MIDI:湮灭(终焉型) > 天罚(审判型) > null(交给地图音轨)
+  let hasJ=false, hasO=false;
+  const scan=ch=>{ if(!ch) return; if(ch.tag==='终焉型') hasO=true; else if(ch.tag==='审判型') hasJ=true; };
+  if(game.mechs&&game.mechs.length){ for(const m of game.mechs) scan(m&&m.ch); }
+  else if(game.select){
+    if(game.select.idx1>=0) scan(CHARS[game.select.idx1]);
+    if(game.select.idx2>=0) scan(CHARS[game.select.idx2]);
+  }
+  if(hasO) return 'oblivion';
+  if(hasJ) return 'judgement';
+  return null;
+}
+function desiredMusic(){
+  const s=game.state;
+  if(s==='title') return 'title';
+  if(s==='storyChar'||s==='story'||s==='scenario') return 'story';
+  if(s==='diff'||s==='cpuPick'||s==='map'||s==='vs') return 'menu';
+  if(s==='select') return 'select';                 // 选人界面专属 BGM
+  if(s==='intro'||s==='fight'||s==='ko'){
+    if(game.mode===3) return 'spectate';
+    const h=heroMusic();                            // 隐藏机体专属 MIDI 优先于地图音轨
+    if(h) return h;
+    if(game.storyMode&&isBossWave()) return 'boss';
+    return 'map'+(game.mapIdx|0);                   // 各战场专属 mini 音轨
+  }
+  if(s==='sresult') return game.storyMode?'story':'menu';
+  if(s==='end') return game.mode===3?'spectate':'menu';
+  return 'menu';
+}
 
 /* ---------------- 3. 输入系统 ---------------- */
 const keys = {};          // 按住
@@ -515,27 +791,32 @@ addEventListener('keydown',e=>{
   if(PREVENT.has(e.code)) e.preventDefault();
   if(!e.repeat){
     pressed[e.code]=true;
-    for(let i=1;i<=5;i++) if(e.key===String(i)) pressed['Digit'+i]=true;  // e.key 兜底(兼容部分自动化/布局)
+    for(let i=1;i<=8;i++) if(e.key===String(i)) pressed['Digit'+i]=true;  // e.key 兜底(兼容部分自动化/布局)
   }
   keys[e.code]=true;
 });
 addEventListener('keyup',e=>{ keys[e.code]=false; });
 
 /* 选人确认(P1 确定 → P2/AI;双方确定 → 选地图) */
+function selRandomChar(){                    // 随机机体(仅在已解锁机体中抽取)
+  const pool=CHARS.map((c,i)=>i).filter(charUnlocked);
+  return pool.length?pool[ri(0,pool.length-1)]:0;
+}
 function confirmSelect(){
   const S=game.select;
-  if((S.phase==='p1'||S.phase==='p2')&&!charUnlocked(S.cursor)){ sfx.hit(); return; }
+  const pick = S.cursor>=CHARS.length ? selRandomChar() : S.cursor;   // 末格为"随机"
+  if((S.phase==='p1'||S.phase==='p2')&&!charUnlocked(pick)){ sfx.hit(); return; }
   sfx.ui();
   if(S.phase==='p1'){
-    S.idx1=S.cursor;
+    S.idx1=pick;
     if(game.mode===1){ S.phase='cpuPick'; S.t=0.9; S.pickT=0; game.state='cpuPick'; }
     else if(game.mode===2){ game.startTraining(); }
     else S.phase='p2';
   }else if(S.phase==='p2'){
-    S.idx2=S.cursor; S.cursor=0; S.phase='map'; game.state='map';
+    S.idx2=pick; S.cursor=0; S.phase='map'; game.state='map';
   }
 }
-/* 选图确认(第 5 项为随机)→ VS 过场 */
+/* 选图确认(末项为随机)→ VS 过场 */
 function confirmMap(){
   const S=game.select;
   game.mapIdx = S.cursor>=MAPS.length ? ri(0,MAPS.length-1) : S.cursor;
@@ -560,13 +841,20 @@ cv.addEventListener('pointerdown',e=>{
     if(y>=100&&y<=200){ game.diffObj=DIFFS[clamp(Math.floor((y-100)/32),0,2)]; game.state='select'; sfx.ui(); }
   }else if(game.state==='select'){
     const S=game.select;
-    if((S.phase==='p1'||S.phase==='p2')&&x>=14&&x<474&&y>=52&&y<224){
-      S.cursor=clamp(Math.floor((y-52)/86),0,1)*5+clamp(Math.floor((x-14)/92),0,4);
+    if((S.phase==='p1'||S.phase==='p2')&&x>=SEL_CX&&x<SEL_CX+SEL_COLS*SEL_GX&&y>=SEL_CY&&y<SEL_CY+3*SEL_GY){
+      const col=clamp(Math.floor((x-SEL_CX)/SEL_GX),0,SEL_COLS-1);
+      const row=clamp(Math.floor((y-SEL_CY)/SEL_GY),0,2);
+      S.cursor=row*SEL_COLS+col;
       confirmSelect();
     }
   }else if(game.state==='map'){
     const S=game.select;
-    if(x>=18&&x<470&&y>=94&&y<146){ S.cursor=clamp(Math.floor((x-18)/92),0,4); confirmMap(); }
+    if(x>=MAPSEL_CX&&x<MAPSEL_CX+MAPSEL_COLS*MAPSEL_GX&&y>=MAPSEL_CY&&y<MAPSEL_CY+2*MAPSEL_GY){
+      const col=clamp(Math.floor((x-MAPSEL_CX)/MAPSEL_GX),0,MAPSEL_COLS-1);
+      const row=clamp(Math.floor((y-MAPSEL_CY)/MAPSEL_GY),0,1);
+      S.cursor=row*MAPSEL_COLS+col;
+      confirmMap();
+    }
   }else if(game.state==='storyChar'){
     if(x>=14&&x<474&&y>=52&&y<224){
       const i=clamp(Math.floor((y-52)/86),0,1)*5+clamp(Math.floor((x-14)/92),0,4);
@@ -592,7 +880,7 @@ function humanInput(map){
 }
 const NO_INP = { left:false,right:false,guard:false,up:false,down:false,upEdge:false,downEdge:false,jump:false,atk:false,shoot:false };
 
-/* ---------------- 4. 地图系统:4 张可选战场 ----------------
+/* ---------------- 4. 地图系统:7 张可选战场 ----------------
  * 设计空间 960×540(地面线 MG=472),渲染时按 SC/2 变换铺满画布;
  * 每张地图:{name, tag, build(d) 预生成随机元素, draw(t) 绘制(含动画)} */
 const MW=960, MH=540, MG=472;
@@ -937,6 +1225,183 @@ const MAPS=[
     }
     g.globalAlpha=1;
   } },
+/* —— 地图 5:轨道残骸 —— */
+{ name:'轨道残骸', tag:'近地轨道 · 失重残骸',
+  build(d){
+    d.stars=Array.from({length:210},()=>({x:ri(-BX,MW+BX),y:ri(0,392),p:rnd(0,6),s:Math.random()<.18?3:2}));
+    d.hulls=[]; { let x=-BX; while(x<MW+BX){ const w=ri(46,96),h=ri(48,150);
+      d.hulls.push({x,w,h,lit:Math.random()<.5}); x+=w+ri(10,52); } }
+    d.debris=Array.from({length:16},()=>({x:rnd(-BX,MW+BX),y:ri(60,420),s:ri(6,18),p:rnd(0,6),sp:rnd(0.3,0.8)}));
+    d.streaks=Array.from({length:5},()=>({x:rnd(0,MW),y:ri(40,MG-40),len:ri(60,150),sp:rnd(60,140)}));
+  },
+  draw(t){
+    const d=this.data;
+    px(-BX,-100,MW+2*BX,MG+100,'#03050c');
+    // 母星弧面(近地轨道)
+    pixelCircle(600,760,340,'#123a52');
+    g.globalAlpha=0.5; pixelCircle(600,764,340,'#1d5a76'); g.globalAlpha=1;
+    g.globalAlpha=0.16;
+    for(let i=0;i<8;i++) px(60+i*110,404+i*6,90,6,'#3ea0c8');
+    g.globalAlpha=1;
+    for(const s of d.stars){ g.globalAlpha=0.35+0.65*Math.abs(Math.sin(t*1.4+s.p)); px(s.x,s.y,s.s,s.s,'#dfe8ff'); }
+    g.globalAlpha=1;
+    // 流星横掠
+    for(const st of d.streaks){
+      const x=((st.x+t*st.sp)%(MW+300)+(MW+300))%(MW+300)-150;
+      g.globalAlpha=0.5;
+      px(x,st.y,st.len,1,'#bfe9ff'); px(x+Math.round(st.len*0.6),st.y,Math.round(st.len*0.4),1,'#7de3ff');
+      g.globalAlpha=1;
+    }
+    // 空间站外壳(远景)
+    for(const h of d.hulls){
+      px(h.x,MG-h.h,h.w,h.h,'#1a2338');
+      px(h.x,MG-h.h,h.w,3,'#2e3f60');
+      g.globalAlpha=0.5;
+      for(let y=MG-h.h+10;y<MG-6;y+=12) px(h.x+3,y,h.w-6,2,'#0d1424');
+      g.globalAlpha=1;
+      if(h.lit){ g.globalAlpha=0.4+0.4*Math.abs(Math.sin(t*2+h.x)); px(h.x+Math.round(h.w*0.28),MG-h.h+8,5,5,'#7de3ff'); g.globalAlpha=1; }
+    }
+    // 悬浮残骸(缓慢旋转漂移)
+    for(const b of d.debris){
+      const x=b.x+Math.sin(t*b.sp+b.p)*22, y=b.y+Math.cos(t*b.sp*0.8+b.p)*16;
+      g.save(); g.translate(Math.round(x),Math.round(y)); g.rotate(t*b.sp+b.p);
+      px(-b.s/2,-b.s/4,b.s,b.s/2,'#33405c'); px(-b.s/2,-b.s/4,b.s,2,'#4d5f80');
+      g.restore();
+    }
+    // 轨道平台地面
+    px(-BX,MG,MW+2*BX,180,'#1c2740');
+    px(-BX,MG,MW+2*BX,4,'#39507a');
+    px(-BX,MG+4,MW+2*BX,2,'#0e1626');
+    g.globalAlpha=0.35;
+    for(let x=26-BX;x<MW+BX;x+=64) px(x,MG+8,2,MH-MG,'#0a1020');
+    for(let y=MG+18;y<MH;y+=26) px(-BX,y,MW+2*BX,1,'#0a1020');
+    g.globalAlpha=1;
+    for(let x=40;x<MW;x+=140){ const on=Math.sin(t*3+x)>0; px(x,MG+16,4,4,on?'#ff9a5b':'#4a2a20'); }
+  } },
+/* —— 地图 6:远古神殿 —— */
+{ name:'远古神殿', tag:'失落遗迹 · 圣光倾泻',
+  build(d){
+    d.cols=[]; { let x=20; while(x<MW-20){ d.cols.push({x,w:ri(14,22),h:ri(90,210),broken:Math.random()<.35}); x+=ri(80,150); } }
+    d.arches=[{x:180},{x:560},{x:820}];
+    d.vines=Array.from({length:14},()=>({x:ri(20,MW-20),y:ri(0,120),len:ri(30,110),p:rnd(0,6)}));
+    d.runes=Array.from({length:18},()=>({x:ri(30,MW-30),y:ri(MG-150,MG-20),p:rnd(0,6),c:Math.random()<.5?'#7dffd0':'#ffe9a8'}));
+    d.fireflies=Array.from({length:30},()=>({x:rnd(0,MW),y:ri(120,MG),p:rnd(0,6),sp:rnd(0.3,0.9)}));
+    d.motes=Array.from({length:40},()=>({x:rnd(0,MW),y:rnd(0,MG),sp:rnd(6,18),p:rnd(0,6),s:Math.random()<.3?2:1}));
+    d.shafts=[{x:200,w:120},{x:640,w:150}];
+  },
+  draw(t){
+    const d=this.data;
+    px(-BX,-100,MW+2*BX,MG+100,'#07130f');
+    ['#07130f','#0c1e18','#123026','#183c2f','#1f4a38'].forEach((c,i)=>px(-BX,i*88,MW+2*BX,88,c));
+    px(-BX,440,MW+2*BX,32,'#24523c');
+    // 圣光柱(自上而下的锥形光)
+    for(const s of d.shafts){
+      g.globalAlpha=0.09+0.04*Math.sin(t*1.6+s.x*0.05);
+      g.fillStyle='#ffe9a8';
+      g.beginPath(); g.moveTo(s.x,0); g.lineTo(s.x+s.w,0); g.lineTo(s.x+s.w*1.5,MG); g.lineTo(s.x-s.w*0.5,MG); g.closePath(); g.fill();
+      g.globalAlpha=1;
+    }
+    // 顶部藤蔓(摆动)
+    for(const v of d.vines){
+      const sw=Math.sin(t*1.1+v.p)*4;
+      for(let y=v.y;y<v.y+v.len;y+=10) px(v.x+Math.round(sw*Math.sin(y*0.1)),y,3,10,'#1c4432');
+      px(v.x+Math.round(sw*Math.sin((v.y+v.len)*0.1)),v.y+v.len-6,4,6,'#2a5c42');
+    }
+    // 石柱(含雕纹/断头)
+    for(const c of d.cols){
+      px(c.x,MG-c.h,c.w,c.h,'#3a4a3c');
+      px(c.x,MG-c.h,c.w,4,'#5a6e56');
+      if(c.broken) px(c.x-2,MG-c.h-10,c.w+4,10,'#4a5c48');
+      g.globalAlpha=0.35;
+      for(let y=MG-c.h+12;y<MG-10;y+=22) px(c.x+3,y,c.w-6,2,'#243026');
+      g.globalAlpha=1;
+    }
+    // 残拱门
+    for(const a of d.arches){
+      px(a.x,MG-120,10,120,'#3a4a3c'); px(a.x+70,MG-120,10,120,'#3a4a3c');
+      px(a.x,MG-130,80,12,'#4a5c48'); px(a.x+16,MG-142,48,12,'#5a6e56');
+    }
+    // 悬空符文(明灭)
+    for(const r of d.runes){
+      if(Math.sin(t*2.4+r.p)>0.55){
+        g.globalAlpha=0.5+0.4*Math.abs(Math.sin(t*5+r.p));
+        px(r.x,r.y,3,3,r.c); px(r.x-1,r.y+1,5,1,r.c);
+      }
+    }
+    g.globalAlpha=1;
+    // 石板地面
+    px(-BX,MG,MW+2*BX,180,'#5a6a52');
+    px(-BX,MG,MW+2*BX,4,'#7d8f6e');
+    g.globalAlpha=0.3;
+    for(let x=40-BX;x<MW+BX;x+=84) px(x,MG+4,2,MH-MG,'#39452f');
+    for(let y=MG+22;y<MH;y+=26) px(-BX,y,MW+2*BX,2,'#39452f');
+    g.globalAlpha=1;
+    for(let i=0;i<16;i++) px(30+i*56,MG+8+((i*13)%40),ri(6,16),ri(2,5),'#42563a');
+    // 萤火 + 尘埃
+    for(const f of d.fireflies){
+      g.globalAlpha=0.3+0.5*Math.abs(Math.sin(t*3+f.p));
+      px(f.x+Math.sin(t*f.sp+f.p)*14,f.y+Math.sin(t*0.8+f.p)*10,2,2,'#e8ffb0');
+    }
+    for(const mo of d.motes){
+      g.globalAlpha=0.2;
+      px((mo.x+Math.sin(t+mo.p)*8+MW)%MW,(mo.y+t*mo.sp)%MG,mo.s,mo.s,'#ffe9a8');
+    }
+    g.globalAlpha=1;
+  } },
+/* —— 地图 7:数据深渊 —— */
+{ name:'数据深渊', tag:'虚拟深潜 · 数据裂隙',
+  build(d){
+    d.bars=[]; { let x=0; while(x<MW){ d.bars.push({x,w:ri(40,110)}); x+=ri(60,150); } }
+    d.cubes=Array.from({length:16},()=>({x:rnd(-BX,MW+BX),y:ri(80,420),s:ri(8,22),p:rnd(0,6),sp:rnd(0.4,1.1),c:Math.random()<.5?'#5ff2ff':'#ff5bd8'}));
+    d.glitch=Array.from({length:10},()=>({x:ri(0,MW),y:ri(30,MG),w:ri(30,120),h:ri(2,5),p:rnd(0,6)}));
+    d.stream=Array.from({length:60},()=>({x:ri(0,MW),y:rnd(0,MG),sp:rnd(30,90),len:ri(4,14),c:Math.random()<.5?'#5ff2ff':'#9a6bff'}));
+    d.nodes=Array.from({length:22},()=>({x:ri(0,MW),y:ri(MG+6,MH+60),p:rnd(0,6)}));
+  },
+  draw(t){
+    const d=this.data;
+    px(-BX,-100,MW+2*BX,MG+100,'#05060f');
+    ['#05060f','#080a1e','#0b1030','#0e1542','#111a52'].forEach((c,i)=>px(-BX,i*88,MW+2*BX,88,c));
+    px(-BX,440,MW+2*BX,32,'#1a2160');
+    // 透视网格(向地平线汇聚)
+    g.globalAlpha=0.35; g.strokeStyle='#2a3a9a'; g.lineWidth=1;
+    for(let i=0;i<=12;i++){ const bx2=i*80; g.beginPath(); g.moveTo(bx2,0); g.lineTo(240+(bx2-240)*0.25,MG); g.stroke(); }
+    for(let y=0;y<MG;y+=34){ g.beginPath(); g.moveTo(-BX,y); g.lineTo(MW+BX,y); g.stroke(); }
+    g.globalAlpha=1;
+    // 数据柱(高度脉动)
+    for(const b of d.bars){
+      const hh=60+180*Math.abs(Math.sin(t*0.9+b.x*0.01));
+      g.globalAlpha=0.12; px(b.x,MG-hh,b.w,hh,'#5ff2ff');
+      g.globalAlpha=0.5;  px(b.x,MG-hh,b.w,2,'#9affff');
+      g.globalAlpha=1;
+    }
+    // 悬浮数据立方(旋转发光框)
+    for(const c of d.cubes){
+      const x=c.x+Math.sin(t*c.sp+c.p)*18, y=c.y+Math.cos(t*c.sp*0.7+c.p)*14;
+      const s=c.s*(0.85+0.15*Math.sin(t*3+c.p));
+      g.globalAlpha=0.7; g.strokeStyle=c.c; g.lineWidth=1;
+      g.strokeRect(Math.round(x-s/2),Math.round(y-s/2),Math.round(s),Math.round(s));
+      g.globalAlpha=0.2; px(x-s/2,y-s/2,s,2,c.c);
+      g.globalAlpha=1;
+    }
+    // 故障彩条
+    for(const gl of d.glitch){
+      if(Math.sin(t*7+gl.p)>0.6){ g.globalAlpha=0.5; px(gl.x,gl.y,gl.w,gl.h,Math.random()<.5?'#ff5bd8':'#5ff2ff'); g.globalAlpha=1; }
+    }
+    // 下落数据流
+    for(const s of d.stream){
+      const y=(s.y+t*s.sp)%MG;
+      g.globalAlpha=0.6; px(s.x,y,1,s.len,s.c); px(s.x,y,1,2,'#ffffff');
+      g.globalAlpha=1;
+    }
+    // 深渊地面(线框)
+    px(-BX,MG,MW+2*BX,180,'#0a1030');
+    px(-BX,MG,MW+2*BX,4,'#3a5adf');
+    g.globalAlpha=0.4;
+    for(let x=30-BX;x<MW+BX;x+=56) px(x,MG+6,2,MH-MG,'#1c2a6e');
+    for(let y=MG+20;y<MH;y+=22) px(-BX,y,MW+2*BX,1,'#1c2a6e');
+    g.globalAlpha=1;
+    for(const n of d.nodes) px(n.x,n.y,3,3,Math.sin(t*4+n.p)>0.2?'#5ff2ff':'#182a66');
+  } },
 ];
 function buildBackground(){ for(const m of MAPS){ m.data={}; m.build(m.data); } }
 /* 各图底色(延伸铺底用):sky 天空 / ground 地面,与各地图自身配色一致 */
@@ -945,6 +1410,9 @@ const MAP_BG=[
   {sky:'#2b1b3d', ground:'#e0aa62'},
   {sky:'#050912', ground:'#b9cfe2'},
   {sky:'#160a0a', ground:'#ff6a1a'},
+  {sky:'#03050c', ground:'#1c2740'},
+  {sky:'#07130f', ground:'#5a6a52'},
+  {sky:'#05060f', ground:'#0a1030'},
 ];
 function drawBackground(t){
   const m=MAPS[game.mapIdx]||MAPS[0];
@@ -1484,37 +1952,64 @@ let dmgTexts=[];
 function updateDmgTexts(dt){ for(const d of dmgTexts){ d.life-=dt; d.y-=34*dt; } dmgTexts=dmgTexts.filter(d=>d.life>0); }
 function drawDmgTexts(){
   for(const d of dmgTexts){
-    const sz=d.sz||9, life=clamp(d.life/d.max,0,1);
+    const sz=d.sz||9, life=clamp(d.life/d.max,0,1), age=1-life;
     const bx=Math.round(d.x), by=Math.round(d.y);
-    if(d.glow){                                   // 高伤:闪光光晕
-      g.globalAlpha=life*(0.25+0.35*Math.abs(Math.sin(T*11)));
-      text(String(d.val),bx,by,sz+5,d.col,'center');
+    // 弹入:出生瞬间由小放大(轻微回弹),暴击额外脉动,伤害越高越醒目
+    let sc=0.5+0.5*Math.min(1,age/0.11);
+    if(d.crit) sc+=0.12*Math.abs(Math.sin(age*22))*(1-age);
+    const fsz=Math.max(1,Math.round(sz*sc));
+    if(d.glow){                                   // 高伤:外扩光晕(暴击更强)
+      g.globalAlpha=life*(0.22+0.30*Math.abs(Math.sin(T*11)));
+      text(String(d.val),bx,by,fsz+(d.crit?12:6),d.col,'center');
+    }
+    if(d.crit){                                   // 暴击:四向放射光束
+      g.globalAlpha=life*0.75;
+      g.strokeStyle=d.col; g.lineWidth=1;
+      const cy=by+fsz*0.4, L=fsz*1.6;
+      for(let i=0;i<4;i++){
+        const a=Math.PI/4+Math.PI/2*i;
+        g.beginPath();
+        g.moveTo(bx+Math.cos(a)*fsz*0.7, cy+Math.sin(a)*fsz*0.7);
+        g.lineTo(bx+Math.cos(a)*L,       cy+Math.sin(a)*L);
+        g.stroke();
+      }
+      g.globalAlpha=1;
     }
     g.globalAlpha=life;
-    text(String(d.val),bx+1,by+1,sz,'rgba(0,0,0,.8)','center');
-    text(String(d.val),bx,by,sz,d.col,'center');
+    // 四向黑描边 + 投影:复杂背景下依然清晰
+    text(String(d.val),bx-1,by,fsz,'rgba(0,0,0,.85)','center');
+    text(String(d.val),bx+1,by,fsz,'rgba(0,0,0,.85)','center');
+    text(String(d.val),bx,by-1,fsz,'rgba(0,0,0,.85)','center');
+    text(String(d.val),bx,by+1,fsz,'rgba(0,0,0,.85)','center');
+    text(String(d.val),bx+2,by+2,fsz,'rgba(0,0,0,.9)','center');
+    text(String(d.val),bx,by,fsz,d.col,'center');
     if(d.glow){                                   // 高伤:白芯闪烁
       g.globalAlpha=life*(0.45+0.45*Math.abs(Math.sin(T*14)));
-      text(String(d.val),bx,by,sz,'#ffffff','center');
+      text(String(d.val),bx,by,fsz,'#ffffff','center');
     }
   }
   g.globalAlpha=1;
 }
 
-/* 地图专属危险:周期性 预警→爆发 的区域伤害
- * 夜幕都市=电网浪涌(闪电柱,全域高度) / 荒漠遗址=流沙旋风(横向移动扫过)
- * 冰原哨站=冰锥坠落(天降冰锥,落点溅射) / 熔岩工厂=岩浆喷泉(地面喷发) */
+/* 地图专属危险:周期性 预警→爆发 的区域伤害(kind 决定判定与绘制)
+ * bolt 电网浪涌(闪电柱,全域高度) / whirl 流沙旋风(横向移动扫过) / ice 冰锥坠落(落点溅射)
+ * lava 岩浆喷泉(地面喷发) / debris 碎星横掠(残骸横向扫过中低空) / light 圣光倾泻(神殿光柱)
+ * glitch 数据裂隙(虚拟空间错位撕裂) */
 const HAZ_INFO=[
-  {name:'电网浪涌', col:'#7de3ff', warn:1.0, live:0.55, dmg:9,  tmin:5.5, tmax:9.5},
-  {name:'流沙旋风', col:'#e8c07a', warn:0.8, live:2.8,  dmg:8,  tmin:6.0, tmax:10.0},
-  {name:'冰锥坠落', col:'#bfe8ff', warn:1.0, live:0.5,  dmg:10, tmin:5.5, tmax:9.5},
-  {name:'岩浆喷泉', col:'#ff8c2a', warn:1.1, live:0.9,  dmg:12, tmin:6.0, tmax:10.0},
+  {kind:'bolt',   name:'电网浪涌', col:'#7de3ff', warn:1.0, live:0.55, dmg:9,  tmin:5.5, tmax:9.5},
+  {kind:'whirl',  name:'流沙旋风', col:'#e8c07a', warn:0.8, live:2.8,  dmg:8,  tmin:6.0, tmax:10.0},
+  {kind:'ice',    name:'冰锥坠落', col:'#bfe8ff', warn:1.0, live:0.5,  dmg:10, tmin:5.5, tmax:9.5},
+  {kind:'lava',   name:'岩浆喷泉', col:'#ff8c2a', warn:1.1, live:0.9,  dmg:12, tmin:6.0, tmax:10.0},
+  {kind:'debris', name:'碎星横掠', col:'#9fb6ff', warn:1.0, live:1.0,  dmg:11, tmin:6.0, tmax:10.0},
+  {kind:'light',  name:'圣光倾泻', col:'#ffe9a8', warn:1.2, live:0.6,  dmg:10, tmin:6.0, tmax:10.0},
+  {kind:'glitch', name:'数据裂隙', col:'#ff5bd8', warn:0.9, live:0.7,  dmg:11, tmin:5.5, tmax:9.5},
 ];
 let haz={phase:'idle',t:3,x:W/2,dir:1,hit:[false,false],imp:false,tmr:0};
 function resetHazards(){ haz={phase:'idle',t:rnd(2.5,4.5),x:rnd(60,W-60),dir:Math.random()<.5?1:-1,hit:[false,false],imp:false,tmr:0}; }
 function updateHazards(dt){
   if(game.state!=='fight'||!game.mechs.length) return;
   const info=HAZ_INFO[game.mapIdx]||HAZ_INFO[0];
+  const kind=info.kind;
   haz.tmr+=dt;
   if(haz.phase==='idle'){
     haz.t-=dt;
@@ -1523,7 +2018,7 @@ function updateHazards(dt){
   }else if(haz.phase==='warn'){
     if(haz.tmr>=info.warn){ haz.phase='live'; haz.tmr=0; }
   }else{
-    if(game.mapIdx===1){                            // 旋风横向推移
+    if(kind==='whirl'||kind==='debris'){            // 旋风/碎星残骸:横向推移
       haz.x+=haz.dir*85*dt;
       if(haz.x<24||haz.x>W-24){ haz.dir*=-1; haz.x=clamp(haz.x,24,W-24); }
     }
@@ -1531,12 +2026,15 @@ function updateHazards(dt){
       const m=game.mechs[i];
       if(m.dead||haz.hit[i]) continue;
       let inZone=false;
-      if(game.mapIdx===0) inZone=Math.abs(m.x-haz.x)<24;                       // 闪电柱:全域高度
-      else if(game.mapIdx===1) inZone=Math.abs(m.x-haz.x)<20&&m.y>GROUND-46;   // 旋风:贴地扫过
-      else if(game.mapIdx===3) inZone=Math.abs(m.x-haz.x)<20&&m.y>GROUND-104;  // 岩浆柱:中低空
+      if(kind==='bolt')        inZone=Math.abs(m.x-haz.x)<24;                  // 闪电柱:全域高度
+      else if(kind==='whirl')  inZone=Math.abs(m.x-haz.x)<20&&m.y>GROUND-46;   // 旋风:贴地扫过
+      else if(kind==='lava')   inZone=Math.abs(m.x-haz.x)<20&&m.y>GROUND-104;  // 岩浆柱:中低空
+      else if(kind==='debris') inZone=Math.abs(m.x-haz.x)<30&&m.y>GROUND-150;  // 碎星:中低空横掠
+      else if(kind==='light')  inZone=Math.abs(m.x-haz.x)<22;                  // 圣光:全域高度
+      else if(kind==='glitch') inZone=Math.abs(m.x-haz.x)<18&&m.y>GROUND-90;   // 裂隙:近地错位
       if(inZone){ haz.hit[i]=true; hitMech(m,info.dmg,(Math.sign(m.x-haz.x)||1)*90,false); }
     }
-    if(game.mapIdx===2&&!haz.imp&&haz.tmr>=info.live){   // 冰锥落地溅射
+    if(kind==='ice'&&!haz.imp&&haz.tmr>=info.live){   // 冰锥落地溅射
       haz.imp=true;
       sparks(haz.x,GROUND-4,'#bfe8ff',12,150); game.shake=Math.max(game.shake,3.5); sfx.boom();
       for(let i=0;i<game.mechs.length;i++){
@@ -1553,6 +2051,7 @@ function drawHazards(){
   if(haz.phase==='idle'||!game.mechs.length) return;
   if(game.state!=='fight'&&game.state!=='ko') return;
   const info=HAZ_INFO[game.mapIdx]||HAZ_INFO[0];
+  const kind=info.kind;
   const x=Math.round(haz.x);
   if(haz.phase==='warn'){                          // 预警:地面标记 + 感叹号
     const blink=Math.sin(T*14)>0;
@@ -1560,12 +2059,14 @@ function drawHazards(){
     px(x-14,GROUND-2,28,2,info.col);
     px(x-1,GROUND-26,3,14,info.col); px(x-1,GROUND-8,3,3,info.col);
     g.globalAlpha=1;
-    if(game.mapIdx===3&&blink){ g.globalAlpha=0.3; px(x-8,GROUND-6,16,4,'#ff5b1a'); g.globalAlpha=1; }
-    if(game.mapIdx===0&&blink){ px(x-1,GROUND-64,2,10,'#7de3ff'); px(x-1,GROUND-46,2,8,'#7de3ff'); }
+    if(kind==='lava'&&blink){ g.globalAlpha=0.3; px(x-8,GROUND-6,16,4,'#ff5b1a'); g.globalAlpha=1; }
+    if(kind==='bolt'&&blink){ px(x-1,GROUND-64,2,10,'#7de3ff'); px(x-1,GROUND-46,2,8,'#7de3ff'); }
+    if(kind==='light'&&blink){ g.globalAlpha=0.22; px(x-16,0,32,GROUND,'#ffe9a8'); g.globalAlpha=1; }
+    if(kind==='glitch'&&blink){ for(let i=0;i<4;i++) px(x-10+ri(-6,6),GROUND-20-i*18,ri(6,16),2,'#ff5bd8'); }
     return;
   }
   const pr=clamp(haz.tmr/info.live,0,1);
-  if(game.mapIdx===0){                             // 闪电柱
+  if(kind==='bolt'){                               // 闪电柱
     let yy=0,xx=x;
     g.globalAlpha=0.9;
     while(yy<GROUND){
@@ -1574,18 +2075,44 @@ function drawHazards(){
       xx=nx; yy=ny;
     }
     g.globalAlpha=0.3; pixelCircle(x,GROUND-10,18,'#7de3ff'); g.globalAlpha=1;
-  }else if(game.mapIdx===1){                       // 流沙旋风
+  }else if(kind==='whirl'){                        // 流沙旋风
     for(let i=0;i<6;i++){
       const yy=GROUND-6-i*9, wdt=26-i*3, off=Math.round(Math.sin(T*10+i*1.4)*6);
       g.globalAlpha=0.3+0.09*i;
       px(x-wdt/2+off,yy,wdt,3,i%2?'#e8c07a':'#c9924f');
     }
     g.globalAlpha=1;
-  }else if(game.mapIdx===2){                       // 冰锥坠落
+  }else if(kind==='ice'){                          // 冰锥坠落
     const fy=-24+pr*(GROUND+16);
     g.fillStyle='#bfe8ff';
     g.beginPath(); g.moveTo(x-5,fy); g.lineTo(x+5,fy); g.lineTo(x,fy+22); g.closePath(); g.fill();
     px(x-1,fy-12,2,12,'rgba(191,232,255,.45)');
+  }else if(kind==='debris'){                       // 碎星横掠(旋转残骸)
+    const dy=GROUND-92+Math.round(Math.sin(T*3)*10);
+    g.save(); g.translate(x,dy); g.rotate(T*4);
+    px(-16,-7,32,14,'#33405c'); px(-16,-7,32,3,'#5d7396');
+    px(-9,-2,18,4,'#9fb6ff');
+    g.restore();
+    g.globalAlpha=0.28; pixelCircle(x,dy,20,'#9fb6ff'); g.globalAlpha=1;
+    if(Math.random()<0.6) particles.push({x:x+rnd(-14,14),y:dy+rnd(-8,8),vx:rnd(-60,-10),vy:rnd(-30,30),life:rnd(0.2,0.5),max:0.5,col:'#cfdcff',sz:2,g:60});
+  }else if(kind==='light'){                        // 圣光倾泻(神殿光柱)
+    g.globalAlpha=0.28+0.12*Math.abs(Math.sin(T*9));
+    px(x-9,0,18,GROUND,'#ffe9a8');
+    g.globalAlpha=0.5;
+    px(x-3,0,6,GROUND,'#fff6d0');
+    g.globalAlpha=1;
+    for(let i=0;i<5;i++){
+      const yy=((T*90+i*54)%GROUND);
+      px(x-8+Math.round(Math.sin(T*4+i)*6),GROUND-yy,3,7,'#fff6d0');
+    }
+    g.globalAlpha=0.3; pixelCircle(x,GROUND-8,20,'#ffe9a8'); g.globalAlpha=1;
+  }else if(kind==='glitch'){                       // 数据裂隙(错位撕裂)
+    for(let yy=GROUND;yy>GROUND-96;yy-=7){
+      const off=Math.round(Math.sin(T*16+yy*0.3)*6);
+      g.globalAlpha=0.55+0.35*Math.abs(Math.sin(T*12+yy));
+      px(x-8+off,yy,ri(4,14),5,(yy%14<7)?'#ff5bd8':'#5ff2ff');
+    }
+    g.globalAlpha=0.35; pixelCircle(x,GROUND-10,20,'#ff5bd8'); g.globalAlpha=1;
   }else{                                           // 岩浆喷泉
     const env=pr<0.2?pr/0.2:(pr>0.7?(1-pr)/0.3:1);
     const hgt=Math.round(105*env);
@@ -1631,6 +2158,7 @@ class Mech{
     this.inBuf=null;                         // 人类玩家输入缓冲(硬直期间的边沿输入暂存)
     this.burstN=0; this.burstGap=0; this.burstGap0=0.15;
     this.flying=false; this.flyFuel=2.5; this.flyMax=2.5; this.lastUpT=-9;
+    this.regenDelay=0;                       // 靶机:触底后的回血延迟计时
     this.ai={t:0,move:0,guardT:0};           // 每机体独立 AI 记忆(避免多单位互相污染)
   }
   get inAction(){ return this.atkT>0; }
@@ -1773,7 +2301,11 @@ class Mech{
       else if(opp&&!opp.dead) this.fire(lockAngle(this,opp));
     }
     this.energy=Math.min(100,this.energy+this.regen*dt*(this.burstT>0?3:1));
-    if(this.invincible) this.hp=Math.min(this.maxHp,this.hp+this.maxHp*0.28*dt);  // 靶机:持续快速回血
+    if(this.invincible){                         // 靶机:掉至下限后停留 1s,再快速回满(展示技能伤害)
+      if(this.hp<=DUMMY_HP_FLOOR+0.5) this.regenDelay+=dt;
+      if(this.regenDelay>=1) this.hp=Math.min(this.maxHp,this.hp+this.maxHp*3.2*dt);
+      if(this.hp>=this.maxHp-0.5) this.regenDelay=0;   // 回满后复位,可再次受击体验
+    }
     this.physics(dt,inp);
     this.x=clamp(this.x,16,W-16);
   }
@@ -1878,6 +2410,8 @@ class Mech{
   castSkill(slot,opp){
     const id=this.ch.skills&&this.ch.skills[slot], sk=SKILLS[id];
     if(!sk) return false;
+    sfx.cast();                                   // 统一的技能施放音
+    if(SKILL_SFX[id]) sfx[SKILL_SFX[id]]();       // 按技能类型叠加专属音色
     switch(id){
       case 'dash': this.dashT=0.18; this.dashHit=false; this.dashDir=1; this.dashSpd=520; this.dashDmgMul=1.35; this.dashKb=150;
         for(let i=0;i<9;i++) particles.push({x:this.x-this.facing*rnd(0,12),y:this.y-rnd(6,38),vx:-this.facing*rnd(50,150),vy:rnd(-35,35),life:0.28,max:0.28,col:this.pal.saber,sz:ri(1,2),g:0});
@@ -2260,16 +2794,18 @@ function hitMech(def,dmg,kbx,melee,dot){
     sparks(def.x+def.facing*8,def.y-24,'#ffffff',3,80);
     sfx.hit();
   }
-  def.hp = def.invincible ? Math.max(1,def.hp-d) : Math.max(0,def.hp-d);  // 靶机血量下限锁在 1
-  // 伤害数字分级:高伤更大更亮并闪光,低伤更小更暗
-  let tcol='#cfd6e6', tsz=7, tglow=0;
+  def.hp = def.invincible ? Math.max(DUMMY_HP_FLOOR,def.hp-d) : Math.max(0,def.hp-d);  // 靶机血量下限锁在 DUMMY_HP_FLOOR
+  // 伤害数字分级:伤害越高字越大越亮、光晕与抖屏越夸张,便于一眼看出招式强度
+  let tcol='#cfd6e6', tsz=7, tglow=0, tcrit=0;
   if(def.guarding){ tcol='#9adcff'; tsz=9; }
-  else if(d>=30){ tcol='#fff2a0'; tsz=16; tglow=1; }
-  else if(d>=18){ tcol='#ffd166'; tsz=13; tglow=1; }
+  else if(d>=60){ tcol='#fff5c0'; tsz=26; tglow=1; tcrit=1; }
+  else if(d>=45){ tcol='#fff2c0'; tsz=22; tglow=1; tcrit=1; }
+  else if(d>=30){ tcol='#ffd166'; tsz=17; tglow=1; }
+  else if(d>=18){ tcol='#ffe08a'; tsz=13; tglow=1; }
   else if(d>=9){  tcol='#ffe9b0'; tsz=10; }
-  dmgTexts.push({x:def.x+rnd(-6,6),y:def.y-44*def.size,val:d,col:tcol,sz:tsz,glow:tglow,life:0.65,max:0.65});
+  dmgTexts.push({x:def.x+rnd(-6,6),y:def.y-44*def.size,val:d,col:tcol,sz:tsz,glow:tglow,crit:tcrit,life:0.65,max:0.65});
   def.flash=Math.max(def.flash,0.12);
-  game.shake=Math.max(game.shake,def.guarding?2:4.5);
+  game.shake=Math.max(game.shake,def.guarding?2:(3+Math.min(d,90)*0.09));   // 伤害越高抖屏越强
   if(def.hp<=0 && !def.invincible) killMech(def,kbx,att);
 }
 function killMech(def,kbx,att){
@@ -2436,6 +2972,25 @@ const game={
   challengeStreak:0,   // 挑战 AI 模式:当前连胜场数(玩家取胜后自动换对手继续)
   spectateNextT:0,     // 观赏模式:当前场结束后自动换人续场的倒计时
   spectateWinner:null, // 观赏模式:上一场获胜方(结算界面用)
+  spectateStreak:0,    // 观赏模式:当前擂主连续守擂场数
+  spectateLastSlot:-1, // 观赏模式:上一场胜者槽位(0=左 1=右),用于判定是否同一擂主
+  spectateLadder:null, // 观赏模式:本会话 14×14 胜率矩阵(行角色 vs 列角色,单元格 {w,n})
+  ladderOpen:false,    // 观赏模式:ESC 唤出的胜率天梯面板(不暂停对战)
+  ladderData(){        // 惰性建立胜率矩阵(行=胜方角色,列=负方角色)
+    if(!this.spectateLadder){
+      const N=CHARS.length; this.spectateLadder=[];
+      for(let i=0;i<N;i++){ const row=[]; for(let j=0;j<N;j++) row.push({w:0,n:0}); this.spectateLadder.push(row); }
+    }
+    return this.spectateLadder;
+  },
+  recordSpectate(winner){   // 记入一场观赏对战结果(胜方行记胜、负方行记负;同型对局不入表)
+    if(!winner||!this.select) return;
+    const S=this.select, L=this.ladderData();
+    const wi=winner.id===0?S.idx1:S.idx2, li=winner.id===0?S.idx2:S.idx1;
+    if(wi<0||li<0||wi===li) return;                          // 行=列(同型机体)不记录
+    L[wi][li].n++; L[wi][li].w++;                            // 胜者视角:记一场胜
+    L[li][wi].n++;                                           // 负者视角:只累加场次(胜率视作 0)
+  },
   enemiesOf(m){ return this.mechs.filter(o=>o!==m && o.team!==m.team && !o.dead); },
   other(m){                                 // 最近的敌对单位(1v1 与故事模式多单位通用)
     const e=this.enemiesOf(m); if(!e.length) return null;
@@ -2484,6 +3039,7 @@ const game={
       return;
     }
     if(this.mode===3 && winner){              // 观赏模式:单场定胜负,结束后自动换人续场
+      this.recordSpectate(winner);            // 记入本会话胜率天梯
       this.state='end'; this.spectateNextT=3.4;
       this.spectateWinner=winner;
       this.setAnn(mechLabel(winner)+' '+winner.ch.name+' 获胜!',20,99,'#7df9ff');
@@ -2536,7 +3092,7 @@ const game={
     this.mechs[0].reset(120,1); d.reset(360,-1);
     this.timer=0; this.koWinner=null; this.round=1;
     this.state='intro'; this.introT=1.2;
-    this.setAnn('训练开始 — 靶机不会死亡并持续回血',17,1.7,'#7dff9a'); sfx.round();
+    this.setAnn('训练开始 — 靶机受击掉血,血量触底后回满',17,1.7,'#7dff9a'); sfx.round();
   },
   /* ---- 观赏模式:随机两位电脑角色自动对战 ---- */
   beginSpectate(){         // 标题进入:随机抽两位已解锁机体对峙
@@ -2545,6 +3101,8 @@ const game={
     fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
     this.select={cursor:0,idx1:-1,idx2:-1,phase:'vs',t:0,pickT:0};
     this.pickSpectators(); this.mapIdx=ri(0,MAPS.length-1);
+    this.spectateStreak=0; this.spectateLastSlot=-1;
+    this.ladderOpen=false;                      // 面板默认收起(ESC 唤出)
     this.select.t=1.2; this.state='vs'; sfx.ui();
   },
   pickSpectators(){        // 从已解锁机体中随机取两位(尽量不同)
@@ -2553,9 +3111,17 @@ const game={
     if(pool.length>1) while(b===a) b=pool[ri(0,pool.length-1)];
     this.select.idx1=a; this.select.idx2=b;
   },
-  nextSpectators(){        // 换两位新机体,立即展开下一场
-    this.pickSpectators(); this.mapIdx=ri(0,MAPS.length-1); this.setupMatch();
-    this.setAnn('新对局  '+CHARS[this.select.idx1].name+'  VS  '+CHARS[this.select.idx2].name,16,1.7,'#7df9ff');
+  nextSpectators(){        // 胜者留场守擂,负者随机换一位新机体,立即展开下一场
+    const S=this.select, w=this.spectateWinner;
+    const pool=CHARS.map((c,i)=>i).filter(charUnlocked);
+    const champSlot = w ? w.id : 0;                            // 胜者槽位:0=左,1=右
+    if(champSlot!==this.spectateLastSlot) this.spectateStreak=0;   // 挑战者夺擂 → 连胜重新计
+    this.spectateStreak++; this.spectateLastSlot=champSlot;
+    const keepIdx = champSlot===0 ? S.idx1 : S.idx2;           // 擂主保留原机体
+    let n; do{ n=pool[ri(0,pool.length-1)]; }while(pool.length>1 && n===keepIdx);
+    if(champSlot===0) S.idx2=n; else S.idx1=n;                 // 只替换负者一侧
+    this.mapIdx=ri(0,MAPS.length-1); this.setupMatch();
+    this.setAnn('擂主 '+CHARS[keepIdx].name+'  '+this.spectateStreak+' 连胜   VS   挑战者 '+CHARS[n].name,15,1.7,'#7df9ff');
   },
   /* ---- 故事模式 ---- */
   beginStory(){           // 标题 / 更换机师 → 选择出击机师
@@ -2714,10 +3280,12 @@ function updateGame(dt){
   game.t+=dt;
   if(game.ann){ game.ann.t-=dt; if(game.ann.t<=0) game.ann=null; }
   game.shake=Math.max(0,game.shake-14*dt);
+  musicSet(desiredMusic());          // 依据当前状态切换背景音轨(AC 未就绪时静默记录)
 
   // 全局按键
-  if(pressed['KeyR']&&game.state!=='title'){ game.storyMode=false; game.state='title'; sfx.ui(); }
-  if((pressed['KeyP']||pressed['Escape'])&&(game.state==='fight'||game.state==='intro')){ game.pause=!game.pause; sfx.ui(); }
+  if(pressed['KeyR']&&game.state!=='title'){ game.storyMode=false; game.state='title'; game.ladderOpen=false; game.pause=false; sfx.ui(); }
+  if(pressed['Escape']&&game.mode===3&&game.state!=='title'){ game.ladderOpen=!game.ladderOpen; sfx.ui(); }   // 观赏模式:ESC 唤出/收起胜率天梯,不暂停对战
+  else if((pressed['KeyP']||pressed['Escape'])&&(game.state==='fight'||game.state==='intro')){ game.pause=!game.pause; sfx.ui(); }
 
   switch(game.state){
     case 'title':
@@ -2757,21 +3325,14 @@ function updateGame(dt){
       if(d>=0){ game.diffObj=DIFFS[d]; game.state='select'; sfx.ui(); }
       break;}
     case 'select':{
-      const S=game.select;
-      if(S.phase==='p1'){
-        const N=CHARS.length;
-        if(pressed['KeyA']) S.cursor=(S.cursor+N-1)%N;
-        else if(pressed['KeyD']) S.cursor=(S.cursor+1)%N;
-        else if(pressed['KeyW']) S.cursor=(S.cursor+N-7)%N;
-        else if(pressed['KeyS']) S.cursor=(S.cursor+7)%N;
-        else if(pressed['KeyJ']||pressed['Enter']) confirmSelect();
-      }else if(S.phase==='p2'){
-        const N=CHARS.length;
-        if(pressed['ArrowLeft']) S.cursor=(S.cursor+N-1)%N;
-        else if(pressed['ArrowRight']) S.cursor=(S.cursor+1)%N;
-        else if(pressed['ArrowUp']) S.cursor=(S.cursor+N-7)%N;
-        else if(pressed['ArrowDown']) S.cursor=(S.cursor+7)%N;
-        else if(pressed['Comma']||pressed['Enter']) confirmSelect();
+      const S=game.select, N=CHARS.length+1;      // 15 格:14 机体 + 随机
+      if(S.phase==='p1'||S.phase==='p2'){
+        const p1=S.phase==='p1';
+        if(pressed[p1?'KeyA':'ArrowLeft']) S.cursor=(S.cursor+N-1)%N;
+        else if(pressed[p1?'KeyD':'ArrowRight']) S.cursor=(S.cursor+1)%N;
+        else if(pressed[p1?'KeyW':'ArrowUp']) S.cursor=(S.cursor+N-SEL_COLS)%N;
+        else if(pressed[p1?'KeyS':'ArrowDown']) S.cursor=(S.cursor+SEL_COLS)%N;
+        else if(pressed[p1?'KeyJ':'Comma']||pressed['Enter']) confirmSelect();
       }
       break;}
     case 'cpuPick':{
@@ -2781,12 +3342,14 @@ function updateGame(dt){
       if(S.t<=0){ const pool=CHARS.map((c,i)=>i).filter(charUnlocked); S.idx2=pool[ri(0,pool.length-1)]; S.cursor=0; S.phase='map'; game.state='map'; sfx.ui(); }
       break;}
     case 'map':{
-      const S=game.select;
-      if(pressed['KeyA']||pressed['ArrowLeft']) S.cursor=(S.cursor+4)%5;
-      else if(pressed['KeyD']||pressed['ArrowRight']) S.cursor=(S.cursor+1)%5;
+      const S=game.select, N=MAPS.length+1;       // 8 格:7 地图 + 随机
+      if(pressed['KeyA']||pressed['ArrowLeft']) S.cursor=(S.cursor+N-1)%N;
+      else if(pressed['KeyD']||pressed['ArrowRight']) S.cursor=(S.cursor+1)%N;
+      else if(pressed['KeyW']||pressed['ArrowUp']) S.cursor=(S.cursor+N-4)%N;
+      else if(pressed['KeyS']||pressed['ArrowDown']) S.cursor=(S.cursor+4)%N;
       else if(pressed['KeyJ']||pressed['Comma']||pressed['Enter']) confirmMap();
       else{
-        for(let i=0;i<5;i++)
+        for(let i=0;i<N;i++)
           if(pressed['Digit'+(i+1)]||pressed['Numpad'+(i+1)]){ S.cursor=i; confirmMap(); break; }
       }
       break;}
@@ -2945,8 +3508,16 @@ function drawHUD(){
   }
   // 当前地图
   text(MAPS[game.mapIdx].name,240,26,8,'#6a749a','center');
-  // 挑战 AI:连胜计数
-  if(game.mode===1) text('连胜 '+game.challengeStreak,240,36,7,'#ff9a5b','center');
+  // 挑战 AI:连胜徽标(连胜时高亮脉动,便于随时关注连战场数)
+  if(game.mode===1){
+    const s=game.challengeStreak, txt='连胜 '+s;
+    const w=Math.max(58,40+String(s).length*7), x=240-w/2, y=29, h=16, hot=s>0;
+    px(x,y,w,h,'rgba(8,10,18,.86)');
+    if(hot){ g.globalAlpha=0.30+0.30*(0.5+0.5*Math.sin(T*5)); px(x+1,y+1,w-2,h-2,'rgba(255,140,60,.30)'); g.globalAlpha=1; }
+    const bd=hot?'#ffb347':'#39466a';
+    px(x,y,w,1,bd); px(x,y+h-1,w,1,bd); px(x,y,1,h,bd); px(x+w-1,y,1,h,bd);
+    text(txt,240,y+h/2+1,hot?11:10,hot?'#ffd166':'#8a94b8','center','middle');
+  }
   // 胜场标记(训练/观赏模式无三局两胜,不显示)
   if(game.mode<2){
     for(let i=0;i<2;i++){
@@ -2958,9 +3529,9 @@ function drawHUD(){
   // 底部操作提示
   g.globalAlpha=0.55;
   if(game.mode===3){
-    text('观赏模式 · 双方皆由电脑操控自动对战',240,H-9,7,'#7df9ff','center');
+    text('观赏模式 · 双方皆由电脑操控自动对战 · [ESC] 胜率天梯',240,H-9,7,'#7df9ff','center');
   }else if(game.mode===2){
-    text('训练模式 · 靶机不会死亡并持续回血,可反复练习技能',12,H-9,7,'#8affa0');
+    text('训练模式 · 靶机受击掉血,血量触底后回满,便于观察技能伤害',12,H-9,7,'#8affa0');
     text('P/ESC暂停  R返回标题',W-12,H-9,7,'#8a94b8','right');
   }else{
     text('P1  A/D移动 W跳 S防 J斩 K射 · 防御+方向+J/K=技能',12,H-9,7,'#8a94b8');
@@ -2983,7 +3554,7 @@ function drawTitle(t){
   text('MECH DUEL',240,50,30,'#8df6ff','center');
   text('MECH DUEL',240,48,30,'#ffffff','center');
   text('机 甲 对 决',240,84,20,'#ffd166','center');
-  text('- 像素机甲 · 10 种机体 · 3 档难度 · 4 张地图 · 故事模式 -',240,100,8,'#8a94b8','center');
+  text('- 像素机甲 · 14 台机体 · 3 档难度 · 7 张地图 · 故事模式 -',240,100,8,'#8a94b8','center');
   // 菜单
   const blink=Math.sin(t*4)>-0.3;
   if(blink){
@@ -2997,7 +3568,7 @@ function drawTitle(t){
   // 操作说明
   text('P1: A/D移动  W跳  S防御  J斩击  K射击    ·    P2: ←/→移动  ↑跳  ↓防御  ,斩击  .射击',240,214,7.5,'#8a94b8','center');
   text('技能:先按防御,0.5秒内 方向+斩/射 组合出招(每机体3式) · 疾风/幽灵/新星可双击跳飞行锁敌',240,224,7,'#5a648a','center');
-  text('训练模式:对阵不会死亡、持续回血的靶机,自由练习技能 · 观赏模式:随机两位电脑机体自动对战',240,234,7,'#5a648a','center');
+  text('训练模式:对阵受击掉血、触底回满的靶机,直观查看技能伤害 · 观赏模式:电脑自动对战,ESC 查看胜率天梯',240,234,7,'#5a648a','center');
   text('故事模式:先选出击机师,再用该机师顺 10 关推进;击败第 9/10 关 BOSS 解锁隐藏机体「天罚」「湮灭」',240,244,7,'#5a648a','center');
 }
 /* 故事模式 — 选择出击机师(先选角色,再用该机师走完整条故事线) */
@@ -3169,14 +3740,16 @@ function drawSelect(t){
                                   :'P1 选择机甲 — A/D 移动 W/S 换行 J 确认')
              : S.phase==='p2' ? 'P2 选择机甲 — ←/→ 移动 ↑/↓ 换行 , 确认'
              : 'AI 选择中 ...';
-  shadowText(head,240,19,12, S.phase==='p2'?'#ffc24d':'#5ff2ff','center');
-  if(game.mode===1) text('难度:'+game.diffObj.name,240,36,8,'#8a94b8','center');
-  else if(game.mode===2) text('对手是永不死去、持续回血的训练靶机',240,36,8,'#8affa0','center');
-  // 7×2 机体网格(含 2 台隐藏机体,未解锁显示锁定)
-  for(let i=0;i<CHARS.length;i++){
-    const cx=14+(i%7)*65, cy=52+((i/7)|0)*82, cw=60, chh=74;
-    const open=charUnlocked(i);
-    px(cx,cy,cw,chh,open?'#0d1120':'#0a0c14');
+  shadowText(head,240,18,12, S.phase==='p2'?'#ffc24d':'#5ff2ff','center');
+  if(game.mode===1) text('难度:'+game.diffObj.name,240,32,8,'#8a94b8','center');
+  else if(game.mode===2) text('对手是受击掉血、血量触底后回满的训练靶机',240,32,8,'#8affa0','center');
+  // 5×3 机体网格(14 台机体 + 随机;含 2 台隐藏机体,未解锁显示锁定)
+  const total=CHARS.length+1;
+  for(let i=0;i<total;i++){
+    const isRnd=i>=CHARS.length;
+    const cx=SEL_CX+(i%SEL_COLS)*SEL_GX, cy=SEL_CY+((i/SEL_COLS)|0)*SEL_GY, cw=SEL_CW, chh=SEL_CH;
+    const open=isRnd||charUnlocked(i);
+    px(cx,cy,cw,chh,isRnd?'#141027':(open?'#0d1120':'#0a0c14'));
     px(cx,cy,cw,1,'#1c2646'); px(cx,cy+chh-1,cw,1,'#1c2646');
     px(cx,cy,1,chh,'#1c2646'); px(cx+cw-1,cy,1,chh,'#1c2646');
     const showCur=(S.phase==='p1'||S.phase==='p2'||S.phase==='cpuPick')&&i===S.cursor;
@@ -3184,66 +3757,80 @@ function drawSelect(t){
       const col=S.phase==='p2'?'#ffc24d':'#5ff2ff';
       px(cx-2,cy-2,cw+4,2,col); px(cx-2,cy+chh,cw+4,2,col); px(cx-2,cy-2,2,chh+4,col); px(cx+cw,cy-2,2,chh+4,col);
     }
-    if(i===S.idx1){ px(cx+3,cy+3,cw-6,1,'#5ff2ff'); px(cx+3,cy+chh-4,cw-6,1,'#5ff2ff'); text('P1',cx+6,cy+6,8,'#5ff2ff'); }
-    if(i===S.idx2){ px(cx+3,cy+3,cw-6,1,'#ffc24d'); px(cx+3,cy+chh-4,cw-6,1,'#ffc24d'); text(mechLabel({id:1,ctrl:game.mode===1?'cpu':'p2'}),cx+cw-6,cy+6,8,'#ffc24d','right'); }
-    g.globalAlpha=open?1:0.32;
-    drawMech(fakeMech(CHARS[i],cx+30,cy+58,1,0.55));
-    text(CHARS[i].name,cx+cw/2,cy+64,8,'#cfd6ea','center');
-    g.globalAlpha=1;
-    if(!open){
-      px(cx+2,cy+2,cw-4,chh-4,'rgba(6,8,16,.55)');
-      text('LOCK',cx+cw/2,cy+chh/2-8,11,'#8a94b8','center');
-      text('击败第 '+CHARS[i].unlock+' 关 BOSS 解锁',cx+cw/2,cy+chh/2+4,6,'#5a648a','center');
+    if(i===S.idx1){ px(cx+3,cy+2,cw-6,1,'#5ff2ff'); text('P1',cx+5,cy+10,7,'#5ff2ff'); }
+    if(i===S.idx2){ px(cx+3,cy+chh-3,cw-6,1,'#ffc24d'); text(mechLabel({id:1,ctrl:game.mode===1?'cpu':'p2'}),cx+cw-5,cy+10,7,'#ffc24d','right'); }
+    if(isRnd){                                 // 随机格
+      text('?',cx+cw/2,cy+24,20,'#b18aff','center');
+      text('随机',cx+cw/2,cy+chh-6,8,'#b18aff','center');
+    }else{
+      g.globalAlpha=open?1:0.32;
+      drawMech(fakeMech(CHARS[i],cx+cw/2,cy+chh-15,1,0.5));
+      text(CHARS[i].name,cx+cw/2,cy+chh-6,7.5,'#cfd6ea','center');
+      g.globalAlpha=1;
+      if(!open){
+        px(cx+1,cy+1,cw-2,chh-2,'rgba(6,8,16,.55)');
+        text('LOCK',cx+cw/2,cy+22,11,'#8a94b8','center');
+        text('击败第 '+CHARS[i].unlock+' 关 BOSS 解锁',cx+cw/2,cy+34,6,'#5a648a','center');
+      }
     }
   }
-  const cur=CHARS[S.cursor];
-  text(cur.name+' · '+cur.tag+(charUnlocked(S.cursor)?'':'   [未解锁]'),240,218,9,'#ffe27a','center');
-  text('「'+cur.lore+'」',240,230,7.5,'#8a94b8','center');
-  text('HP '+cur.hp+'   攻击 x'+cur.atk+'   速度 '+cur.spd+'   体型 x'+cur.size+'   蓄能 '+cur.regen+'/s',240,242,7.5,'#8a94b8','center');
-  text('武器:'+WEAPONS[cur.weapon].name+'   技能:'+skillBrief(cur)+(cur.canFly?'   双击跳可飞行':'')+(cur.airW?'   空中:'+WEAPONS[cur.airW].name:''),
-       240,254,7.5,'#5ff2ff','center');
+  const cur=S.cursor>=CHARS.length?null:CHARS[S.cursor];
+  if(cur){
+    text(cur.name+' · '+cur.tag+(charUnlocked(S.cursor)?'':'   [未解锁]'),240,214,9,'#ffe27a','center');
+    text('HP '+cur.hp+'   攻击 x'+cur.atk+'   速度 '+cur.spd+'   体型 x'+cur.size+'   蓄能 '+cur.regen+'/s',240,226,7.5,'#8a94b8','center');
+    text('武器:'+WEAPONS[cur.weapon].name+'   技能:'+skillBrief(cur)+(cur.canFly?'   双击跳可飞行':'')+(cur.airW?'   空中:'+WEAPONS[cur.airW].name:''),
+         240,238,7.5,'#5ff2ff','center');
+    text('「'+cur.lore+'」',240,250,7.5,'#8a94b8','center');
+  }else{
+    text('随机机体 · 由系统从已解锁机甲中抽取',240,222,11,'#b18aff','center');
+    text('已解锁 '+CHARS.filter((c,i)=>charUnlocked(i)).length+' / '+CHARS.length+' 台 · 击败 BOSS 解锁隐藏机体',240,238,8,'#8a94b8','center');
+    text('A/D 或 ←/→ 移动 · W/S 或 ↑/↓ 换行 · J / , 确认',240,252,7.5,'#5a648a','center');
+  }
 }
-/* 选地图界面:4 张地图实时预览 + 随机 */
+/* 选地图界面:7 张地图实时预览 + 随机 */
 function drawMapSelect(t){
   const S=game.select; if(!S) return;
   g.fillStyle='rgba(5,6,13,.45)'; g.fillRect(0,0,W,H);
-  shadowText('选择战场',240,24,18,'#ffe27a','center');
-  text(CHARS[S.idx1].name,186,56,10,'#5ff2ff','right');
-  text('VS',240,56,10,'#ff5b5b','center');
-  text(CHARS[S.idx2].name,294,56,10,'#ffc24d','left');
-  for(let i=0;i<5;i++){
-    const x=18+i*92, y=96, cur=i===S.cursor;
-    if(i<4){
+  shadowText('选择战场',240,22,18,'#ffe27a','center');
+  text(CHARS[S.idx1].name,186,48,10,'#5ff2ff','right');
+  text('VS',240,48,10,'#ff5b5b','center');
+  text(CHARS[S.idx2].name,294,48,10,'#ffc24d','left');
+  const total=MAPS.length+1;                   // 8 格:7 地图 + 随机
+  for(let i=0;i<total;i++){
+    const isRnd=i>=MAPS.length;
+    const x=MAPSEL_CX+(i%MAPSEL_COLS)*MAPSEL_GX, y=MAPSEL_CY+((i/MAPSEL_COLS)|0)*MAPSEL_GY;
+    const cw=MAPSEL_CW, chh=MAPSEL_CH, cur=i===S.cursor;
+    if(!isRnd){
       g.save();
-      g.beginPath(); g.rect(x,y,84,48); g.clip();
-      g.setTransform(SC*84/MW,0,0,SC*84/MW,x*SC,y*SC);
+      g.beginPath(); g.rect(x,y,cw,chh); g.clip();
+      g.setTransform(SC*cw/MW,0,0,SC*cw/MW,x*SC,y*SC);
       MAPS[i].draw(t);
       g.restore();
     }else{
-      px(x,y,84,48,'#0d1120');
-      text('?',x+42,y+8,22,'#5a648a','center');
-      text('随机',x+42,y+34,8,'#5a648a','center');
+      px(x,y,cw,chh,'#141027');
+      text('?',x+cw/2,y+12,24,'#b18aff','center');
+      text('随机地图',x+cw/2,y+chh-10,8,'#b18aff','center');
     }
-    px(x,y,84,1,'#1c2646'); px(x,y+47,84,1,'#1c2646'); px(x,y,1,48,'#1c2646'); px(x+83,y,1,48,'#1c2646');
+    px(x,y,cw,1,'#1c2646'); px(x,y+chh-1,cw,1,'#1c2646'); px(x,y,1,chh,'#1c2646'); px(x+cw-1,y,1,chh,'#1c2646');
     if(cur&&Math.sin(t*6)>-0.4){
-      px(x-2,y-2,88,2,'#ffe27a'); px(x-2,y+48,88,2,'#ffe27a'); px(x-2,y-2,2,52,'#ffe27a'); px(x+84,y-2,2,52,'#ffe27a');
+      px(x-2,y-2,cw+4,2,'#ffe27a'); px(x-2,y+chh,cw+4,2,'#ffe27a'); px(x-2,y-2,2,chh+4,'#ffe27a'); px(x+cw,y-2,2,chh+4,'#ffe27a');
     }
-    text(i<4?MAPS[i].name:'随机',x+42,y+54,8,cur?'#ffe27a':'#8a94b8','center');
-    text(String(i+1),x+4,y+4,7,cur?'#ffe27a':'#4a5a66');
+    text(isRnd?'随机':MAPS[i].name,x+cw/2,y+chh+9,8,cur?'#ffe27a':'#8a94b8','center');
+    text(String(i+1),x+4,y+9,7,cur?'#ffe27a':'#4a5a66');
   }
-  const cur=S.cursor<4?MAPS[S.cursor]:null;
-  shadowText(cur?cur.name:'随机地图',240,182,14,'#ffe27a','center');
-  text(cur?cur.tag:'从 4 张地图中随机抽取一张',240,204,9,'#8a94b8','center');
-  text('A/D 或 ←/→ 移动 · J / , 确认 · 也可按 1-5 或点击',240,236,8,'#5a648a','center');
+  const cur=S.cursor<MAPS.length?MAPS[S.cursor]:null;
+  shadowText(cur?cur.name:'随机地图',240,234,13,'#ffe27a','center');
+  text(cur?cur.tag:'从 '+MAPS.length+' 张地图中随机抽取一张',240,250,9,'#8a94b8','center');
+  text('A/D 或 ←/→ 移动 · W/S 或 ↑/↓ 换行 · J / , 确认 · 也可按 1-'+total+' 或点击',240,263,7.5,'#5a648a','center');
 }
 function drawEnd(){
   g.fillStyle='rgba(5,6,13,.55)'; g.fillRect(0,0,W,H);
   const wnr=game.mechs[0].wins>=2?game.mechs[0]:game.mechs[1];
   if(game.mode===3){
     const w3=game.spectateWinner||wnr;
-    shadowText('观 战 结 束',240,86,24,'#7df9ff','center');
-    shadowText(mechLabel(w3)+' '+w3.ch.name+' 获胜',240,124,14,w3.pal.light,'center');
-    text('即将随机换上新对手自动续战 · 按 [J] 立即下一场',240,158,9,'#8a94b8','center');
+    shadowText('胜 者 守 擂',240,86,24,'#7df9ff','center');
+    shadowText(mechLabel(w3)+' '+w3.ch.name+' 获胜 · 守擂 '+(game.spectateStreak||1)+' 连胜',240,124,13,w3.pal.light,'center');
+    text('负者随机换新机体上场续战 · [J] 立即下一场 · [ESC] 胜率天梯',240,158,9,'#8a94b8','center');
   }else if(game.mode===1){                          // 挑战 AI:走到这里只可能是玩家落败
     shadowText('CHALLENGE OVER',240,82,24,'#ff5b5b','center');
     shadowText('连胜 '+game.challengeStreak+' 场',240,118,16,'#ffe27a','center');
@@ -3253,6 +3840,47 @@ function drawEnd(){
     shadowText(mechLabel(wnr)+' '+wnr.ch.name+' 获得胜利',240,124,14,wnr.pal.light,'center');
   }
   if(Math.sin(T*4)>-0.3) text('按 [R] 返回标题',240,176,10,'#8a94b8','center');
+}
+
+/* 观赏模式 · 胜率天梯(ESC 唤出,不暂停对战):行机甲 对阵 列机甲 的胜率矩阵。
+   采用半透明浮动窗口,四周留白,让玩家仍能看见底层的电脑对战。 */
+function drawLadder(){
+  const L=game.ladderData(), N=CHARS.length;
+  let sumN=0; for(let i=0;i<N;i++) for(let j=0;j<N;j++) sumN+=L[i][j].n;
+  const total=Math.round(sumN/2);                       // 每场对局在对称两格各计一次
+  const pw=400, ph=230, x0=(W-pw)/2, y0=(H-ph)/2;
+  px(x0,y0,pw,ph,'rgba(8,10,20,.46)');                  // 半透明面板:不遮挡对战
+  const bd='rgba(125,249,255,.5)';
+  px(x0,y0,pw,1,bd); px(x0,y0+ph-1,pw,1,bd); px(x0,y0,1,ph,bd); px(x0+pw-1,y0,1,ph,bd);
+  shadowText('对 战 天 梯 · 胜 率 矩 阵',240,y0+5,10,'#7df9ff','center');
+  text('本会话共 '+total+' 场 · 按 [ESC] 收起(对战继续)',240,y0+18,6.5,'#a8b8dd','center');
+  const gx=x0+8, hw=22, cw=(pw-16-hw)/N, gy=y0+30, hh=20, rh=(ph-56-hh)/N;
+  // 左上角:标注 行=胜方 / 列=负方
+  text('行=胜',gx+hw/2,gy+6,5,'#9dff9d','center','middle');
+  text('列=负',gx+hw/2,gy+14,5,'#ff9a9a','center','middle');
+  for(let j=0;j<N;j++) text(CHARS[j].name,gx+hw+j*cw+cw/2,gy+hh/2,5.5,'#93a3c8','center','middle');   // 列头:角色名(负方)
+  for(let i=0;i<N;i++){
+    const ry=gy+hh+i*rh;
+    text(CHARS[i].name,gx+hw/2,ry+rh/2,5.5,'#c3cfec','center','middle');                            // 行头:角色名(胜方)
+    for(let j=0;j<N;j++){
+      const cx=gx+hw+j*cw, rec=L[i][j];
+      let bg='rgba(18,22,34,.62)', fg='#4a5678', lab='-';
+      if(i!==j&&rec.n>0){                               // 行=列(同型对局)不展示数据
+        const r=clamp(rec.w/rec.n,0,1), hue=Math.round(120*r);
+        bg='hsla('+hue+',62%,'+(25+7*r)+'%,.72)';
+        fg=r>0.55?'#eafff0':'#ffecec';
+        lab=String(Math.round(r*100));
+      }
+      px(cx,ry,cw-1,rh-1,bg);
+      if(lab!=='-') text(lab,cx+(cw-1)/2,ry+(rh-1)/2+0.5,6,'rgba(0,0,0,.55)','center','middle');   // 半透明底上的暗描边
+      text(lab,cx+(cw-1)/2,ry+(rh-1)/2,6,fg,'center','middle');
+    }
+  }
+  const lw=110, lx=240-lw/2, ly=y0+ph-22;
+  for(let k=0;k<lw;k++) px(lx+k,ly,1,6,'hsla('+Math.round(120*k/(lw-1))+',62%,32%,.85)');
+  text('低 0%',lx-6,ly+3,6,'#ff9a9a','right','middle');
+  text('100% 高',lx+lw+6,ly+3,6,'#9dff9d','left','middle');
+  text('单元格 = 该行角色(胜)击败该列角色(负)的胜率 · 斜向格与冷色格暂无数据',240,y0+ph-11,6,'#7d8cb0','center');
 }
 
 /* ---------------- 主循环 ---------------- */
@@ -3351,6 +3979,7 @@ function render(){
       if(Math.sin(T*4)>-0.3) text('按 [P] 继续',240,y+18,10,'#8a94b8','center');
     }
   }
+  if(game.ladderOpen&&game.mode===3) drawLadder();   // 观赏模式:ESC 唤出的胜率天梯(叠于最上层,不暂停对战)
   g.setTransform(1,0,0,1,0,0);
 }
 function frame(ts){
