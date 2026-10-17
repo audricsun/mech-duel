@@ -7,15 +7,22 @@
  * ========================================================================= */
 'use strict';
 /* ---------------- 7. 战斗结算 ---------------- */
-function hitMech(def,dmg,kbx,melee,dot){
+function hitMech(def,dmg,kbx,melee,dot,src,skill){
   if(def.dead||game.state!=='fight') return;
   let d=dmg;
-  const att=game.other(def);
+  const att=src||game.other(def);
+  const T=game.telemetry;
   if(def.shieldT>0){                       // 能量护盾:完全格挡
-    def.flash=0.08; sparks(def.x,def.y-22,'#ffffff',6,80); sfx.guard(); return;
+    def.flash=0.08; sparks(def.x,def.y-22,'#ffffff',6,80); sfx.guard();
+    if(T&&src&&src!==def){
+      T.blocked[def.id]=(T.blocked[def.id]||0)+d;
+      T.blocks[src.id]=(T.blocks[src.id]||0)+1;
+    }
+    return;
   }
   if(def.fortifyT>0) d=Math.max(1,Math.round(d*0.5));   // 震荡壁垒:受伤减半
-  if(def.siege) d=Math.max(1,Math.round(d*0.7));        // 攻城模式:受伤 -30%
+  if(def.siege) d=Math.max(1,Math.round(d*0.8));        // 攻城模式:受伤 -20%
+  if(def.markT>0) d=Math.max(1,Math.round(d*1.3));      // 标记锁定:弱点被标记,受创 +30%
   if(def.guarding){                        // 防御:按机体减伤(默认 85%),小幅推挡
     d=Math.max(1,Math.round(d*def.guardMul));
     def.vx=kbx*0.5; def.flash=0.08;
@@ -34,6 +41,25 @@ function hitMech(def,dmg,kbx,melee,dot){
     sfx.hit();
   }
   def.hp = def.invincible ? Math.max(DUMMY_HP_FLOOR,def.hp-d) : Math.max(0,def.hp-d);  // 靶机血量下限锁在 DUMMY_HP_FLOOR
+  if(T){
+    if(src&&src!==def){
+      T.damage[src.id]=(T.damage[src.id]||0)+d;
+      T.taken[def.id]=(T.taken[def.id]||0)+d;
+      T.hits[src.id]=(T.hits[src.id]||0)+1;
+      T.hitsTaken[def.id]=(T.hitsTaken[def.id]||0)+1;
+      const kid=skill||src._castId||null;
+      if(kid){
+        T.skillDamage[src.id]=T.skillDamage[src.id]||{};
+        T.skillDamage[src.id][kid]=(T.skillDamage[src.id][kid]||0)+d;
+        T.skillHits[src.id]=T.skillHits[src.id]||{};
+        T.skillHits[src.id][kid]=(T.skillHits[src.id][kid]||0)+1;
+      }
+    }else{
+      T.neutralDamage=(T.neutralDamage||0)+d;
+      T.taken[def.id]=(T.taken[def.id]||0)+d;
+    }
+  }
+  if(src&&src.addUlt&&src!==def) src.addUlt(d*ULT_GAIN);   // 造成伤害积累终结能量
   // 伤害数字分级:伤害越高字越大越亮、光晕与抖屏越夸张,便于一眼看出招式强度
   let tcol='#cfd6e6', tsz=7, tglow=0, tcrit=0;
   if(def.guarding){ tcol='#9adcff'; tsz=9; }
@@ -49,6 +75,11 @@ function hitMech(def,dmg,kbx,melee,dot){
 }
 function killMech(def,kbx,att){
   def.dead=true; def.hp=0;
+  if(game.telemetry){
+    const T=game.telemetry;
+    if(att&&att!==def) T.kills[att.id]=(T.kills[att.id]||0)+1;
+    T.deaths[def.id]=(T.deaths[def.id]||0)+1;
+  }
   def.flying=false; def.siege=false; def.siegeT=0; def.cloakT=0; def.cloakAtk=false;
   def.vy=-150; def.vx=kbx*1.2;
   explosion(def.x,def.y-20);
@@ -60,6 +91,23 @@ function killMech(def,kbx,att){
   game.setAnn('K.O.!',7,1.6,'#ff5b5b');
   sfx.boom(); sfx.ko();
 }
+/* 统一治疗入口:记录有效治疗量(用于详细平衡统计) */
+function applyHeal(m,amount,src,skill){
+  if(!m||m.dead) return 0;
+  const before=m.hp;
+  m.hp=Math.min(m.maxHp,m.hp+Math.max(0,amount));
+  const healed=m.hp-before;
+  const T=game.telemetry;
+  if(T&&healed>0){
+    T.healing[m.id]=(T.healing[m.id]||0)+healed;
+    if(skill){
+      const sid=src?src.id:m.id;
+      T.skillHealing[sid]=T.skillHealing[sid]||{};
+      T.skillHealing[sid][skill]=(T.skillHealing[sid][skill]||0)+healed;
+    }
+  }
+  return healed;
+}
 function meleeCheck(a,def){
   if(a.dead||def.dead||a.atkT<=0||a.hitDone) return;
   const w=a.mw||MELEE_WEP.saber, dur=a.atkDur||ATK_TIME;
@@ -69,7 +117,7 @@ function meleeCheck(a,def){
     if(dx>2 && dx<w.range*a.size && Math.abs(def.y-a.y)<w.arc*Math.max(1,def.size)){
       let md=MELEE_DMG*a.atkMul*w.dmg*roleMeleeMul(a);
       if(a.cloakAtk){ md*=1.8; a.cloakAtk=false; a.cloakT=0; }   // 破隐一击
-      a.hitDone=true; hitMech(def,Math.round(md),a.facing*w.kb,true);
+      a.hitDone=true; hitMech(def,Math.round(md),a.facing*w.kb,true,false,a);
     }
   }
 }

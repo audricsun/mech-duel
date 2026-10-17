@@ -8,10 +8,10 @@
 'use strict';
 /* ---------------- 1b. 故事模式数据 ----------------
  * 一条主线共 10 关:进入故事模式后先选定一名出击机师,再用该机师顺关卡推进。
- * 每关战场遍布普通杂兵,末段由一名 Boss 坐镇 —— Boss 是该出击机师的「影武者」镜像
- * (武装/技能/底盘数值完全复制,经统一系数换算,保证任何机师都打得过)。
+ * 每关战场遍布普通杂兵,末段由该关的剧情机师坐镇 Boss —— Boss 使用该关卡角色的
+ * 外观、武装、技能与底盘数值(经统一系数换算),不再是玩家所选机师的镜像。
  * 第 9 / 第 10 关的 Boss 分别是隐藏机体「天罚」与「湮灭」;击败后即解锁该机体,
- * 之后可在选人界面(双人 / 人机 / 故事)中选用。 */
+ * 之后可在选人界面(对战 / 街机 / 故事)中选用。 */
 const STORY_KEY='mechduel.story.v1';
 let storyProg={cleared:0};                 // 已通关关卡数(顺序推进)
 function loadStory(){
@@ -35,8 +35,8 @@ const MOBS={
 };
 function mobChar(type){ return MOBS[type]||MOBS.grunt; }
 /* 故事模式 Boss 平衡系数:
- * 影武者 = 本关机师的「镜像」:技能组完全复制本关机师(「你的影子」),
- * 但作为可攻略的 Boss,不能靠同伤害+高血量硬压。折中方案:
+ * Boss = 本关剧情机师(第 9/10 关为隐藏机体),完整继承该角色的外观、武装、
+ * 技能组与底盘数值,再用统一系数换算,保证 1~10 关的强度规则一致:
  *   hpK  — 血量倍率(略高于玩家,压迫感来源)
  *   dmgK — 输出倍率(略低于玩家,给玩家「换血占优」的窗口)
  *   sizeK— 体型倍率(同步放大受击面积与近战范围,过大则近战范围碾压)
@@ -45,24 +45,26 @@ const STORY_BOSS={ hpK:1.15, dmgK:0.8, sizeK:1.35, regenK:1.0, bossWaveAdds:0 };
 /* 波间补给:清剿一波后为机师纳米修复,避免「上一波残血 → 下一波必败」的连续消耗死局。
  * healK 为按最大血量回复的比例(0=不回复,1=回满)。 */
 const WAVE_HEAL={ healK:0.9 };
-/* Boss 一律是「玩家里所选出击机师」的镜像经同一组系数换算而来,保证 1~10 关强度换算规则一致。
- * 只镜像「武装/技能/底盘数值」,外观与命名取自隐藏机体(第 9/10 关)或通用影武者配色。
- * 这样出击机师强度与 Boss 强度天然挂钩,不会出现某关数学上必败、某关又必过的极端。 */
-function bossChar(lv, heroIdx){
+/* Boss 一律取自本关剧情机师(第 9/10 关由 bossIdx 指定隐藏机体);
+ * 技能组与该角色在选人界面中可选的版本完全一致,避免「Boss 长得像 X、用的却是 Y 的技能」。 */
+function bossChar(lv){
   const B=STORY_BOSS;
-  const hero=CHARS[heroIdx!==undefined?heroIdx:0];           // 镜像来源:玩家所选出击机师
-  const look=lv.bossIdx!==undefined?CHARS[lv.bossIdx]:null;  // 第 9/10 关的隐藏机体皮肤
+  const srcIdx=lv.bossIdx!==undefined?lv.bossIdx:(lv.hero!==undefined?lv.hero:0);
+  const src=CHARS[srcIdx]||CHARS[0];
   return {
-    name:look?look.name:'影武者·'+hero.name, tag:'BOSS',
-    pal:look?look.pal:{main:'#3a3f52',dark:'#20242f',light:'#8a93ad',joint:'#171b24',visor:'#ff3b5b',gun:'#2a2e3a',saber:'#ff6a7a'},
-    hp:Math.round(hero.hp*B.hpK),
-    spd:hero.spd, jump:hero.jump,
-    atk:Math.round(hero.atk*100*B.dmgK)/100,
-    bullet:Math.max(1,Math.round(hero.bullet*B.dmgK)),
-    regen:Math.round(hero.regen*B.regenK),
-    size:B.sizeK, weapon:hero.weapon, meleeW:hero.meleeW||'saber',
-    canFly:!!hero.canFly, airW:hero.airW,
-    skills:Object.assign({},hero.skills)       // 镜像:与玩家同款技能组
+    name:src.name, tag:'BOSS',
+    pal:src.pal,
+    hp:Math.round(src.hp*B.hpK),
+    spd:src.spd, jump:src.jump,
+    atk:Math.round(src.atk*100*B.dmgK)/100,
+    bullet:Math.max(1,Math.round(src.bullet*B.dmgK)),
+    regen:Math.round(src.regen*B.regenK),
+    size:Math.min(1.6,+(src.size*B.sizeK).toFixed(2)),
+    role:src.role, weapon:src.weapon, meleeW:src.meleeW||'saber',
+    canFly:!!src.canFly, airW:src.airW,
+    pCount:src.pCount, pSize:src.pSize, guardMul:src.guardMul,
+    ult:src.ult,
+    skills:Object.assign({},src.skills)       // 与本关剧情机师同款技能组
   };
 }
 /* 关卡表:hero=本关机师(0 基,CHARS 索引) / map=战场索引 / mobs=杂兵种类 / count=杂兵数量 */

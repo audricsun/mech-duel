@@ -1,0 +1,3430 @@
+{
+  "meta": {
+    "source": "index.html",
+    "generatedAt": "2026-10-17T07:56:30.522Z",
+    "mode": "spectate",
+    "diff": 0,
+    "diffName": "简单",
+    "matches": 5000,
+    "draws": 0,
+    "capped": 0,
+    "seed": 12345,
+    "runsPerPair": null,
+    "chars": [
+      "突击者",
+      "重装兵",
+      "疾风",
+      "堡垒",
+      "猎手",
+      "幽灵",
+      "巨兽",
+      "新星",
+      "磁暴",
+      "工匠",
+      "游隼",
+      "自由",
+      "天罚",
+      "湮灭"
+    ]
+  },
+  "summary": {
+    "matches": 5000,
+    "draws": 0,
+    "capped": 0,
+    "neutralDamage": 0,
+    "mean": 0.4985,
+    "std": 0.0301,
+    "min": 0.4418,
+    "max": 0.5483,
+    "rangePP": 10.7,
+    "within4060": 14,
+    "totals": {
+      "damage": 1465970,
+      "taken": 1465970,
+      "healing": 174396,
+      "casts": 57778,
+      "ultCasts": 4448,
+      "skillDamage": 1104505,
+      "basicDamage": 361465,
+      "kills": 5000
+    }
+  },
+  "chars": [
+    {
+      "idx": 0,
+      "name": "突击者",
+      "hidden": false,
+      "games": 735,
+      "wins": 403,
+      "losses": 332,
+      "draws": 0,
+      "frames": 504845,
+      "damage": 106542,
+      "taken": 93712,
+      "healing": 0,
+      "kills": 403,
+      "deaths": 332,
+      "hits": 9443,
+      "hitsTaken": 11352,
+      "blocked": 0,
+      "blocks": 1349,
+      "casts": 4006,
+      "ultCasts": 324,
+      "skillCasts": {
+        "suppressfire": 788,
+        "rocketsalvo": 658,
+        "triple": 720,
+        "mechbird": 701,
+        "dash": 495,
+        "smokebomb": 320,
+        "ultBarrage": 324
+      },
+      "skillDamage": {
+        "suppressfire": 8344,
+        "rocketsalvo": 14108,
+        "triple": 17984,
+        "mechbird": 26580,
+        "smokebomb": 846,
+        "dash": 2394,
+        "ultBarrage": 19802
+      },
+      "skillHits": {
+        "suppressfire": 1080,
+        "rocketsalvo": 1443,
+        "triple": 1569,
+        "mechbird": 2313,
+        "smokebomb": 63,
+        "dash": 158,
+        "ultBarrage": 1382
+      },
+      "skillHealing": {},
+      "winRate": 0.5482993197278911,
+      "avgDamage": 144.9551020408163,
+      "avgTaken": 127.49931972789116,
+      "avgHealing": 0,
+      "avgCasts": 5.450340136054422,
+      "avgUlt": 0.44081632653061226,
+      "avgDuration": 11.447732426303855,
+      "skills": [
+        {
+          "id": "mechbird",
+          "name": "机械隼",
+          "kind": "普通技",
+          "casts": 701,
+          "hits": 2313,
+          "damage": 26580,
+          "healing": 0,
+          "avgDamage": 37.91726105563481,
+          "avgHits": 3.2995720399429387,
+          "share": 0.2494790786731993,
+          "perGame": 36.16326530612245
+        },
+        {
+          "id": "ultBarrage",
+          "name": "苍穹隼群",
+          "kind": "终结技",
+          "casts": 324,
+          "hits": 1382,
+          "damage": 19802,
+          "healing": 0,
+          "avgDamage": 61.117283950617285,
+          "avgHits": 4.265432098765432,
+          "share": 0.18586097501454826,
+          "perGame": 26.941496598639457
+        },
+        {
+          "id": "triple",
+          "name": "速射三连",
+          "kind": "普通技",
+          "casts": 720,
+          "hits": 1569,
+          "damage": 17984,
+          "healing": 0,
+          "avgDamage": 24.977777777777778,
+          "avgHits": 2.1791666666666667,
+          "share": 0.16879728182313078,
+          "perGame": 24.468027210884355
+        },
+        {
+          "id": "rocketsalvo",
+          "name": "火箭齐射",
+          "kind": "普通技",
+          "casts": 658,
+          "hits": 1443,
+          "damage": 14108,
+          "healing": 0,
+          "avgDamage": 21.440729483282674,
+          "avgHits": 2.1930091185410334,
+          "share": 0.1324172626757523,
+          "perGame": 19.19455782312925
+        },
+        {
+          "id": "suppressfire",
+          "name": "压制火网",
+          "kind": "普通技",
+          "casts": 788,
+          "hits": 1080,
+          "damage": 8344,
+          "healing": 0,
+          "avgDamage": 10.588832487309645,
+          "avgHits": 1.3705583756345177,
+          "share": 0.07831653244729778,
+          "perGame": 11.352380952380953
+        },
+        {
+          "id": "dash",
+          "name": "冲刺斩",
+          "kind": "普通技",
+          "casts": 495,
+          "hits": 158,
+          "damage": 2394,
+          "healing": 0,
+          "avgDamage": 4.836363636363636,
+          "avgHits": 0.3191919191919192,
+          "share": 0.022470011826322012,
+          "perGame": 3.257142857142857
+        },
+        {
+          "id": "smokebomb",
+          "name": "烟幕脱离",
+          "kind": "普通技",
+          "casts": 320,
+          "hits": 63,
+          "damage": 846,
+          "healing": 0,
+          "avgDamage": 2.64375,
+          "avgHits": 0.196875,
+          "share": 0.00794053049501605,
+          "perGame": 1.1510204081632653
+        }
+      ],
+      "skillDamageTotal": 90058,
+      "basicDamage": 16484,
+      "basicShare": 0.15471832704473354,
+      "regularCasts": 3682,
+      "avgRegularCasts": 5.0095238095238095
+    },
+    {
+      "idx": 1,
+      "name": "重装兵",
+      "hidden": false,
+      "games": 770,
+      "wins": 399,
+      "losses": 371,
+      "draws": 0,
+      "frames": 556219,
+      "damage": 113252,
+      "taken": 85422,
+      "healing": 8194,
+      "kills": 399,
+      "deaths": 371,
+      "hits": 10970,
+      "hitsTaken": 11333,
+      "blocked": 6422,
+      "blocks": 593,
+      "casts": 4171,
+      "ultCasts": 326,
+      "skillCasts": {
+        "ironcharge": 843,
+        "bulwark": 598,
+        "hammerorbit": 556,
+        "ammodrop": 688,
+        "groundburst": 724,
+        "ultEarthbreaker": 326,
+        "vulcan": 436
+      },
+      "skillDamage": {
+        "ironcharge": 13218,
+        "hammerorbit": 16716,
+        "groundburst": 2359,
+        "ultEarthbreaker": 24575,
+        "vulcan": 32161
+      },
+      "skillHits": {
+        "ironcharge": 560,
+        "hammerorbit": 802,
+        "groundburst": 598,
+        "ultEarthbreaker": 457,
+        "vulcan": 6497
+      },
+      "skillHealing": {
+        "ammodrop": 8194
+      },
+      "winRate": 0.5181818181818182,
+      "avgDamage": 147.08051948051948,
+      "avgTaken": 110.93766233766233,
+      "avgHealing": 10.641558441558441,
+      "avgCasts": 5.416883116883117,
+      "avgUlt": 0.42337662337662335,
+      "avgDuration": 12.039372294372294,
+      "skills": [
+        {
+          "id": "vulcan",
+          "name": "火神炮模式",
+          "kind": "普通技",
+          "casts": 436,
+          "hits": 6497,
+          "damage": 32161,
+          "healing": 0,
+          "avgDamage": 73.7637614678899,
+          "avgHits": 14.90137614678899,
+          "share": 0.28397732490375444,
+          "perGame": 41.76753246753247
+        },
+        {
+          "id": "ultEarthbreaker",
+          "name": "湮地锤阵",
+          "kind": "终结技",
+          "casts": 326,
+          "hits": 457,
+          "damage": 24575,
+          "healing": 0,
+          "avgDamage": 75.38343558282209,
+          "avgHits": 1.401840490797546,
+          "share": 0.21699396037156077,
+          "perGame": 31.915584415584416
+        },
+        {
+          "id": "hammerorbit",
+          "name": "环绕战锤",
+          "kind": "普通技",
+          "casts": 556,
+          "hits": 802,
+          "damage": 16716,
+          "healing": 0,
+          "avgDamage": 30.06474820143885,
+          "avgHits": 1.4424460431654675,
+          "share": 0.14760004238335747,
+          "perGame": 21.70909090909091
+        },
+        {
+          "id": "ironcharge",
+          "name": "铁壁冲撞",
+          "kind": "普通技",
+          "casts": 843,
+          "hits": 560,
+          "damage": 13218,
+          "healing": 0,
+          "avgDamage": 15.679715302491104,
+          "avgHits": 0.66429418742586,
+          "share": 0.11671317062833328,
+          "perGame": 17.166233766233766
+        },
+        {
+          "id": "groundburst",
+          "name": "连环地裂",
+          "kind": "普通技",
+          "casts": 724,
+          "hits": 598,
+          "damage": 2359,
+          "healing": 0,
+          "avgDamage": 3.2582872928176796,
+          "avgHits": 0.8259668508287292,
+          "share": 0.020829654222441988,
+          "perGame": 3.0636363636363635
+        },
+        {
+          "id": "ammodrop",
+          "name": "弹药补给",
+          "kind": "普通技",
+          "casts": 688,
+          "hits": 0,
+          "damage": 0,
+          "healing": 8194,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "bulwark",
+          "name": "钢壁架势",
+          "kind": "普通技",
+          "casts": 598,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 89029,
+      "basicDamage": 24223,
+      "basicShare": 0.21388584749055203,
+      "regularCasts": 3845,
+      "avgRegularCasts": 4.9935064935064934
+    },
+    {
+      "idx": 2,
+      "name": "疾风",
+      "hidden": false,
+      "games": 668,
+      "wins": 309,
+      "losses": 359,
+      "draws": 0,
+      "frames": 519528,
+      "damage": 91902,
+      "taken": 112602,
+      "healing": 0,
+      "kills": 309,
+      "deaths": 359,
+      "hits": 7013,
+      "hitsTaken": 12299,
+      "blocked": 3738,
+      "blocks": 544,
+      "casts": 3758,
+      "ultCasts": 286,
+      "skillCasts": {
+        "tailwind": 621,
+        "backflip": 931,
+        "windblade": 711,
+        "sonicdash": 398,
+        "afterimage": 466,
+        "railpiercer": 345,
+        "ultSonicStorm": 286
+      },
+      "skillDamage": {
+        "windblade": 29662,
+        "backflip": 6094,
+        "afterimage": 5579,
+        "railpiercer": 18323,
+        "ultSonicStorm": 10120
+      },
+      "skillHits": {
+        "windblade": 2562,
+        "backflip": 453,
+        "afterimage": 424,
+        "railpiercer": 305,
+        "ultSonicStorm": 853
+      },
+      "skillHealing": {},
+      "winRate": 0.4625748502994012,
+      "avgDamage": 137.57784431137725,
+      "avgTaken": 168.56586826347305,
+      "avgHealing": 0,
+      "avgCasts": 5.625748502994012,
+      "avgUlt": 0.4281437125748503,
+      "avgDuration": 12.962275449101798,
+      "skills": [
+        {
+          "id": "windblade",
+          "name": "风刃回旋",
+          "kind": "普通技",
+          "casts": 711,
+          "hits": 2562,
+          "damage": 29662,
+          "healing": 0,
+          "avgDamage": 41.71870604781997,
+          "avgHits": 3.6033755274261603,
+          "share": 0.32275684968771085,
+          "perGame": 44.40419161676647
+        },
+        {
+          "id": "railpiercer",
+          "name": "疾光贯刺",
+          "kind": "普通技",
+          "casts": 345,
+          "hits": 305,
+          "damage": 18323,
+          "healing": 0,
+          "avgDamage": 53.11014492753623,
+          "avgHits": 0.8840579710144928,
+          "share": 0.19937542164479555,
+          "perGame": 27.429640718562876
+        },
+        {
+          "id": "ultSonicStorm",
+          "name": "音速风暴",
+          "kind": "终结技",
+          "casts": 286,
+          "hits": 853,
+          "damage": 10120,
+          "healing": 0,
+          "avgDamage": 35.38461538461539,
+          "avgHits": 2.9825174825174825,
+          "share": 0.11011729886183108,
+          "perGame": 15.149700598802395
+        },
+        {
+          "id": "backflip",
+          "name": "空翻脱离",
+          "kind": "普通技",
+          "casts": 931,
+          "hits": 453,
+          "damage": 6094,
+          "healing": 0,
+          "avgDamage": 6.545649838882921,
+          "avgHits": 0.4865735767991407,
+          "share": 0.06630976474940697,
+          "perGame": 9.122754491017965
+        },
+        {
+          "id": "afterimage",
+          "name": "残像突进",
+          "kind": "普通技",
+          "casts": 466,
+          "hits": 424,
+          "damage": 5579,
+          "healing": 0,
+          "avgDamage": 11.972103004291846,
+          "avgHits": 0.9098712446351931,
+          "share": 0.06070596940218929,
+          "perGame": 8.35179640718563
+        },
+        {
+          "id": "tailwind",
+          "name": "顺风",
+          "kind": "普通技",
+          "casts": 621,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "sonicdash",
+          "name": "音爆冲刺",
+          "kind": "普通技",
+          "casts": 398,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 69778,
+      "basicDamage": 22124,
+      "basicShare": 0.2407346956540663,
+      "regularCasts": 3472,
+      "avgRegularCasts": 5.197604790419161
+    },
+    {
+      "idx": 3,
+      "name": "堡垒",
+      "hidden": false,
+      "games": 731,
+      "wins": 393,
+      "losses": 338,
+      "draws": 0,
+      "frames": 660491,
+      "damage": 111200,
+      "taken": 118654,
+      "healing": 0,
+      "kills": 393,
+      "deaths": 338,
+      "hits": 12528,
+      "hitsTaken": 13276,
+      "blocked": 45753,
+      "blocks": 1042,
+      "casts": 4424,
+      "ultCasts": 340,
+      "skillCasts": {
+        "mortarBarrage": 616,
+        "shieldbreak": 831,
+        "aegis": 757,
+        "shieldbash": 695,
+        "blinkF": 614,
+        "siegecannon": 571,
+        "ultFortress": 340
+      },
+      "skillDamage": {
+        "shieldbreak": 9032,
+        "shieldbash": 8427,
+        "siegecannon": 15979,
+        "mortarBarrage": 15460,
+        "ultFortress": 21856
+      },
+      "skillHits": {
+        "shieldbreak": 808,
+        "shieldbash": 431,
+        "siegecannon": 1016,
+        "mortarBarrage": 1581,
+        "ultFortress": 3107
+      },
+      "skillHealing": {},
+      "winRate": 0.5376196990424077,
+      "avgDamage": 152.1203830369357,
+      "avgTaken": 162.31737346101232,
+      "avgHealing": 0,
+      "avgCasts": 6.051983584131327,
+      "avgUlt": 0.46511627906976744,
+      "avgDuration": 15.05907432740538,
+      "skills": [
+        {
+          "id": "ultFortress",
+          "name": "绝对要塞",
+          "kind": "终结技",
+          "casts": 340,
+          "hits": 3107,
+          "damage": 21856,
+          "healing": 0,
+          "avgDamage": 64.28235294117647,
+          "avgHits": 9.138235294117647,
+          "share": 0.19654676258992806,
+          "perGame": 29.89876880984952
+        },
+        {
+          "id": "siegecannon",
+          "name": "要塞重炮",
+          "kind": "普通技",
+          "casts": 571,
+          "hits": 1016,
+          "damage": 15979,
+          "healing": 0,
+          "avgDamage": 27.984238178633976,
+          "avgHits": 1.7793345008756567,
+          "share": 0.14369604316546764,
+          "perGame": 21.85909712722298
+        },
+        {
+          "id": "mortarBarrage",
+          "name": "多发迫击炮",
+          "kind": "普通技",
+          "casts": 616,
+          "hits": 1581,
+          "damage": 15460,
+          "healing": 0,
+          "avgDamage": 25.0974025974026,
+          "avgHits": 2.5665584415584415,
+          "share": 0.13902877697841726,
+          "perGame": 21.149110807113544
+        },
+        {
+          "id": "shieldbreak",
+          "name": "破盾重击",
+          "kind": "普通技",
+          "casts": 831,
+          "hits": 808,
+          "damage": 9032,
+          "healing": 0,
+          "avgDamage": 10.868832731648617,
+          "avgHits": 0.9723225030084236,
+          "share": 0.08122302158273381,
+          "perGame": 12.355677154582763
+        },
+        {
+          "id": "shieldbash",
+          "name": "盾击冲锋",
+          "kind": "普通技",
+          "casts": 695,
+          "hits": 431,
+          "damage": 8427,
+          "healing": 0,
+          "avgDamage": 12.125179856115109,
+          "avgHits": 0.6201438848920864,
+          "share": 0.07578237410071942,
+          "perGame": 11.528043775649795
+        },
+        {
+          "id": "aegis",
+          "name": "守护力场",
+          "kind": "普通技",
+          "casts": 757,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "blinkF",
+          "name": "瞬步突进",
+          "kind": "普通技",
+          "casts": 614,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 70754,
+      "basicDamage": 40446,
+      "basicShare": 0.3637230215827338,
+      "regularCasts": 4084,
+      "avgRegularCasts": 5.58686730506156
+    },
+    {
+      "idx": 4,
+      "name": "猎手",
+      "hidden": false,
+      "games": 659,
+      "wins": 328,
+      "losses": 331,
+      "draws": 0,
+      "frames": 446619,
+      "damage": 96734,
+      "taken": 71014,
+      "healing": 0,
+      "kills": 328,
+      "deaths": 331,
+      "hits": 6726,
+      "hitsTaken": 8954,
+      "blocked": 0,
+      "blocks": 467,
+      "casts": 3507,
+      "ultCasts": 324,
+      "skillCasts": {
+        "executionshot": 497,
+        "twinlaser": 514,
+        "grapple": 660,
+        "drone": 610,
+        "clusterbomb": 584,
+        "ultDeadeye": 324,
+        "leapblast": 318
+      },
+      "skillDamage": {
+        "executionshot": 17325,
+        "twinlaser": 12779,
+        "grapple": 2098,
+        "drone": 24294,
+        "ultDeadeye": 13322,
+        "leapblast": 8855,
+        "clusterbomb": 91
+      },
+      "skillHits": {
+        "executionshot": 480,
+        "twinlaser": 797,
+        "grapple": 209,
+        "drone": 2165,
+        "ultDeadeye": 1074,
+        "leapblast": 629,
+        "clusterbomb": 7
+      },
+      "skillHealing": {},
+      "winRate": 0.4977238239757208,
+      "avgDamage": 146.78907435508347,
+      "avgTaken": 107.76024279210925,
+      "avgHealing": 0,
+      "avgCasts": 5.321699544764795,
+      "avgUlt": 0.49165402124430957,
+      "avgDuration": 11.295371775417298,
+      "skills": [
+        {
+          "id": "drone",
+          "name": "浮游炮",
+          "kind": "普通技",
+          "casts": 610,
+          "hits": 2165,
+          "damage": 24294,
+          "healing": 0,
+          "avgDamage": 39.82622950819672,
+          "avgHits": 3.5491803278688523,
+          "share": 0.2511423077718279,
+          "perGame": 36.8649468892261
+        },
+        {
+          "id": "executionshot",
+          "name": "处决射击",
+          "kind": "普通技",
+          "casts": 497,
+          "hits": 480,
+          "damage": 17325,
+          "healing": 0,
+          "avgDamage": 34.859154929577464,
+          "avgHits": 0.96579476861167,
+          "share": 0.17909938594496247,
+          "perGame": 26.289833080424888
+        },
+        {
+          "id": "ultDeadeye",
+          "name": "双星贯日",
+          "kind": "终结技",
+          "casts": 324,
+          "hits": 1074,
+          "damage": 13322,
+          "healing": 0,
+          "avgDamage": 41.117283950617285,
+          "avgHits": 3.314814814814815,
+          "share": 0.13771786548679885,
+          "perGame": 20.2154779969651
+        },
+        {
+          "id": "twinlaser",
+          "name": "双束狙击",
+          "kind": "普通技",
+          "casts": 514,
+          "hits": 797,
+          "damage": 12779,
+          "healing": 0,
+          "avgDamage": 24.861867704280154,
+          "avgHits": 1.5505836575875487,
+          "share": 0.13210453408315587,
+          "perGame": 19.391502276176023
+        },
+        {
+          "id": "leapblast",
+          "name": "后跃齐射",
+          "kind": "普通技",
+          "casts": 318,
+          "hits": 629,
+          "damage": 8855,
+          "healing": 0,
+          "avgDamage": 27.845911949685533,
+          "avgHits": 1.9779874213836477,
+          "share": 0.09153968614964748,
+          "perGame": 13.437025796661608
+        },
+        {
+          "id": "grapple",
+          "name": "钩索突进",
+          "kind": "普通技",
+          "casts": 660,
+          "hits": 209,
+          "damage": 2098,
+          "healing": 0,
+          "avgDamage": 3.1787878787878787,
+          "avgHits": 0.31666666666666665,
+          "share": 0.02168834122438853,
+          "perGame": 3.1836115326251897
+        },
+        {
+          "id": "clusterbomb",
+          "name": "集束炸弹",
+          "kind": "普通技",
+          "casts": 584,
+          "hits": 7,
+          "damage": 91,
+          "healing": 0,
+          "avgDamage": 0.1558219178082192,
+          "avgHits": 0.011986301369863013,
+          "share": 0.0009407240473876817,
+          "perGame": 0.13808801213960548
+        }
+      ],
+      "skillDamageTotal": 78764,
+      "basicDamage": 17970,
+      "basicShare": 0.18576715529183122,
+      "regularCasts": 3183,
+      "avgRegularCasts": 4.830045523520486
+    },
+    {
+      "idx": 5,
+      "name": "幽灵",
+      "hidden": false,
+      "games": 843,
+      "wins": 442,
+      "losses": 401,
+      "draws": 0,
+      "frames": 591132,
+      "damage": 129261,
+      "taken": 90852,
+      "healing": 0,
+      "kills": 442,
+      "deaths": 401,
+      "hits": 7880,
+      "hitsTaken": 10557,
+      "blocked": 0,
+      "blocks": 723,
+      "casts": 4764,
+      "ultCasts": 374,
+      "skillCasts": {
+        "shadow": 789,
+        "nightfall": 714,
+        "voidstab": 956,
+        "shadowdash": 666,
+        "cloak": 621,
+        "ultAssassinate": 374,
+        "blinkB": 644
+      },
+      "skillDamage": {
+        "nightfall": 23559,
+        "voidstab": 28391,
+        "ultAssassinate": 29684,
+        "shadowdash": 10136
+      },
+      "skillHits": {
+        "nightfall": 3829,
+        "voidstab": 906,
+        "ultAssassinate": 672,
+        "shadowdash": 379
+      },
+      "skillHealing": {},
+      "winRate": 0.5243179122182681,
+      "avgDamage": 153.33451957295372,
+      "avgTaken": 107.77224199288256,
+      "avgHealing": 0,
+      "avgCasts": 5.6512455516014235,
+      "avgUlt": 0.44365361803084225,
+      "avgDuration": 11.687069988137605,
+      "skills": [
+        {
+          "id": "ultAssassinate",
+          "name": "暗影降临",
+          "kind": "终结技",
+          "casts": 374,
+          "hits": 672,
+          "damage": 29684,
+          "healing": 0,
+          "avgDamage": 79.36898395721926,
+          "avgHits": 1.7967914438502675,
+          "share": 0.22964389877844052,
+          "perGame": 35.21233689205219
+        },
+        {
+          "id": "voidstab",
+          "name": "虚空刺",
+          "kind": "普通技",
+          "casts": 956,
+          "hits": 906,
+          "damage": 28391,
+          "healing": 0,
+          "avgDamage": 29.697698744769873,
+          "avgHits": 0.9476987447698745,
+          "share": 0.21964088162709558,
+          "perGame": 33.6785290628707
+        },
+        {
+          "id": "nightfall",
+          "name": "夜幕领域",
+          "kind": "普通技",
+          "casts": 714,
+          "hits": 3829,
+          "damage": 23559,
+          "healing": 0,
+          "avgDamage": 32.99579831932773,
+          "avgHits": 5.362745098039215,
+          "share": 0.18225915009167498,
+          "perGame": 27.94661921708185
+        },
+        {
+          "id": "shadowdash",
+          "name": "疾影斩",
+          "kind": "普通技",
+          "casts": 666,
+          "hits": 379,
+          "damage": 10136,
+          "healing": 0,
+          "avgDamage": 15.21921921921922,
+          "avgHits": 0.5690690690690691,
+          "share": 0.07841498982678456,
+          "perGame": 12.023724792408066
+        },
+        {
+          "id": "shadow",
+          "name": "影袭",
+          "kind": "普通技",
+          "casts": 789,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "blinkB",
+          "name": "残影回撤",
+          "kind": "普通技",
+          "casts": 644,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "cloak",
+          "name": "光学迷彩",
+          "kind": "普通技",
+          "casts": 621,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 91770,
+      "basicDamage": 37491,
+      "basicShare": 0.29004107967600434,
+      "regularCasts": 4390,
+      "avgRegularCasts": 5.207591933570582
+    },
+    {
+      "idx": 6,
+      "name": "巨兽",
+      "hidden": false,
+      "games": 756,
+      "wins": 386,
+      "losses": 370,
+      "draws": 0,
+      "frames": 556926,
+      "damage": 114428,
+      "taken": 113476,
+      "healing": 0,
+      "kills": 386,
+      "deaths": 370,
+      "hits": 12718,
+      "hitsTaken": 14311,
+      "blocked": 0,
+      "blocks": 892,
+      "casts": 4291,
+      "ultCasts": 348,
+      "skillCasts": {
+        "incendiary": 739,
+        "quakewave": 772,
+        "meteorcharge": 761,
+        "fortify": 596,
+        "hellfire": 624,
+        "ultCataclysm": 348,
+        "roar": 451
+      },
+      "skillDamage": {
+        "quakewave": 6844,
+        "meteorcharge": 24688,
+        "incendiary": 10241,
+        "hellfire": 20195,
+        "ultCataclysm": 12109,
+        "roar": 2662
+      },
+      "skillHits": {
+        "quakewave": 631,
+        "meteorcharge": 406,
+        "incendiary": 5259,
+        "hellfire": 3402,
+        "ultCataclysm": 708,
+        "roar": 386
+      },
+      "skillHealing": {},
+      "winRate": 0.5105820105820106,
+      "avgDamage": 151.35978835978835,
+      "avgTaken": 150.1005291005291,
+      "avgHealing": 0,
+      "avgCasts": 5.675925925925926,
+      "avgUlt": 0.4603174603174603,
+      "avgDuration": 12.277910052910052,
+      "skills": [
+        {
+          "id": "meteorcharge",
+          "name": "陨石冲撞",
+          "kind": "普通技",
+          "casts": 761,
+          "hits": 406,
+          "damage": 24688,
+          "healing": 0,
+          "avgDamage": 32.44152431011827,
+          "avgHits": 0.533508541392904,
+          "share": 0.21575138952004755,
+          "perGame": 32.65608465608466
+        },
+        {
+          "id": "hellfire",
+          "name": "地狱火导弹",
+          "kind": "普通技",
+          "casts": 624,
+          "hits": 3402,
+          "damage": 20195,
+          "healing": 0,
+          "avgDamage": 32.36378205128205,
+          "avgHits": 5.451923076923077,
+          "share": 0.1764865242772748,
+          "perGame": 26.712962962962962
+        },
+        {
+          "id": "ultCataclysm",
+          "name": "地脉崩解",
+          "kind": "终结技",
+          "casts": 348,
+          "hits": 708,
+          "damage": 12109,
+          "healing": 0,
+          "avgDamage": 34.79597701149425,
+          "avgHits": 2.0344827586206895,
+          "share": 0.10582200160799804,
+          "perGame": 16.017195767195766
+        },
+        {
+          "id": "incendiary",
+          "name": "凝固燃烧弹",
+          "kind": "普通技",
+          "casts": 739,
+          "hits": 5259,
+          "damage": 10241,
+          "healing": 0,
+          "avgDamage": 13.857916102841678,
+          "avgHits": 7.11637347767253,
+          "share": 0.08949732582934247,
+          "perGame": 13.546296296296296
+        },
+        {
+          "id": "quakewave",
+          "name": "地震波",
+          "kind": "普通技",
+          "casts": 772,
+          "hits": 631,
+          "damage": 6844,
+          "healing": 0,
+          "avgDamage": 8.865284974093264,
+          "avgHits": 0.8173575129533679,
+          "share": 0.05981053588282588,
+          "perGame": 9.052910052910052
+        },
+        {
+          "id": "roar",
+          "name": "战吼",
+          "kind": "普通技",
+          "casts": 451,
+          "hits": 386,
+          "damage": 2662,
+          "healing": 0,
+          "avgDamage": 5.902439024390244,
+          "avgHits": 0.8558758314855875,
+          "share": 0.02326353689656378,
+          "perGame": 3.5211640211640214
+        },
+        {
+          "id": "fortify",
+          "name": "震荡壁垒",
+          "kind": "普通技",
+          "casts": 596,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 76739,
+      "basicDamage": 37689,
+      "basicShare": 0.3293686859859475,
+      "regularCasts": 3943,
+      "avgRegularCasts": 5.215608465608466
+    },
+    {
+      "idx": 7,
+      "name": "新星",
+      "hidden": false,
+      "games": 627,
+      "wins": 277,
+      "losses": 350,
+      "draws": 0,
+      "frames": 584674,
+      "damage": 87132,
+      "taken": 142599,
+      "healing": 39220,
+      "kills": 277,
+      "deaths": 350,
+      "hits": 8101,
+      "hitsTaken": 15487,
+      "blocked": 37330,
+      "blocks": 830,
+      "casts": 3617,
+      "ultCasts": 248,
+      "skillCasts": {
+        "judgement": 811,
+        "arcburst": 933,
+        "spin": 684,
+        "healDrone": 536,
+        "eshield": 405,
+        "ultSupernova": 248
+      },
+      "skillDamage": {
+        "judgement": 7521,
+        "spin": 3642,
+        "arcburst": 42554,
+        "ultSupernova": 10417
+      },
+      "skillHits": {
+        "judgement": 640,
+        "spin": 291,
+        "arcburst": 3692,
+        "ultSupernova": 1175
+      },
+      "skillHealing": {
+        "healDrone": 33418,
+        "ultSupernova": 5802
+      },
+      "winRate": 0.44178628389154706,
+      "avgDamage": 138.9665071770335,
+      "avgTaken": 227.4306220095694,
+      "avgHealing": 62.5518341307815,
+      "avgCasts": 5.768740031897926,
+      "avgUlt": 0.39553429027113235,
+      "avgDuration": 15.541573631047315,
+      "skills": [
+        {
+          "id": "arcburst",
+          "name": "星弧连射",
+          "kind": "普通技",
+          "casts": 933,
+          "hits": 3692,
+          "damage": 42554,
+          "healing": 0,
+          "avgDamage": 45.60986066452304,
+          "avgHits": 3.957127545551983,
+          "share": 0.48838543818574115,
+          "perGame": 67.86921850079744
+        },
+        {
+          "id": "ultSupernova",
+          "name": "超新星",
+          "kind": "终结技",
+          "casts": 248,
+          "hits": 1175,
+          "damage": 10417,
+          "healing": 5802,
+          "avgDamage": 42.00403225806452,
+          "avgHits": 4.737903225806452,
+          "share": 0.119554239544599,
+          "perGame": 16.614035087719298
+        },
+        {
+          "id": "judgement",
+          "name": "天罚审判",
+          "kind": "普通技",
+          "casts": 811,
+          "hits": 640,
+          "damage": 7521,
+          "healing": 0,
+          "avgDamage": 9.273736128236745,
+          "avgHits": 0.7891491985203453,
+          "share": 0.0863173116650599,
+          "perGame": 11.995215311004785
+        },
+        {
+          "id": "spin",
+          "name": "回旋斩",
+          "kind": "普通技",
+          "casts": 684,
+          "hits": 291,
+          "damage": 3642,
+          "healing": 0,
+          "avgDamage": 5.324561403508772,
+          "avgHits": 0.42543859649122806,
+          "share": 0.04179865032364688,
+          "perGame": 5.8086124401913874
+        },
+        {
+          "id": "healDrone",
+          "name": "修复无人机",
+          "kind": "普通技",
+          "casts": 536,
+          "hits": 0,
+          "damage": 0,
+          "healing": 33418,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "eshield",
+          "name": "能量护盾",
+          "kind": "普通技",
+          "casts": 405,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 64134,
+      "basicDamage": 22998,
+      "basicShare": 0.263944360280953,
+      "regularCasts": 3369,
+      "avgRegularCasts": 5.373205741626794
+    },
+    {
+      "idx": 8,
+      "name": "磁暴",
+      "hidden": false,
+      "games": 714,
+      "wins": 336,
+      "losses": 378,
+      "draws": 0,
+      "frames": 493705,
+      "damage": 99337,
+      "taken": 84762,
+      "healing": 0,
+      "kills": 336,
+      "deaths": 378,
+      "hits": 30218,
+      "hitsTaken": 8443,
+      "blocked": 0,
+      "blocks": 2567,
+      "casts": 3823,
+      "ultCasts": 311,
+      "skillCasts": {
+        "emorb": 567,
+        "drone3": 669,
+        "tumble": 497,
+        "lightning": 709,
+        "trample": 517,
+        "magnetpull": 553,
+        "ultSingularity": 311
+      },
+      "skillDamage": {
+        "emorb": 6710,
+        "drone3": 33436,
+        "lightning": 14839,
+        "trample": 8303,
+        "magnetpull": 2134,
+        "ultSingularity": 14337
+      },
+      "skillHits": {
+        "emorb": 1372,
+        "drone3": 17025,
+        "lightning": 7593,
+        "trample": 306,
+        "magnetpull": 437,
+        "ultSingularity": 1722
+      },
+      "skillHealing": {},
+      "winRate": 0.47058823529411764,
+      "avgDamage": 139.12745098039215,
+      "avgTaken": 118.71428571428571,
+      "avgHealing": 0,
+      "avgCasts": 5.3543417366946775,
+      "avgUlt": 0.43557422969187676,
+      "avgDuration": 11.52439309056956,
+      "skills": [
+        {
+          "id": "drone3",
+          "name": "三连装浮游炮",
+          "kind": "普通技",
+          "casts": 669,
+          "hits": 17025,
+          "damage": 33436,
+          "healing": 0,
+          "avgDamage": 49.979073243647235,
+          "avgHits": 25.44843049327354,
+          "share": 0.3365916023234042,
+          "perGame": 46.82913165266106
+        },
+        {
+          "id": "lightning",
+          "name": "雷击锁定",
+          "kind": "普通技",
+          "casts": 709,
+          "hits": 7593,
+          "damage": 14839,
+          "healing": 0,
+          "avgDamage": 20.929478138222848,
+          "avgHits": 10.709449929478138,
+          "share": 0.14938039199895306,
+          "perGame": 20.782913165266105
+        },
+        {
+          "id": "ultSingularity",
+          "name": "磁暴奇点",
+          "kind": "终结技",
+          "casts": 311,
+          "hits": 1722,
+          "damage": 14337,
+          "healing": 0,
+          "avgDamage": 46.09967845659164,
+          "avgHits": 5.536977491961415,
+          "share": 0.14432688726255072,
+          "perGame": 20.07983193277311
+        },
+        {
+          "id": "trample",
+          "name": "巨兽冲撞",
+          "kind": "普通技",
+          "casts": 517,
+          "hits": 306,
+          "damage": 8303,
+          "healing": 0,
+          "avgDamage": 16.059961315280464,
+          "avgHits": 0.5918762088974855,
+          "share": 0.0835841630006946,
+          "perGame": 11.628851540616246
+        },
+        {
+          "id": "emorb",
+          "name": "电磁球",
+          "kind": "普通技",
+          "casts": 567,
+          "hits": 1372,
+          "damage": 6710,
+          "healing": 0,
+          "avgDamage": 11.834215167548502,
+          "avgHits": 2.419753086419753,
+          "share": 0.06754784219374453,
+          "perGame": 9.397759103641457
+        },
+        {
+          "id": "magnetpull",
+          "name": "磁力牵引",
+          "kind": "普通技",
+          "casts": 553,
+          "hits": 437,
+          "damage": 2134,
+          "healing": 0,
+          "avgDamage": 3.8589511754068715,
+          "avgHits": 0.7902350813743219,
+          "share": 0.021482428500961374,
+          "perGame": 2.988795518207283
+        },
+        {
+          "id": "tumble",
+          "name": "战术翻滚",
+          "kind": "普通技",
+          "casts": 497,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 79759,
+      "basicDamage": 19578,
+      "basicShare": 0.19708668471969157,
+      "regularCasts": 3512,
+      "avgRegularCasts": 4.918767507002801
+    },
+    {
+      "idx": 9,
+      "name": "工匠",
+      "hidden": false,
+      "games": 702,
+      "wins": 356,
+      "losses": 346,
+      "draws": 0,
+      "frames": 565853,
+      "damage": 100709,
+      "taken": 106278,
+      "healing": 38217,
+      "kills": 356,
+      "deaths": 346,
+      "hits": 11371,
+      "hitsTaken": 11626,
+      "blocked": 0,
+      "blocks": 1412,
+      "casts": 4324,
+      "ultCasts": 332,
+      "skillCasts": {
+        "teslacoil": 720,
+        "antidrone": 556,
+        "rocketjump": 848,
+        "rocketBarrage": 742,
+        "ultWorkshop": 332,
+        "cover": 540,
+        "rebuildfield": 586
+      },
+      "skillDamage": {
+        "teslacoil": 39427,
+        "antidrone": 4872,
+        "rocketjump": 16012,
+        "rocketBarrage": 10471,
+        "ultWorkshop": 16238
+      },
+      "skillHits": {
+        "teslacoil": 4099,
+        "antidrone": 514,
+        "rocketjump": 1194,
+        "rocketBarrage": 1363,
+        "ultWorkshop": 2432
+      },
+      "skillHealing": {
+        "ultWorkshop": 20578,
+        "rebuildfield": 17639
+      },
+      "winRate": 0.5071225071225072,
+      "avgDamage": 143.46011396011397,
+      "avgTaken": 151.39316239316238,
+      "avgHealing": 54.44017094017094,
+      "avgCasts": 6.15954415954416,
+      "avgUlt": 0.47293447293447294,
+      "avgDuration": 13.434306742640075,
+      "skills": [
+        {
+          "id": "teslacoil",
+          "name": "电弧线圈",
+          "kind": "普通技",
+          "casts": 720,
+          "hits": 4099,
+          "damage": 39427,
+          "healing": 0,
+          "avgDamage": 54.75972222222222,
+          "avgHits": 5.6930555555555555,
+          "share": 0.391494305374892,
+          "perGame": 56.16381766381766
+        },
+        {
+          "id": "ultWorkshop",
+          "name": "战争工坊",
+          "kind": "终结技",
+          "casts": 332,
+          "hits": 2432,
+          "damage": 16238,
+          "healing": 20578,
+          "avgDamage": 48.90963855421687,
+          "avgHits": 7.325301204819277,
+          "share": 0.16123683086913781,
+          "perGame": 23.13105413105413
+        },
+        {
+          "id": "rocketjump",
+          "name": "火箭跃击",
+          "kind": "普通技",
+          "casts": 848,
+          "hits": 1194,
+          "damage": 16012,
+          "healing": 0,
+          "avgDamage": 18.882075471698112,
+          "avgHits": 1.4080188679245282,
+          "share": 0.15899274146302714,
+          "perGame": 22.80911680911681
+        },
+        {
+          "id": "rocketBarrage",
+          "name": "多联装火箭弹",
+          "kind": "普通技",
+          "casts": 742,
+          "hits": 1363,
+          "damage": 10471,
+          "healing": 0,
+          "avgDamage": 14.111859838274933,
+          "avgHits": 1.8369272237196765,
+          "share": 0.10397283261674727,
+          "perGame": 14.915954415954415
+        },
+        {
+          "id": "antidrone",
+          "name": "干扰脉冲",
+          "kind": "普通技",
+          "casts": 556,
+          "hits": 514,
+          "damage": 4872,
+          "healing": 0,
+          "avgDamage": 8.762589928057555,
+          "avgHits": 0.9244604316546763,
+          "share": 0.04837700702022659,
+          "perGame": 6.94017094017094
+        },
+        {
+          "id": "rebuildfield",
+          "name": "重建立场",
+          "kind": "普通技",
+          "casts": 586,
+          "hits": 0,
+          "damage": 0,
+          "healing": 17639,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "cover",
+          "name": "部署掩体",
+          "kind": "普通技",
+          "casts": 540,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 87020,
+      "basicDamage": 13689,
+      "basicShare": 0.13592628265596918,
+      "regularCasts": 3992,
+      "avgRegularCasts": 5.686609686609686
+    },
+    {
+      "idx": 10,
+      "name": "游隼",
+      "hidden": false,
+      "games": 679,
+      "wins": 317,
+      "losses": 362,
+      "draws": 0,
+      "frames": 490473,
+      "damage": 96834,
+      "taken": 82354,
+      "healing": 0,
+      "kills": 317,
+      "deaths": 362,
+      "hits": 7772,
+      "hitsTaken": 10080,
+      "blocked": 0,
+      "blocks": 397,
+      "casts": 3768,
+      "ultCasts": 278,
+      "skillCasts": {
+        "marklock": 599,
+        "reveal": 661,
+        "iceball": 576,
+        "dive": 693,
+        "missileSalvo": 558,
+        "ultSkyfall": 278,
+        "flare": 403
+      },
+      "skillDamage": {
+        "marklock": 11423,
+        "iceball": 14940,
+        "missileSalvo": 21994,
+        "ultSkyfall": 19098,
+        "dive": 2579,
+        "flare": 889
+      },
+      "skillHits": {
+        "marklock": 590,
+        "iceball": 752,
+        "missileSalvo": 3797,
+        "ultSkyfall": 655,
+        "dive": 187,
+        "flare": 72
+      },
+      "skillHealing": {},
+      "winRate": 0.46686303387334316,
+      "avgDamage": 142.61266568483063,
+      "avgTaken": 121.28718703976436,
+      "avgHealing": 0,
+      "avgCasts": 5.549337260677467,
+      "avgUlt": 0.40942562592047127,
+      "avgDuration": 12.039101620029454,
+      "skills": [
+        {
+          "id": "missileSalvo",
+          "name": "多联装追踪导弹",
+          "kind": "普通技",
+          "casts": 558,
+          "hits": 3797,
+          "damage": 21994,
+          "healing": 0,
+          "avgDamage": 39.415770609319,
+          "avgHits": 6.804659498207886,
+          "share": 0.22713096639610053,
+          "perGame": 32.391752577319586
+        },
+        {
+          "id": "ultSkyfall",
+          "name": "天穹标记",
+          "kind": "终结技",
+          "casts": 278,
+          "hits": 655,
+          "damage": 19098,
+          "healing": 0,
+          "avgDamage": 68.6978417266187,
+          "avgHits": 2.356115107913669,
+          "share": 0.19722411549662308,
+          "perGame": 28.126656848306332
+        },
+        {
+          "id": "iceball",
+          "name": "寒冰球",
+          "kind": "普通技",
+          "casts": 576,
+          "hits": 752,
+          "damage": 14940,
+          "healing": 0,
+          "avgDamage": 25.9375,
+          "avgHits": 1.3055555555555556,
+          "share": 0.15428465208501146,
+          "perGame": 22.002945508100147
+        },
+        {
+          "id": "marklock",
+          "name": "标记锁定",
+          "kind": "普通技",
+          "casts": 599,
+          "hits": 590,
+          "damage": 11423,
+          "healing": 0,
+          "avgDamage": 19.070116861435725,
+          "avgHits": 0.9849749582637729,
+          "share": 0.11796476444224137,
+          "perGame": 16.823269513991164
+        },
+        {
+          "id": "dive",
+          "name": "俯冲掠袭",
+          "kind": "普通技",
+          "casts": 693,
+          "hits": 187,
+          "damage": 2579,
+          "healing": 0,
+          "avgDamage": 3.7215007215007216,
+          "avgHits": 0.2698412698412698,
+          "share": 0.02663320734452775,
+          "perGame": 3.7982326951399115
+        },
+        {
+          "id": "flare",
+          "name": "干扰闪光",
+          "kind": "普通技",
+          "casts": 403,
+          "hits": 72,
+          "damage": 889,
+          "healing": 0,
+          "avgDamage": 2.205955334987593,
+          "avgHits": 0.17866004962779156,
+          "share": 0.009180659685647604,
+          "perGame": 1.309278350515464
+        },
+        {
+          "id": "reveal",
+          "name": "侦察脉冲",
+          "kind": "普通技",
+          "casts": 661,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 70923,
+      "basicDamage": 25911,
+      "basicShare": 0.2675816345498482,
+      "regularCasts": 3490,
+      "avgRegularCasts": 5.139911634756996
+    },
+    {
+      "idx": 11,
+      "name": "自由",
+      "hidden": false,
+      "games": 699,
+      "wins": 335,
+      "losses": 364,
+      "draws": 0,
+      "frames": 679712,
+      "damage": 100242,
+      "taken": 144441,
+      "healing": 64151,
+      "kills": 335,
+      "deaths": 364,
+      "hits": 19585,
+      "hitsTaken": 15182,
+      "blocked": 25063,
+      "blocks": 1628,
+      "casts": 5046,
+      "ultCasts": 300,
+      "skillCasts": {
+        "dronebarrage": 899,
+        "repairfield": 828,
+        "phasewings": 1086,
+        "fullburst": 719,
+        "overcharge": 629,
+        "prismwall": 585,
+        "ultFullBurst": 300
+      },
+      "skillDamage": {
+        "dronebarrage": 28340,
+        "fullburst": 12594,
+        "ultFullBurst": 20358,
+        "phasewings": 2134
+      },
+      "skillHits": {
+        "dronebarrage": 9652,
+        "fullburst": 2564,
+        "ultFullBurst": 3710,
+        "phasewings": 442
+      },
+      "skillHealing": {
+        "repairfield": 64151
+      },
+      "winRate": 0.4792560801144492,
+      "avgDamage": 143.40772532188842,
+      "avgTaken": 206.63948497854076,
+      "avgHealing": 91.77539341917024,
+      "avgCasts": 7.218884120171674,
+      "avgUlt": 0.4291845493562232,
+      "avgDuration": 16.206771578445398,
+      "skills": [
+        {
+          "id": "dronebarrage",
+          "name": "浮游齐射",
+          "kind": "普通技",
+          "casts": 899,
+          "hits": 9652,
+          "damage": 28340,
+          "healing": 0,
+          "avgDamage": 31.52391546162403,
+          "avgHits": 10.736373748609566,
+          "share": 0.28271582769697334,
+          "perGame": 40.543633762517885
+        },
+        {
+          "id": "ultFullBurst",
+          "name": "全弹解放",
+          "kind": "终结技",
+          "casts": 300,
+          "hits": 3710,
+          "damage": 20358,
+          "healing": 0,
+          "avgDamage": 67.86,
+          "avgHits": 12.366666666666667,
+          "share": 0.2030885257676423,
+          "perGame": 29.124463519313306
+        },
+        {
+          "id": "fullburst",
+          "name": "全弹发射",
+          "kind": "普通技",
+          "casts": 719,
+          "hits": 2564,
+          "damage": 12594,
+          "healing": 0,
+          "avgDamage": 17.515994436717662,
+          "avgHits": 3.566063977746871,
+          "share": 0.12563596097444185,
+          "perGame": 18.01716738197425
+        },
+        {
+          "id": "phasewings",
+          "name": "相位翼",
+          "kind": "普通技",
+          "casts": 1086,
+          "hits": 442,
+          "damage": 2134,
+          "healing": 0,
+          "avgDamage": 1.9650092081031307,
+          "avgHits": 0.40699815837937386,
+          "share": 0.021288481873865246,
+          "perGame": 3.0529327610872676
+        },
+        {
+          "id": "repairfield",
+          "name": "纳米修复场",
+          "kind": "普通技",
+          "casts": 828,
+          "hits": 0,
+          "damage": 0,
+          "healing": 64151,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "overcharge",
+          "name": "过载射击",
+          "kind": "普通技",
+          "casts": 629,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "prismwall",
+          "name": "棱镜屏障",
+          "kind": "普通技",
+          "casts": 585,
+          "hits": 0,
+          "damage": 0,
+          "healing": 0,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 63426,
+      "basicDamage": 36816,
+      "basicShare": 0.3672712036870773,
+      "regularCasts": 4746,
+      "avgRegularCasts": 6.789699570815451
+    },
+    {
+      "idx": 12,
+      "name": "天罚",
+      "hidden": true,
+      "games": 706,
+      "wins": 346,
+      "losses": 360,
+      "draws": 0,
+      "frames": 587639,
+      "damage": 106860,
+      "taken": 121538,
+      "healing": 20564,
+      "kills": 346,
+      "deaths": 360,
+      "hits": 11895,
+      "hitsTaken": 13922,
+      "blocked": 15048,
+      "blocks": 752,
+      "casts": 4474,
+      "ultCasts": 348,
+      "skillCasts": {
+        "judgementpillar": 728,
+        "orbitaljudgement": 699,
+        "divinebeam": 714,
+        "grace": 708,
+        "seraphrush": 798,
+        "sanctuary": 479,
+        "ultJudgement": 348
+      },
+      "skillDamage": {
+        "judgementpillar": 13637,
+        "orbitaljudgement": 29580,
+        "divinebeam": 18087,
+        "ultJudgement": 16559,
+        "seraphrush": 6514
+      },
+      "skillHits": {
+        "judgementpillar": 699,
+        "orbitaljudgement": 2307,
+        "divinebeam": 4597,
+        "ultJudgement": 1271,
+        "seraphrush": 321
+      },
+      "skillHealing": {
+        "grace": 15450,
+        "sanctuary": 5114
+      },
+      "winRate": 0.49008498583569404,
+      "avgDamage": 151.3597733711048,
+      "avgTaken": 172.1501416430595,
+      "avgHealing": 29.127478753541077,
+      "avgCasts": 6.337110481586402,
+      "avgUlt": 0.49291784702549574,
+      "avgDuration": 13.872497639282342,
+      "skills": [
+        {
+          "id": "orbitaljudgement",
+          "name": "轨道裁决",
+          "kind": "普通技",
+          "casts": 699,
+          "hits": 2307,
+          "damage": 29580,
+          "healing": 0,
+          "avgDamage": 42.317596566523605,
+          "avgHits": 3.300429184549356,
+          "share": 0.2768107804604155,
+          "perGame": 41.89801699716714
+        },
+        {
+          "id": "divinebeam",
+          "name": "神罚光束",
+          "kind": "普通技",
+          "casts": 714,
+          "hits": 4597,
+          "damage": 18087,
+          "healing": 0,
+          "avgDamage": 25.331932773109244,
+          "avgHits": 6.438375350140056,
+          "share": 0.1692588433464346,
+          "perGame": 25.61898016997167
+        },
+        {
+          "id": "ultJudgement",
+          "name": "终焉审判",
+          "kind": "终结技",
+          "casts": 348,
+          "hits": 1271,
+          "damage": 16559,
+          "healing": 0,
+          "avgDamage": 47.583333333333336,
+          "avgHits": 3.6522988505747125,
+          "share": 0.154959760434213,
+          "perGame": 23.454674220963174
+        },
+        {
+          "id": "judgementpillar",
+          "name": "裁决光柱",
+          "kind": "普通技",
+          "casts": 728,
+          "hits": 699,
+          "damage": 13637,
+          "healing": 0,
+          "avgDamage": 18.732142857142858,
+          "avgHits": 0.9601648351648352,
+          "share": 0.1276155717761557,
+          "perGame": 19.31586402266289
+        },
+        {
+          "id": "seraphrush",
+          "name": "炽翼突进",
+          "kind": "普通技",
+          "casts": 798,
+          "hits": 321,
+          "damage": 6514,
+          "healing": 0,
+          "avgDamage": 8.162907268170427,
+          "avgHits": 0.40225563909774437,
+          "share": 0.06095826314804417,
+          "perGame": 9.226628895184136
+        },
+        {
+          "id": "grace",
+          "name": "恩泽",
+          "kind": "普通技",
+          "casts": 708,
+          "hits": 0,
+          "damage": 0,
+          "healing": 15450,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        },
+        {
+          "id": "sanctuary",
+          "name": "圣域",
+          "kind": "普通技",
+          "casts": 479,
+          "hits": 0,
+          "damage": 0,
+          "healing": 5114,
+          "avgDamage": 0,
+          "avgHits": 0,
+          "share": 0,
+          "perGame": 0
+        }
+      ],
+      "skillDamageTotal": 84377,
+      "basicDamage": 22483,
+      "basicShare": 0.21039678083473703,
+      "regularCasts": 4126,
+      "avgRegularCasts": 5.8441926345609065
+    },
+    {
+      "idx": 13,
+      "name": "湮灭",
+      "hidden": true,
+      "games": 711,
+      "wins": 373,
+      "losses": 338,
+      "draws": 0,
+      "frames": 504090,
+      "damage": 111537,
+      "taken": 98266,
+      "healing": 4050,
+      "kills": 373,
+      "deaths": 338,
+      "hits": 11923,
+      "hitsTaken": 11321,
+      "blocked": 0,
+      "blocks": 627,
+      "casts": 3805,
+      "ultCasts": 309,
+      "skillCasts": {
+        "entropyrain": 696,
+        "singularity": 692,
+        "voidstep": 875,
+        "devour": 507,
+        "ultZero": 309,
+        "oblivion": 360,
+        "nullfield": 366
+      },
+      "skillDamage": {
+        "entropyrain": 28326,
+        "singularity": 20002,
+        "devour": 6397,
+        "ultZero": 12168,
+        "oblivion": 9240,
+        "nullfield": 5807,
+        "voidstep": 6034
+      },
+      "skillHits": {
+        "entropyrain": 3181,
+        "singularity": 4023,
+        "devour": 472,
+        "ultZero": 761,
+        "oblivion": 319,
+        "nullfield": 1466,
+        "voidstep": 133
+      },
+      "skillHealing": {
+        "devour": 4050
+      },
+      "winRate": 0.5246132208157525,
+      "avgDamage": 156.873417721519,
+      "avgTaken": 138.20815752461323,
+      "avgHealing": 5.69620253164557,
+      "avgCasts": 5.351617440225035,
+      "avgUlt": 0.4345991561181435,
+      "avgDuration": 11.816455696202532,
+      "skills": [
+        {
+          "id": "entropyrain",
+          "name": "熵能雨",
+          "kind": "普通技",
+          "casts": 696,
+          "hits": 3181,
+          "damage": 28326,
+          "healing": 0,
+          "avgDamage": 40.69827586206897,
+          "avgHits": 4.570402298850575,
+          "share": 0.2539605691384922,
+          "perGame": 39.83966244725738
+        },
+        {
+          "id": "singularity",
+          "name": "奇点坍缩",
+          "kind": "普通技",
+          "casts": 692,
+          "hits": 4023,
+          "damage": 20002,
+          "healing": 0,
+          "avgDamage": 28.904624277456648,
+          "avgHits": 5.813583815028902,
+          "share": 0.17933062571164726,
+          "perGame": 28.132208157524612
+        },
+        {
+          "id": "ultZero",
+          "name": "归零",
+          "kind": "终结技",
+          "casts": 309,
+          "hits": 761,
+          "damage": 12168,
+          "healing": 0,
+          "avgDamage": 39.37864077669903,
+          "avgHits": 2.4627831715210355,
+          "share": 0.10909384329863633,
+          "perGame": 17.11392405063291
+        },
+        {
+          "id": "oblivion",
+          "name": "湮灭冲击",
+          "kind": "普通技",
+          "casts": 360,
+          "hits": 319,
+          "damage": 9240,
+          "healing": 0,
+          "avgDamage": 25.666666666666668,
+          "avgHits": 0.8861111111111111,
+          "share": 0.0828424648322978,
+          "perGame": 12.995780590717299
+        },
+        {
+          "id": "devour",
+          "name": "吞噬",
+          "kind": "普通技",
+          "casts": 507,
+          "hits": 472,
+          "damage": 6397,
+          "healing": 4050,
+          "avgDamage": 12.617357001972387,
+          "avgHits": 0.9309664694280079,
+          "share": 0.05735316531733864,
+          "perGame": 8.9971870604782
+        },
+        {
+          "id": "voidstep",
+          "name": "虚空步",
+          "kind": "普通技",
+          "casts": 875,
+          "hits": 133,
+          "damage": 6034,
+          "healing": 0,
+          "avgDamage": 6.896,
+          "avgHits": 0.152,
+          "share": 0.054098639913212655,
+          "perGame": 8.486638537271448
+        },
+        {
+          "id": "nullfield",
+          "name": "虚无领域",
+          "kind": "普通技",
+          "casts": 366,
+          "hits": 1466,
+          "damage": 5807,
+          "healing": 0,
+          "avgDamage": 15.866120218579235,
+          "avgHits": 4.005464480874317,
+          "share": 0.052063440831293654,
+          "perGame": 8.167369901547117
+        }
+      ],
+      "skillDamageTotal": 87974,
+      "basicDamage": 23563,
+      "basicShare": 0.2112572509570815,
+      "regularCasts": 3496,
+      "avgRegularCasts": 4.9170182841068915
+    }
+  ],
+  "skills": [
+    {
+      "id": "arcburst",
+      "name": "星弧连射",
+      "kind": "普通技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 933,
+      "hits": 3692,
+      "damage": 42554,
+      "healing": 0,
+      "avgDamage": 45.60986066452304
+    },
+    {
+      "id": "teslacoil",
+      "name": "电弧线圈",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 720,
+      "hits": 4099,
+      "damage": 39427,
+      "healing": 0,
+      "avgDamage": 54.75972222222222
+    },
+    {
+      "id": "drone3",
+      "name": "三连装浮游炮",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 669,
+      "hits": 17025,
+      "damage": 33436,
+      "healing": 0,
+      "avgDamage": 49.979073243647235
+    },
+    {
+      "id": "vulcan",
+      "name": "火神炮模式",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 436,
+      "hits": 6497,
+      "damage": 32161,
+      "healing": 0,
+      "avgDamage": 73.7637614678899
+    },
+    {
+      "id": "ultAssassinate",
+      "name": "暗影降临",
+      "kind": "终结技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 374,
+      "hits": 672,
+      "damage": 29684,
+      "healing": 0,
+      "avgDamage": 79.36898395721926
+    },
+    {
+      "id": "windblade",
+      "name": "风刃回旋",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 711,
+      "hits": 2562,
+      "damage": 29662,
+      "healing": 0,
+      "avgDamage": 41.71870604781997
+    },
+    {
+      "id": "orbitaljudgement",
+      "name": "轨道裁决",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 699,
+      "hits": 2307,
+      "damage": 29580,
+      "healing": 0,
+      "avgDamage": 42.317596566523605
+    },
+    {
+      "id": "voidstab",
+      "name": "虚空刺",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 956,
+      "hits": 906,
+      "damage": 28391,
+      "healing": 0,
+      "avgDamage": 29.697698744769873
+    },
+    {
+      "id": "dronebarrage",
+      "name": "浮游齐射",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 899,
+      "hits": 9652,
+      "damage": 28340,
+      "healing": 0,
+      "avgDamage": 31.52391546162403
+    },
+    {
+      "id": "entropyrain",
+      "name": "熵能雨",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 696,
+      "hits": 3181,
+      "damage": 28326,
+      "healing": 0,
+      "avgDamage": 40.69827586206897
+    },
+    {
+      "id": "mechbird",
+      "name": "机械隼",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 701,
+      "hits": 2313,
+      "damage": 26580,
+      "healing": 0,
+      "avgDamage": 37.91726105563481
+    },
+    {
+      "id": "meteorcharge",
+      "name": "陨石冲撞",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 761,
+      "hits": 406,
+      "damage": 24688,
+      "healing": 0,
+      "avgDamage": 32.44152431011827
+    },
+    {
+      "id": "ultEarthbreaker",
+      "name": "湮地锤阵",
+      "kind": "终结技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 326,
+      "hits": 457,
+      "damage": 24575,
+      "healing": 0,
+      "avgDamage": 75.38343558282209
+    },
+    {
+      "id": "drone",
+      "name": "浮游炮",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 610,
+      "hits": 2165,
+      "damage": 24294,
+      "healing": 0,
+      "avgDamage": 39.82622950819672
+    },
+    {
+      "id": "nightfall",
+      "name": "夜幕领域",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 714,
+      "hits": 3829,
+      "damage": 23559,
+      "healing": 0,
+      "avgDamage": 32.99579831932773
+    },
+    {
+      "id": "missileSalvo",
+      "name": "多联装追踪导弹",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 558,
+      "hits": 3797,
+      "damage": 21994,
+      "healing": 0,
+      "avgDamage": 39.415770609319
+    },
+    {
+      "id": "ultFortress",
+      "name": "绝对要塞",
+      "kind": "终结技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 340,
+      "hits": 3107,
+      "damage": 21856,
+      "healing": 0,
+      "avgDamage": 64.28235294117647
+    },
+    {
+      "id": "ultFullBurst",
+      "name": "全弹解放",
+      "kind": "终结技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 300,
+      "hits": 3710,
+      "damage": 20358,
+      "healing": 0,
+      "avgDamage": 67.86
+    },
+    {
+      "id": "hellfire",
+      "name": "地狱火导弹",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 624,
+      "hits": 3402,
+      "damage": 20195,
+      "healing": 0,
+      "avgDamage": 32.36378205128205
+    },
+    {
+      "id": "singularity",
+      "name": "奇点坍缩",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 692,
+      "hits": 4023,
+      "damage": 20002,
+      "healing": 0,
+      "avgDamage": 28.904624277456648
+    },
+    {
+      "id": "ultBarrage",
+      "name": "苍穹隼群",
+      "kind": "终结技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 324,
+      "hits": 1382,
+      "damage": 19802,
+      "healing": 0,
+      "avgDamage": 61.117283950617285
+    },
+    {
+      "id": "ultSkyfall",
+      "name": "天穹标记",
+      "kind": "终结技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 278,
+      "hits": 655,
+      "damage": 19098,
+      "healing": 0,
+      "avgDamage": 68.6978417266187
+    },
+    {
+      "id": "railpiercer",
+      "name": "疾光贯刺",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 345,
+      "hits": 305,
+      "damage": 18323,
+      "healing": 0,
+      "avgDamage": 53.11014492753623
+    },
+    {
+      "id": "divinebeam",
+      "name": "神罚光束",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 714,
+      "hits": 4597,
+      "damage": 18087,
+      "healing": 0,
+      "avgDamage": 25.331932773109244
+    },
+    {
+      "id": "triple",
+      "name": "速射三连",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 720,
+      "hits": 1569,
+      "damage": 17984,
+      "healing": 0,
+      "avgDamage": 24.977777777777778
+    },
+    {
+      "id": "executionshot",
+      "name": "处决射击",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 497,
+      "hits": 480,
+      "damage": 17325,
+      "healing": 0,
+      "avgDamage": 34.859154929577464
+    },
+    {
+      "id": "hammerorbit",
+      "name": "环绕战锤",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 556,
+      "hits": 802,
+      "damage": 16716,
+      "healing": 0,
+      "avgDamage": 30.06474820143885
+    },
+    {
+      "id": "ultJudgement",
+      "name": "终焉审判",
+      "kind": "终结技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 348,
+      "hits": 1271,
+      "damage": 16559,
+      "healing": 0,
+      "avgDamage": 47.583333333333336
+    },
+    {
+      "id": "ultWorkshop",
+      "name": "战争工坊",
+      "kind": "终结技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 332,
+      "hits": 2432,
+      "damage": 16238,
+      "healing": 20578,
+      "avgDamage": 48.90963855421687
+    },
+    {
+      "id": "rocketjump",
+      "name": "火箭跃击",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 848,
+      "hits": 1194,
+      "damage": 16012,
+      "healing": 0,
+      "avgDamage": 18.882075471698112
+    },
+    {
+      "id": "siegecannon",
+      "name": "要塞重炮",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 571,
+      "hits": 1016,
+      "damage": 15979,
+      "healing": 0,
+      "avgDamage": 27.984238178633976
+    },
+    {
+      "id": "mortarBarrage",
+      "name": "多发迫击炮",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 616,
+      "hits": 1581,
+      "damage": 15460,
+      "healing": 0,
+      "avgDamage": 25.0974025974026
+    },
+    {
+      "id": "iceball",
+      "name": "寒冰球",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 576,
+      "hits": 752,
+      "damage": 14940,
+      "healing": 0,
+      "avgDamage": 25.9375
+    },
+    {
+      "id": "lightning",
+      "name": "雷击锁定",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 709,
+      "hits": 7593,
+      "damage": 14839,
+      "healing": 0,
+      "avgDamage": 20.929478138222848
+    },
+    {
+      "id": "ultSingularity",
+      "name": "磁暴奇点",
+      "kind": "终结技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 311,
+      "hits": 1722,
+      "damage": 14337,
+      "healing": 0,
+      "avgDamage": 46.09967845659164
+    },
+    {
+      "id": "rocketsalvo",
+      "name": "火箭齐射",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 658,
+      "hits": 1443,
+      "damage": 14108,
+      "healing": 0,
+      "avgDamage": 21.440729483282674
+    },
+    {
+      "id": "judgementpillar",
+      "name": "裁决光柱",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 728,
+      "hits": 699,
+      "damage": 13637,
+      "healing": 0,
+      "avgDamage": 18.732142857142858
+    },
+    {
+      "id": "ultDeadeye",
+      "name": "双星贯日",
+      "kind": "终结技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 324,
+      "hits": 1074,
+      "damage": 13322,
+      "healing": 0,
+      "avgDamage": 41.117283950617285
+    },
+    {
+      "id": "ironcharge",
+      "name": "铁壁冲撞",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 843,
+      "hits": 560,
+      "damage": 13218,
+      "healing": 0,
+      "avgDamage": 15.679715302491104
+    },
+    {
+      "id": "twinlaser",
+      "name": "双束狙击",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 514,
+      "hits": 797,
+      "damage": 12779,
+      "healing": 0,
+      "avgDamage": 24.861867704280154
+    },
+    {
+      "id": "fullburst",
+      "name": "全弹发射",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 719,
+      "hits": 2564,
+      "damage": 12594,
+      "healing": 0,
+      "avgDamage": 17.515994436717662
+    },
+    {
+      "id": "ultZero",
+      "name": "归零",
+      "kind": "终结技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 309,
+      "hits": 761,
+      "damage": 12168,
+      "healing": 0,
+      "avgDamage": 39.37864077669903
+    },
+    {
+      "id": "ultCataclysm",
+      "name": "地脉崩解",
+      "kind": "终结技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 348,
+      "hits": 708,
+      "damage": 12109,
+      "healing": 0,
+      "avgDamage": 34.79597701149425
+    },
+    {
+      "id": "marklock",
+      "name": "标记锁定",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 599,
+      "hits": 590,
+      "damage": 11423,
+      "healing": 0,
+      "avgDamage": 19.070116861435725
+    },
+    {
+      "id": "rocketBarrage",
+      "name": "多联装火箭弹",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 742,
+      "hits": 1363,
+      "damage": 10471,
+      "healing": 0,
+      "avgDamage": 14.111859838274933
+    },
+    {
+      "id": "ultSupernova",
+      "name": "超新星",
+      "kind": "终结技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 248,
+      "hits": 1175,
+      "damage": 10417,
+      "healing": 5802,
+      "avgDamage": 42.00403225806452
+    },
+    {
+      "id": "incendiary",
+      "name": "凝固燃烧弹",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 739,
+      "hits": 5259,
+      "damage": 10241,
+      "healing": 0,
+      "avgDamage": 13.857916102841678
+    },
+    {
+      "id": "shadowdash",
+      "name": "疾影斩",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 666,
+      "hits": 379,
+      "damage": 10136,
+      "healing": 0,
+      "avgDamage": 15.21921921921922
+    },
+    {
+      "id": "ultSonicStorm",
+      "name": "音速风暴",
+      "kind": "终结技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 286,
+      "hits": 853,
+      "damage": 10120,
+      "healing": 0,
+      "avgDamage": 35.38461538461539
+    },
+    {
+      "id": "oblivion",
+      "name": "湮灭冲击",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 360,
+      "hits": 319,
+      "damage": 9240,
+      "healing": 0,
+      "avgDamage": 25.666666666666668
+    },
+    {
+      "id": "shieldbreak",
+      "name": "破盾重击",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 831,
+      "hits": 808,
+      "damage": 9032,
+      "healing": 0,
+      "avgDamage": 10.868832731648617
+    },
+    {
+      "id": "leapblast",
+      "name": "后跃齐射",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 318,
+      "hits": 629,
+      "damage": 8855,
+      "healing": 0,
+      "avgDamage": 27.845911949685533
+    },
+    {
+      "id": "shieldbash",
+      "name": "盾击冲锋",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 695,
+      "hits": 431,
+      "damage": 8427,
+      "healing": 0,
+      "avgDamage": 12.125179856115109
+    },
+    {
+      "id": "suppressfire",
+      "name": "压制火网",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 788,
+      "hits": 1080,
+      "damage": 8344,
+      "healing": 0,
+      "avgDamage": 10.588832487309645
+    },
+    {
+      "id": "trample",
+      "name": "巨兽冲撞",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 517,
+      "hits": 306,
+      "damage": 8303,
+      "healing": 0,
+      "avgDamage": 16.059961315280464
+    },
+    {
+      "id": "judgement",
+      "name": "天罚审判",
+      "kind": "普通技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 811,
+      "hits": 640,
+      "damage": 7521,
+      "healing": 0,
+      "avgDamage": 9.273736128236745
+    },
+    {
+      "id": "quakewave",
+      "name": "地震波",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 772,
+      "hits": 631,
+      "damage": 6844,
+      "healing": 0,
+      "avgDamage": 8.865284974093264
+    },
+    {
+      "id": "emorb",
+      "name": "电磁球",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 567,
+      "hits": 1372,
+      "damage": 6710,
+      "healing": 0,
+      "avgDamage": 11.834215167548502
+    },
+    {
+      "id": "seraphrush",
+      "name": "炽翼突进",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 798,
+      "hits": 321,
+      "damage": 6514,
+      "healing": 0,
+      "avgDamage": 8.162907268170427
+    },
+    {
+      "id": "devour",
+      "name": "吞噬",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 507,
+      "hits": 472,
+      "damage": 6397,
+      "healing": 4050,
+      "avgDamage": 12.617357001972387
+    },
+    {
+      "id": "backflip",
+      "name": "空翻脱离",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 931,
+      "hits": 453,
+      "damage": 6094,
+      "healing": 0,
+      "avgDamage": 6.545649838882921
+    },
+    {
+      "id": "voidstep",
+      "name": "虚空步",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 875,
+      "hits": 133,
+      "damage": 6034,
+      "healing": 0,
+      "avgDamage": 6.896
+    },
+    {
+      "id": "nullfield",
+      "name": "虚无领域",
+      "kind": "普通技",
+      "owners": [
+        "湮灭"
+      ],
+      "casts": 366,
+      "hits": 1466,
+      "damage": 5807,
+      "healing": 0,
+      "avgDamage": 15.866120218579235
+    },
+    {
+      "id": "afterimage",
+      "name": "残像突进",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 466,
+      "hits": 424,
+      "damage": 5579,
+      "healing": 0,
+      "avgDamage": 11.972103004291846
+    },
+    {
+      "id": "antidrone",
+      "name": "干扰脉冲",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 556,
+      "hits": 514,
+      "damage": 4872,
+      "healing": 0,
+      "avgDamage": 8.762589928057555
+    },
+    {
+      "id": "spin",
+      "name": "回旋斩",
+      "kind": "普通技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 684,
+      "hits": 291,
+      "damage": 3642,
+      "healing": 0,
+      "avgDamage": 5.324561403508772
+    },
+    {
+      "id": "roar",
+      "name": "战吼",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 451,
+      "hits": 386,
+      "damage": 2662,
+      "healing": 0,
+      "avgDamage": 5.902439024390244
+    },
+    {
+      "id": "dive",
+      "name": "俯冲掠袭",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 693,
+      "hits": 187,
+      "damage": 2579,
+      "healing": 0,
+      "avgDamage": 3.7215007215007216
+    },
+    {
+      "id": "dash",
+      "name": "冲刺斩",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 495,
+      "hits": 158,
+      "damage": 2394,
+      "healing": 0,
+      "avgDamage": 4.836363636363636
+    },
+    {
+      "id": "groundburst",
+      "name": "连环地裂",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 724,
+      "hits": 598,
+      "damage": 2359,
+      "healing": 0,
+      "avgDamage": 3.2582872928176796
+    },
+    {
+      "id": "phasewings",
+      "name": "相位翼",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 1086,
+      "hits": 442,
+      "damage": 2134,
+      "healing": 0,
+      "avgDamage": 1.9650092081031307
+    },
+    {
+      "id": "magnetpull",
+      "name": "磁力牵引",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 553,
+      "hits": 437,
+      "damage": 2134,
+      "healing": 0,
+      "avgDamage": 3.8589511754068715
+    },
+    {
+      "id": "grapple",
+      "name": "钩索突进",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 660,
+      "hits": 209,
+      "damage": 2098,
+      "healing": 0,
+      "avgDamage": 3.1787878787878787
+    },
+    {
+      "id": "flare",
+      "name": "干扰闪光",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 403,
+      "hits": 72,
+      "damage": 889,
+      "healing": 0,
+      "avgDamage": 2.205955334987593
+    },
+    {
+      "id": "smokebomb",
+      "name": "烟幕脱离",
+      "kind": "普通技",
+      "owners": [
+        "突击者"
+      ],
+      "casts": 320,
+      "hits": 63,
+      "damage": 846,
+      "healing": 0,
+      "avgDamage": 2.64375
+    },
+    {
+      "id": "clusterbomb",
+      "name": "集束炸弹",
+      "kind": "普通技",
+      "owners": [
+        "猎手"
+      ],
+      "casts": 584,
+      "hits": 7,
+      "damage": 91,
+      "healing": 0,
+      "avgDamage": 0.1558219178082192
+    },
+    {
+      "id": "repairfield",
+      "name": "纳米修复场",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 828,
+      "hits": 0,
+      "damage": 0,
+      "healing": 64151,
+      "avgDamage": 0
+    },
+    {
+      "id": "shadow",
+      "name": "影袭",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 789,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "aegis",
+      "name": "守护力场",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 757,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "grace",
+      "name": "恩泽",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 708,
+      "hits": 0,
+      "damage": 0,
+      "healing": 15450,
+      "avgDamage": 0
+    },
+    {
+      "id": "ammodrop",
+      "name": "弹药补给",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 688,
+      "hits": 0,
+      "damage": 0,
+      "healing": 8194,
+      "avgDamage": 0
+    },
+    {
+      "id": "reveal",
+      "name": "侦察脉冲",
+      "kind": "普通技",
+      "owners": [
+        "游隼"
+      ],
+      "casts": 661,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "blinkB",
+      "name": "残影回撤",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 644,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "overcharge",
+      "name": "过载射击",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 629,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "tailwind",
+      "name": "顺风",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 621,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "cloak",
+      "name": "光学迷彩",
+      "kind": "普通技",
+      "owners": [
+        "幽灵"
+      ],
+      "casts": 621,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "blinkF",
+      "name": "瞬步突进",
+      "kind": "普通技",
+      "owners": [
+        "堡垒"
+      ],
+      "casts": 614,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "bulwark",
+      "name": "钢壁架势",
+      "kind": "普通技",
+      "owners": [
+        "重装兵"
+      ],
+      "casts": 598,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "fortify",
+      "name": "震荡壁垒",
+      "kind": "普通技",
+      "owners": [
+        "巨兽"
+      ],
+      "casts": 596,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "rebuildfield",
+      "name": "重建立场",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 586,
+      "hits": 0,
+      "damage": 0,
+      "healing": 17639,
+      "avgDamage": 0
+    },
+    {
+      "id": "prismwall",
+      "name": "棱镜屏障",
+      "kind": "普通技",
+      "owners": [
+        "自由"
+      ],
+      "casts": 585,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "cover",
+      "name": "部署掩体",
+      "kind": "普通技",
+      "owners": [
+        "工匠"
+      ],
+      "casts": 540,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "healDrone",
+      "name": "修复无人机",
+      "kind": "普通技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 536,
+      "hits": 0,
+      "damage": 0,
+      "healing": 33418,
+      "avgDamage": 0
+    },
+    {
+      "id": "tumble",
+      "name": "战术翻滚",
+      "kind": "普通技",
+      "owners": [
+        "磁暴"
+      ],
+      "casts": 497,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "sanctuary",
+      "name": "圣域",
+      "kind": "普通技",
+      "owners": [
+        "天罚"
+      ],
+      "casts": 479,
+      "hits": 0,
+      "damage": 0,
+      "healing": 5114,
+      "avgDamage": 0
+    },
+    {
+      "id": "eshield",
+      "name": "能量护盾",
+      "kind": "普通技",
+      "owners": [
+        "新星"
+      ],
+      "casts": 405,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    },
+    {
+      "id": "sonicdash",
+      "name": "音爆冲刺",
+      "kind": "普通技",
+      "owners": [
+        "疾风"
+      ],
+      "casts": 398,
+      "hits": 0,
+      "damage": 0,
+      "healing": 0,
+      "avgDamage": 0
+    }
+  ]
+}

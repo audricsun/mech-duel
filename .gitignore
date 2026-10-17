@@ -1,0 +1,97 @@
+# ---- OS / editor junk ----
+.DS_Store
+._*
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+
+# ---- Logs & runtime temp ----
+*.log
+logs/
+tmp/
+temp/
+*.pid
+*.seed
+
+# ---- Test / coverage output ----
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+
+# ---- Build output & caches ----
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.eslintcache
+.turbo/
+.next/
+.nuxt/
+.svelte-kit/
+
+# ---- Python (tools/gen-brand-assets.py) ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# ---- Local secrets / env ----
+.env
+.env.*
+!.env.example
+
+# ---- AI agent scratch files & folders ----
+# Tool caches and session state
+.agent/
+.agents/
+.aider*
+.claude/
+.continue/
+.codeium/
+.cursor/
+.windsurf/
+.copilot/
+.gemini/
+.openhands/
+.roo/
+.mentat/
+.llm/
+.trae/
+
+# Generated share/preview bundles
+.trae-html-share-packages/
+
+# Scratch pads and scratch output
+scratch/
+scratchpad/
+agent-*.log
+agent-*.tmp
+*.agent.tmp
+
+# ---- Generic temp / backup files ----
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.old
+*.part
+*.crdownload
+*.download

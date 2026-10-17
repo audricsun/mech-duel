@@ -8,14 +8,18 @@
 'use strict';
 /* ---------------- 8. AI 控制器(轻量决策,带反应间隔) ---------------- */
 function cpuInput(m,opp,game,dt){
-  const o={left:false,right:false,guard:false,up:false,down:false,upEdge:false,downEdge:false,jump:false,atk:false,shoot:false};
+  const o={left:false,right:false,guard:false,up:false,down:false,leftEdge:false,rightEdge:false,upEdge:false,downEdge:false,jump:false,atk:false,shoot:false,ult:false};
   if(m.passive) return o;                   // 训练靶机:完全被动,只挨打不还手
   if(!opp) return o;                        // 无敌人:待机
-  const D=game.diffObj||DIFFS[1];           // 难度参数驱动
+  const D=game.diffObj||DIFFS[0];           // 难度参数驱动(主界面统一设置)
   const aiMem=m.ai||(m.ai={t:0,move:0,guardT:0,castCd:0});  // 每机体独立记忆
   aiMem.t-=dt; aiMem.guardT-=dt; aiMem.castCd=(aiMem.castCd||0)-dt;
   let casted=false;                         // 本帧是否已通过组合键施放技能
   const toRight=opp.x>m.x, dist=Math.abs(opp.x-m.x);
+  if(m.ult>=ULT_MAX && Math.random()<0.05){
+    const closeUlt=['ultEarthbreaker','ultZero','ultSupernova'].includes(m.ch.ult);
+    if(!closeUlt||dist<150) o.ult=true;   // 自身范围终结技:贴近后再放
+  }
   // 技能施放:模拟 防御(开窗)+方向+攻击 组合键
   const castSlot=(slot)=>{
     const id=m.ch.skills&&m.ch.skills[slot];
@@ -79,6 +83,24 @@ function cpuInput(m,opp,game,dt){
           case 'missileSalvo':ok=dist>120&&dist<340&&Math.random()<0.55; break;
           case 'rocketBarrage':ok=dist>110&&dist<280&&Math.random()<0.55; break;
           case 'drone3':     ok=Math.random()<0.55; break;
+          case 'magnetpull': ok=dist>70&&dist<190&&Math.random()<0.5; break;
+          case 'marklock':   ok=dist>110&&Math.random()<0.6; break;
+          case 'rebuildfield':ok=m.hp<m.maxHp*0.65&&Math.random()<0.6; break;
+          case 'fullburst':  ok=dist>110&&dist<320&&Math.random()<0.55; break;
+          case 'judgementpillar':ok=dist>70&&dist<360&&Math.random()<0.55; break;
+          case 'sonicdash':  ok=dist>90&&dist<200&&Math.random()<0.6; break;
+          case 'hammerorbit':ok=dist<70&&Math.random()<0.55; break;
+          case 'quakewave':  ok=dist>70&&dist<300&&Math.random()<0.55; break;
+          case 'groundburst':ok=dist>60&&dist<280&&Math.random()<0.5; break;
+          case 'mechbird':   ok=Math.random()<0.5; break;
+          case 'shieldbreak':ok=dist<130&&Math.random()<0.55; break;
+          case 'antidrone':  ok=dist<150&&Math.random()<0.5; break;
+          case 'reveal':     ok=Math.random()<0.4; break;
+          default: {
+            const v=SKILL_VARIANTS[id];
+            if(v&&v.aiR) ok=dist>=v.aiR[0]&&dist<=v.aiR[1]&&Math.random()<(v.aiP||0.5);
+            break;
+          }
         }
         if(ok) el.push(s.slot);
       }

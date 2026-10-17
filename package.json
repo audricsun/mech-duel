@@ -7,6 +7,11 @@
     "sim": "node tools/balance-sim.js",
     "sim:quick": "node tools/balance-sim.js --runs 40 --quiet",
     "sim:check": "node tools/balance-sim.js --runs 500 --diff 1 --matrix --compare tools/baseline.json",
-    "sim:snapshot": "node tools/balance-sim.js --runs 500 --diff 1 --matrix --save tools/baseline.json"
+    "sim:snapshot": "node tools/balance-sim.js --runs 500 --diff 1 --matrix --save tools/baseline.json",
+    "sim:detail": "node tools/balance-detail.js --mode spectate --matches 5000 --diff 0 --save tools/balance-detail-easy.json",
+    "sim:detail:normal": "node tools/balance-detail.js --mode spectate --matches 5000 --diff 1 --save tools/balance-detail-normal.json",
+    "sim:detail:rr": "node tools/balance-detail.js --mode roundrobin --runs 500 --diff 0 --save tools/balance-detail-rr-easy.json",
+    "sim:detail:rr-normal": "node tools/balance-detail.js --mode roundrobin --runs 500 --diff 1 --save tools/balance-detail-rr-normal.json",
+    "data:check": "node tools/data-check.js"
   }
 }

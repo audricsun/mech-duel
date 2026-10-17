@@ -23,6 +23,7 @@ function render(){
   const list = game.state==='title' ? game.titleDuo : game.mechs;
   drawFireZones();
   drawBullets();
+  drawBlasts();
   drawHazards();
   for(const m of list) drawMech(m);
   for(const m of list) drawMechEffects(m);
@@ -66,8 +67,6 @@ function render(){
   g.setTransform(SC,0,0,SC,0,0);
   if(game.state==='title'){
     drawTitle(T);
-  }else if(game.state==='diff'){
-    drawDiff();
   }else if(game.state==='map'){
     drawMapSelect(T);
   }else if(game.state==='select'||game.state==='cpuPick'||game.state==='vs'){
@@ -98,7 +97,7 @@ function render(){
         if(m.ch.airW){ text('空中 下+射击:'+WEAPONS[m.ch.airW].name+(m.ch.airW==='mortar'?' — 按发射时目标位置解算抛物线,落点范围爆炸':' — 自动追踪目标'),240,y,6.5,'#c9a6ff','center'); y+=9; }
         y+=3;
       }
-      text('技能:先按防御,0.5秒内输入 方向(前/后)+斩击/射击 组合出招 · ESC/P 暂停 · R 重开',240,y+4,7,'#5a648a','center');
+      text('双击方向冲刺 · 能量满 J+K 终结 · 防御后方向+斩/射 出招 · ESC/P 暂停 · R 重开',240,y+4,7,'#5a648a','center');
       if(Math.sin(T*4)>-0.3) text('按 [P] 继续',240,y+18,10,'#8a94b8','center');
     }
   }
@@ -115,8 +114,8 @@ function frame(ts){
 
 /* 标题页展示机甲(静态摆设:默认两台样机) */
 {
-  const d1=new Mech(0,CHARS[0],'p1'); d1.reset(150,1);
-  const d2=new Mech(1,CHARS[1],'p2'); d2.reset(330,-1);
+  const d1=new Mech(0,CHARS[0],'p1'); d1.reset(70,1);
+  const d2=new Mech(1,CHARS[1],'p2'); d2.reset(410,-1);
   game.titleDuo=[d1,d2];
 }
 game.mechs=[];

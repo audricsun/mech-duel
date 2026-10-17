@@ -42,6 +42,7 @@ const sfx = {
   hit(){ noise(0.11,0.24,2600); tone('square',190,58,0.11,0.16); tone('triangle',95,30,0.13,0.11); tone('square',820,240,0.05,0.06); },
   guard(){ tone('triangle',230,150,0.07,0.15); tone('square',1150,700,0.05,0.05); noise(0.05,0.10,4200); },
   jump(){ tone('square',200,470,0.09,0.055); tone('triangle',120,300,0.09,0.04); },
+  dash(){ tone('sawtooth',620,180,0.12,0.06); noise(0.12,0.09,3200); },
   boom(){ noise(0.6,0.34,1000); tone('sawtooth',130,38,0.55,0.20); tone('sine',70,32,0.6,0.16); },
   ko(){ tone('sawtooth',450,50,0.75,0.17); tone('square',700,120,0.5,0.08); noise(0.45,0.22,1300); },
   round(){ tone('square',523,523,0.09,0.09); tone('triangle',262,262,0.2,0.06); setTimeout(()=>tone('square',784,784,0.14,0.09),110); },
@@ -54,9 +55,19 @@ const sfx = {
 };
 /* 技能 id → 专属音色(叠加在通用施放音上,突出技能类型) */
 const SKILL_SFX={ healDrone:'heal', eshield:'shield', fortify:'shield', cloak:'shield', cover:'shield',
-  twinlaser:'beam', judgement:'beam', arcburst:'beam', lightning:'beam',
+  twinlaser:'beam', judgement:'beam', arcburst:'beam', lightning:'beam', marklock:'beam', fullburst:'beam',
+  rebuildfield:'heal',
   missileSalvo:'missile', hellfire:'missile', rocketsalvo:'missile', rocketBarrage:'missile',
-  mortarBarrage:'missile', incendiary:'missile' };
+  mortarBarrage:'missile', incendiary:'missile',
+  hammerorbit:'swing', quakewave:'boom', groundburst:'boom', shieldbreak:'shield',
+  mechbird:'beam', antidrone:'shield', reveal:'shield',
+  suppressfire:'shoot', smokebomb:'shield', ironcharge:'swing', bulwark:'shield', ammodrop:'heal',
+  railpiercer:'beam', afterimage:'swing', windblade:'beam', backflip:'swing', tailwind:'shield',
+  siegecannon:'missile', aegis:'shield', executionshot:'beam', grapple:'swing', clusterbomb:'missile',
+  voidstab:'swing', nightfall:'shield', meteorcharge:'boom', teslacoil:'shield', rocketjump:'missile',
+  dive:'swing', flare:'shield', phasewings:'swing', dronebarrage:'beam', prismwall:'shield', repairfield:'heal',
+  divinebeam:'beam', seraphrush:'swing', orbitaljudgement:'missile', sanctuary:'shield', grace:'heal',
+  singularity:'boom', voidstep:'swing', entropyrain:'missile', nullfield:'shield', devour:'heal' };
 
 /* ---------------- 2b. 多轨 MIDI 音序器(纯 WebAudio 合成,无外部素材/库) ----------------
  * 贴合游戏叙事:title 序章静谧 / menu 机库电子 / story 荒原叙事 / battle 遭遇战 /
@@ -129,107 +140,160 @@ const INST={
   bell:(f,t,d,v)=>{ mVoice('sine',f,t,Math.min(d,1.2),v,{a:0.005,dec:0.5});
                     mVoice('sine',f*2.76,t,Math.min(d,0.6),v*0.22,{a:0.004,dec:0.3}); }
 };
+/* —— 编曲辅助:把 16/32 步动机扩展为 3~5 段式长循环 ——
+ * __tr 移调(支持和弦) / __sec 规整到 32 步 / __arr 按和声计划拼接 / __drums 加鼓点过门。
+ * 每首 BGM 循环长度均超过 15 秒,并通过移调、留白和过门制造段落变化。 */
+const __NOTE_NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const __FLAT={Cb:'B',Db:'C#',Eb:'D#',Fb:'E',Gb:'F#',Ab:'G#',Bb:'A#'};
+function __tr(seq,n){
+  if(!n) return seq;
+  return seq.trim().split(/\s+/).map(tok=>{
+    if(tok==='.'||tok==='-'||/^[khsH]$/.test(tok)) return tok;
+    return tok.split('+').map(nm=>{
+      const m=/^([A-G][#b]?)(-?\d+)$/.exec(nm); if(!m) return nm;
+      let name=m[1]; if(name.endsWith('b')) name=__FLAT[name]||name;
+      const pc=__NOTE_NAMES.indexOf(name); if(pc<0) return nm;
+      const midi=12*(parseInt(m[2],10)+1)+pc+n;
+      const oct=Math.floor(midi/12)-1, p=((midi%12)+12)%12;
+      return __NOTE_NAMES[p]+oct;
+    }).join('+');
+  }).join(' ');
+}
+function __sec(seq,n=32){
+  const tk=seq.trim().split(/\s+/);
+  if(tk.length>=n) return tk.slice(0,n).join(' ');
+  const out=tk.slice(); while(out.length<n) out.push(...tk);
+  return out.slice(0,n).join(' ');
+}
+function __arr(seq,plan){
+  const base=__sec(seq,32);
+  return plan.map(v=>v===null?Array(32).fill('.').join(' '):__tr(base,v)).join(' ');
+}
+function __drums(seq,plan){
+  const base=__sec(seq,32).split(/\s+/);
+  return plan.map(fill=>{
+    const a=base.slice();
+    if(fill){ a[28]='s'; a[29]='s'; a[30]='h'; a[31]='H'; }
+    return a.join(' ');
+  }).join(' ');
+}
 const MUSIC={
   title:{ bpm:74, div:4, parts:[
-    {inst:'pad',  vol:0.20, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - C3+G3+E4 - - - - - - -'},
-    {inst:'bass', vol:0.22, seq:'D2 - - - - - - - A#1 - - - - - - - F2 - - - - - - - C2 - - - - - - -'},
-    {inst:'bell', vol:0.16, seq:'- - - - F5 - - - - - - - D5 - - - - - - - C5 - - - - - - A4 - - - -'}
+    {inst:'pad',  vol:0.20, seq:__arr('D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - C3+G3+E4 - - - - - - -',[0,3,0])},
+    {inst:'bass', vol:0.22, seq:__arr('D2 - - - - - - - A#1 - - - - - - - F2 - - - - - - - C2 - - - - - - -',[0,3,0])},
+    {inst:'bell', vol:0.16, seq:__arr('- - - - F5 - - - - - - - D5 - - - - - - - C5 - - - - - - A4 - - - -',[0,null,0])}
   ]},
   menu:{ bpm:106, div:4, parts:[
-    {inst:'pad',  vol:0.14, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
-    {inst:'bass', vol:0.22, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .'},
-    {inst:'pluck',vol:0.13, seq:'A3 C4 E4 A4 E4 C4 A3 E4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 D4 B3 G3 D4'},
-    {inst:'drum', vol:0.09, seq:'h . h . h . h . h . h . h . h . h . h . h . h . h . h . h . h .'}
+    {inst:'pad',  vol:0.14, seq:__arr('A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -',[0,0,3,5])},
+    {inst:'bass', vol:0.22, seq:__arr('A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .',[0,0,3,5])},
+    {inst:'pluck',vol:0.13, seq:__arr('A3 C4 E4 A4 E4 C4 A3 E4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 D4 B3 G3 D4',[0,3,5,3])},
+    {inst:'drum', vol:0.09, seq:__drums('h . h . h . h . h . h . h . h . h . h . h . h . h . h . h . h .',[0,0,0,1])}
   ]},
   story:{ bpm:80, div:4, parts:[
-    {inst:'pad',  vol:0.18, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - G2+D3+A#3 - - - - - - - A2+E3+C#4 - - - - - - -'},
-    {inst:'bass', vol:0.20, seq:'D2 - - - D2 - - - A#1 - - - A#1 - - - G1 - - - G1 - - - A1 - - - A1 - - -'},
-    {inst:'bell', vol:0.15, seq:'- D5 - - F5 - - - - - E5 - - D5 - - - - - A#4 - - A4 - - - - - C#5 - - -'}
+    {inst:'pad',  vol:0.18, seq:__arr('D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - G2+D3+A#3 - - - - - - - A2+E3+C#4 - - - - - - -',[0,5,0])},
+    {inst:'bass', vol:0.20, seq:__arr('D2 - - - D2 - - - A#1 - - - A#1 - - - G1 - - - G1 - - - A1 - - - A1 - - -',[0,5,0])},
+    {inst:'bell', vol:0.15, seq:__arr('- D5 - - F5 - - - - - E5 - - D5 - - - - - A#4 - - A4 - - - - - C#5 - - -',[0,null,0])}
   ]},
   battle:{ bpm:140, div:4, parts:[
-    {inst:'bass', vol:0.26, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . E2 . E2 . E2 . E2 .'},
-    {inst:'drum', vol:0.30, seq:'k . h . s . h k k . h . s . h . k . h . s . h k k . h . s . h .'},
-    {inst:'lead', vol:0.16, seq:'A4 . C5 E5 . D5 C5 A4 F4 . A4 C5 . A4 F4 D4 E4 . G4 C5 . B4 G4 E4 D4 . F4 A4 . G#4 A4 B4'},
-    {inst:'stab', vol:0.12, seq:'A3+C4+E4 . . . . . . . F3+A3+C4 . . . . . . . C4+E4+G4 . . . . . . . E3+G#3+B3 . . . . . . .'}
+    {inst:'bass', vol:0.26, seq:__arr('A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . E2 . E2 . E2 . E2 .',[0,0,5,3,0])},
+    {inst:'drum', vol:0.30, seq:__drums('k . h . s . h k k . h . s . h . k . h . s . h k k . h . s . h .',[0,0,1,0,1])},
+    {inst:'lead', vol:0.16, seq:__arr('A4 . C5 E5 . D5 C5 A4 F4 . A4 C5 . A4 F4 D4 E4 . G4 C5 . B4 G4 E4 D4 . F4 A4 . G#4 A4 B4',[0,3,5,3,0])},
+    {inst:'stab', vol:0.12, seq:__arr('A3+C4+E4 . . . . . . . F3+A3+C4 . . . . . . . C4+E4+G4 . . . . . . . E3+G#3+B3 . . . . . . .',[0,0,5,3,0])}
   ]},
   boss:{ bpm:152, div:4, parts:[
-    {inst:'drum', vol:0.32, seq:'k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h s'},
-    {inst:'bass', vol:0.28, seq:'D2 . D2 . D2 . D2 . G#2 . G#2 . G#2 . G#2 . D2 . D2 . D2 . D2 . A2 . A2 . A2 . A2 .'},
-    {inst:'lead', vol:0.16, seq:'D5 . D5 F5 . E5 D5 C#5 G#4 . G#4 B4 . A#4 G#4 G4 D5 . D5 F5 . A5 G#5 G5 F5 . E5 D5 . C#5 D5 A4'},
-    {inst:'pad',  vol:0.14, seq:'D3+A3+F4 - - - - - - - G#2+D3+B3 - - - - - - - D3+A3+F4 - - - - - - - A2+C#3+E3 - - - - - - -'}
+    {inst:'drum', vol:0.32, seq:__drums('k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h s',[0,0,1,0,1])},
+    {inst:'bass', vol:0.28, seq:__arr('D2 . D2 . D2 . D2 . G#2 . G#2 . G#2 . G#2 . D2 . D2 . D2 . D2 . A2 . A2 . A2 . A2 .',[0,0,1,5,0])},
+    {inst:'lead', vol:0.16, seq:__arr('D5 . D5 F5 . E5 D5 C#5 G#4 . G#4 B4 . A#4 G#4 G4 D5 . D5 F5 . A5 G#5 G5 F5 . E5 D5 . C#5 D5 A4',[0,1,5,3,0])},
+    {inst:'pad',  vol:0.14, seq:__arr('D3+A3+F4 - - - - - - - G#2+D3+B3 - - - - - - - D3+A3+F4 - - - - - - - A2+C#3+E3 - - - - - - -',[0,0,1,5,0])}
   ]},
   spectate:{ bpm:124, div:4, parts:[
-    {inst:'bass', vol:0.22, seq:'A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .'},
-    {inst:'pad',  vol:0.12, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
-    {inst:'drum', vol:0.24, seq:'k . h . s . h . k . h . s . h H k . h . s . h . k . h . s . h H'},
-    {inst:'pluck',vol:0.12, seq:'A3 C4 E4 A4 E4 C4 A3 C4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 B4 D4 G3 B3'}
+    {inst:'bass', vol:0.22, seq:__arr('A2 . A2 . A2 . A2 . F2 . F2 . F2 . F2 . C3 . C3 . C3 . C3 . G2 . G2 . G2 . G2 .',[0,3,5,3])},
+    {inst:'pad',  vol:0.12, seq:__arr('A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -',[0,3,5,3])},
+    {inst:'drum', vol:0.24, seq:__drums('k . h . s . h . k . h . s . h H k . h . s . h . k . h . s . h H',[0,0,1,1])},
+    {inst:'pluck',vol:0.12, seq:__arr('A3 C4 E4 A4 E4 C4 A3 C4 F3 A3 C4 F4 C4 A3 F3 A3 C4 E4 G4 C5 G4 E4 C4 E4 G3 B3 D4 G4 B4 D4 G3 B3',[0,3,5,3])}
   ]},
-/* —— 选人界面专属 BGM(明快、充满期待感,呼应"挑选出击机体") —— */
   select:{ bpm:120, div:4, parts:[
-    {inst:'bass', vol:0.24, seq:'A2 . A2 . F2 . F2 . C3 . C3 . G2 . G2 . A2 . A2 . F2 . F2 . C3 . C3 . E2 . E2 .'},
-    {inst:'pad',  vol:0.13, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -'},
-    {inst:'pluck',vol:0.13, seq:'A3 C4 E4 A4 C5 A4 E4 C4 F3 A3 C4 F4 A4 F4 C4 A3 C4 E4 G4 C5 E5 C5 G4 E4 G3 B3 D4 G4 B4 G4 D4 B3'},
-    {inst:'drum', vol:0.12, seq:'k . h . s . h . k . h . s . h . k . h . s . h . k . h . s . h H'}
+    {inst:'bass', vol:0.24, seq:__arr('A2 . A2 . F2 . F2 . C3 . C3 . G2 . G2 . A2 . A2 . F2 . F2 . C3 . C3 . E2 . E2 .',[0,3,5,3])},
+    {inst:'pad',  vol:0.13, seq:__arr('A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - - C3+G3+E4 - - - - - - - G2+D3+B3 - - - - - - -',[0,3,5,3])},
+    {inst:'pluck',vol:0.13, seq:__arr('A3 C4 E4 A4 C5 A4 E4 C4 F3 A3 C4 F4 A4 F4 C4 A3 C4 E4 G4 C5 E5 C5 G4 E4 G3 B3 D4 G4 B4 G4 D4 B3',[0,3,5,3])},
+    {inst:'drum', vol:0.12, seq:__drums('k . h . s . h . k . h . s . h . k . h . s . h . k . h . s . h H',[0,0,1,1])}
   ]},
-/* —— 各战场专属 mini 音轨:16 步短循环,按地图风格设计 —— */
-  map0:{ bpm:136, div:4, parts:[   // 夜幕都市:合成器浪潮
-    {inst:'bass', vol:0.24, seq:'A1 A1 . A1 F1 F1 . F1 C2 C2 . C2 G1 G1 . G1'},
-    {inst:'pad',  vol:0.12, seq:'A2+E3+C4 - - - F2+C3+A3 - - - C3+G3+E4 - - - G2+D3+B3 - - -'},
-    {inst:'lead', vol:0.13, seq:'A4 . C5 . E5 . C5 . F4 . A4 . C5 . A4 .'},
-    {inst:'drum', vol:0.14, seq:'k . h . s . h . k . h . s . h h'}
+  map0:{ bpm:136, div:4, parts:[
+    {inst:'bass', vol:0.24, seq:__arr('A1 A1 . A1 F1 F1 . F1 C2 C2 . C2 G1 G1 . G1',[0,0,3,5,0])},
+    {inst:'pad',  vol:0.12, seq:__arr('A2+E3+C4 - - - F2+C3+A3 - - - C3+G3+E4 - - - G2+D3+B3 - - -',[0,0,3,5,0])},
+    {inst:'lead', vol:0.13, seq:__arr('A4 . C5 . E5 . C5 . F4 . A4 . C5 . A4 .',[0,3,5,3,0])},
+    {inst:'drum', vol:0.14, seq:__drums('k . h . s . h . k . h . s . h h',[0,0,1,0,1])}
   ]},
-  map1:{ bpm:116, div:4, parts:[   // 荒漠遗址:异域干燥
-    {inst:'bass', vol:0.22, seq:'D2 . . D2 . A1 . . A#1 . . A#1 . C2 . .'},
-    {inst:'pluck',vol:0.13, seq:'D3 F3 A3 D4 A3 F3 D3 F3 A#2 D3 F3 A#3 F3 D3 A#2 D3'},
-    {inst:'bell', vol:0.12, seq:'. . A4 . . . F4 . . . D4 . . . C4 .'},
-    {inst:'drum', vol:0.10, seq:'k . . h s . . h k . . h s . h .'}
+  map1:{ bpm:116, div:4, parts:[
+    {inst:'bass', vol:0.22, seq:__arr('D2 . . D2 . A1 . . A#1 . . A#1 . C2 . .',[0,5,3,0])},
+    {inst:'pluck',vol:0.13, seq:__arr('D3 F3 A3 D4 A3 F3 D3 F3 A#2 D3 F3 A#3 F3 D3 A#2 D3',[0,5,3,0])},
+    {inst:'bell', vol:0.12, seq:__arr('. . A4 . . . F4 . . . D4 . . . C4 .',[0,null,5,0])},
+    {inst:'drum', vol:0.10, seq:__drums('k . . h s . . h k . . h s . h .',[0,0,1,1])}
   ]},
-  map2:{ bpm:108, div:4, parts:[   // 冰原哨站:清冷氛围
-    {inst:'pad',  vol:0.16, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - -'},
-    {inst:'bass', vol:0.20, seq:'D2 - - - - - - - A#1 - - - - - - -'},
-    {inst:'bell', vol:0.15, seq:'- - D5 - - - F5 - - - A4 - - - D5 -'},
-    {inst:'drum', vol:0.08, seq:'. . h . . . h . . . h . . . h .'}
+  map2:{ bpm:108, div:4, parts:[
+    {inst:'pad',  vol:0.16, seq:__arr('D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - -',[0,5,3,0])},
+    {inst:'bass', vol:0.20, seq:__arr('D2 - - - - - - - A#1 - - - - - - -',[0,5,3,0])},
+    {inst:'bell', vol:0.15, seq:__arr('- - D5 - - - F5 - - - A4 - - - D5 -',[0,null,5,0])},
+    {inst:'drum', vol:0.08, seq:__drums('. . h . . . h . . . h . . . h .',[0,0,1,1])}
   ]},
-  map3:{ bpm:148, div:4, parts:[   // 熔岩工厂:工业重击
-    {inst:'drum', vol:0.18, seq:'k h s h k h s h k h s h k h s H'},
-    {inst:'bass', vol:0.26, seq:'E1 . E1 . E1 E1 . E1 G1 . G1 . G1 G1 . G1'},
-    {inst:'stab', vol:0.12, seq:'E3+G3+B3 . . . . . . . G2+B2+D3 . . . . . . .'},
-    {inst:'lead', vol:0.13, seq:'E4 . G4 . B4 . G4 E4 D4 . F#4 . A4 . F#4 D4'}
+  map3:{ bpm:148, div:4, parts:[
+    {inst:'drum', vol:0.18, seq:__drums('k h s h k h s h k h s h k h s H',[0,0,1,0,1])},
+    {inst:'bass', vol:0.26, seq:__arr('E1 . E1 . E1 E1 . E1 G1 . G1 . G1 G1 . G1',[0,0,5,3,0])},
+    {inst:'stab', vol:0.12, seq:__arr('E3+G3+B3 . . . . . . . G2+B2+D3 . . . . . . .',[0,0,5,3,0])},
+    {inst:'lead', vol:0.13, seq:__arr('E4 . G4 . B4 . G4 E4 D4 . F#4 . A4 . F#4 D4',[0,3,5,3,0])}
   ]},
-  map4:{ bpm:124, div:4, parts:[   // 轨道残骸:失重空灵
-    {inst:'pad',  vol:0.15, seq:'A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - -'},
-    {inst:'bass', vol:0.20, seq:'A1 . . . . . F1 . . . . . C2 . . .'},
-    {inst:'bell', vol:0.14, seq:'- A5 - - E5 - - - - C5 - - A4 - - -'},
-    {inst:'drum', vol:0.08, seq:'. . h . . . h . . . h . . . h H'}
+  map4:{ bpm:124, div:4, parts:[
+    {inst:'pad',  vol:0.15, seq:__arr('A2+E3+C4 - - - - - - - F2+C3+A3 - - - - - - -',[0,3,5,3])},
+    {inst:'bass', vol:0.20, seq:__arr('A1 . . . . . F1 . . . . . C2 . . .',[0,3,5,3])},
+    {inst:'bell', vol:0.14, seq:__arr('- A5 - - E5 - - - - C5 - - A4 - - -',[0,null,3,0])},
+    {inst:'drum', vol:0.08, seq:__drums('. . h . . . h . . . h . . . h H',[0,0,1,1])}
   ]},
-  map5:{ bpm:92, div:4, parts:[    // 远古神殿:空灵圣咏
-    {inst:'pad',  vol:0.17, seq:'D3+A3+F4 - - - - - - - C3+G3+E4 - - - - - - -'},
-    {inst:'bass', vol:0.19, seq:'D2 - - - - - - - C2 - - - - - - -'},
-    {inst:'bell', vol:0.15, seq:'D5 - - F5 - - A4 - C5 - - E5 - - D5 -'}
+  map5:{ bpm:92, div:4, parts:[
+    {inst:'pad',  vol:0.17, seq:__arr('D3+A3+F4 - - - - - - - C3+G3+E4 - - - - - - -',[0,5,0])},
+    {inst:'bass', vol:0.19, seq:__arr('D2 - - - - - - - C2 - - - - - - -',[0,5,0])},
+    {inst:'bell', vol:0.15, seq:__arr('D5 - - F5 - - A4 - C5 - - E5 - - D5 -',[0,null,0])}
   ]},
-  map6:{ bpm:150, div:4, parts:[   // 数据深渊:故障电子
-    {inst:'drum', vol:0.18, seq:'k . h h s . h h k . h h s . h H'},
-    {inst:'bass', vol:0.25, seq:'F1 F1 . F1 C2 C2 . C2 G#1 G#1 . G#1 D#2 D#2 . D#2'},
-    {inst:'pluck',vol:0.13, seq:'F4 A4 C5 F5 C5 A4 F4 A4 C4 E4 G4 C5 G4 E4 C4 E4'},
-    {inst:'stab', vol:0.11, seq:'F3+A3+C4 . . . . . . . C#3+F3+G#3 . . . . . . .'}
+  map6:{ bpm:150, div:4, parts:[
+    {inst:'drum', vol:0.18, seq:__drums('k . h h s . h h k . h h s . h H',[0,0,1,0,1])},
+    {inst:'bass', vol:0.25, seq:__arr('F1 F1 . F1 C2 C2 . C2 G#1 G#1 . G#1 D#2 D#2 . D#2',[0,0,1,5,0])},
+    {inst:'pluck',vol:0.13, seq:__arr('F4 A4 C5 F5 C5 A4 F4 A4 C4 E4 G4 C5 G4 E4 C4 E4',[0,3,5,3,0])},
+    {inst:'stab', vol:0.11, seq:__arr('F3+A3+C4 . . . . . . . C#3+F3+G#3 . . . . . . .',[0,0,1,5,0])}
   ]},
-/* —— 隐藏机体专属 BGM:优先级 湮灭 > 天罚 > 地图 mini 音轨 —— */
-  judgement:{ bpm:148, div:4, parts:[   // 天罚:审判降临(庄严金调)
-    {inst:'drum', vol:0.30, seq:'k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h H'},
-    {inst:'bass', vol:0.28, seq:'D2 . D2 . D2 . D2 D2 G2 . G2 . G2 . G2 G2 A#2 . A#2 . A#2 . A#2 A#2 C3 . C3 . C3 . C3 C3'},
-    {inst:'lead', vol:0.16, seq:'D5 . F5 . A5 . G5 F5 E5 . D5 . C5 . D5 . D5 . F5 . A5 . C6 A5 G5 . F5 . E5 . F5 G5'},
-    {inst:'pad',  vol:0.15, seq:'D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - A2+E3+C#4 - - - - - - -'},
-    {inst:'bell', vol:0.13, seq:'- - - - A5 - - - - - - - F5 - - - - - - - D5 - - - - - - - C#5 - - -'}
+  judgement:{ bpm:148, div:4, parts:[
+    {inst:'drum', vol:0.30, seq:__drums('k . h k s . h . k . h k s . h s k . h k s . h . k . h k s . h H',[0,0,1,0,1])},
+    {inst:'bass', vol:0.28, seq:__arr('D2 . D2 . D2 . D2 D2 G2 . G2 . G2 . G2 G2 A#2 . A#2 . A#2 . A#2 A#2 C3 . C3 . C3 . C3 C3',[0,0,3,5,0])},
+    {inst:'lead', vol:0.16, seq:__arr('D5 . F5 . A5 . G5 F5 E5 . D5 . C5 . D5 . D5 . F5 . A5 . C6 A5 G5 . F5 . E5 . F5 G5',[0,3,5,3,0])},
+    {inst:'pad',  vol:0.15, seq:__arr('D3+A3+F4 - - - - - - - A#2+F3+D4 - - - - - - - F3+A3+C4 - - - - - - - A2+E3+C#4 - - - - - - -',[0,0,3,5,0])},
+    {inst:'bell', vol:0.13, seq:__arr('- - - - A5 - - - - - - - F5 - - - - - - - D5 - - - - - - - C#5 - - -',[0,null,3,5,0])}
   ]},
-  oblivion:{ bpm:158, div:4, parts:[    // 湮灭:终焉具现(最高优先级,暗黑压迫)
-    {inst:'drum', vol:0.32, seq:'k k h k s s h k k . h k s . h s k k h k s s h k k . h k s . h H'},
-    {inst:'bass', vol:0.28, seq:'C2 . C2 C2 C2 . C2 . G#1 . G#1 G#1 G#1 . G#1 . A#1 . A#1 A#1 A#1 . A#1 . D#2 . D#2 D#2 D#2 . D#2 D#2'},
-    {inst:'lead', vol:0.16, seq:'C5 . D#5 . G5 . A#5 . C6 A#5 G5 D#5 C5 . D#5 . C5 . D#5 . G5 . C6 . A#5 G5 F5 D#5 D5 D#5 C5 D#5'},
-    {inst:'pad',  vol:0.16, seq:'C3+G3+D#4 - - - - - - - G#2+D#3+C4 - - - - - - - A#2+F3+D4 - - - - - - - D#3+A#3+G4 - - - - - - -'},
-    {inst:'stab', vol:0.12, seq:'C4+D#4+G4 . . . . . . . G#3+C4+D#4 . . . . . . . A#3+D4+F4 . . . . . . . D#4+G4+A#4 . . . . . . .'}
+  oblivion:{ bpm:158, div:4, parts:[
+    {inst:'drum', vol:0.32, seq:__drums('k k h k s s h k k . h k s . h s k k h k s s h k k . h k s . h H',[0,0,1,0,1])},
+    {inst:'bass', vol:0.28, seq:__arr('C2 . C2 C2 C2 . C2 . G#1 . G#1 G#1 G#1 . G#1 . A#1 . A#1 A#1 A#1 . A#1 . D#2 . D#2 D#2 D#2 . D#2 D#2',[0,0,1,5,0])},
+    {inst:'lead', vol:0.16, seq:__arr('C5 . D#5 . G5 . A#5 . C6 A#5 G5 D#5 C5 . D#5 . C5 . D#5 . G5 . C6 . A#5 G5 F5 D#5 D5 D#5 C5 D#5',[0,1,5,3,0])},
+    {inst:'pad',  vol:0.16, seq:__arr('C3+G3+D#4 - - - - - - - G#2+D#3+C4 - - - - - - - A#2+F3+D4 - - - - - - - D#3+A#3+G4 - - - - - - -',[0,0,1,5,0])},
+    {inst:'stab', vol:0.12, seq:__arr('C4+D#4+G4 . . . . . . . G#3+C4+D#4 . . . . . . . A#3+D4+F4 . . . . . . . D#4+G4+A#4 . . . . . . .',[0,0,1,5,0])}
   ]}
 };
 const MUS={track:null,name:'',want:'',step:0,nextT:0,timer:null};
+/* 主界面 BGM:从全部地图专属音轨中随机开局,按 M 循环切换 */
+let titleBgmIdx=-1;
+let musicMuted=false;                         // 主界面按钮:关闭/开启全部背景音乐(不影响音效)
+function titleBgmNext(){
+  const n=Math.max(1,MAPS.length);
+  titleBgmIdx=((titleBgmIdx<0?ri(0,n-1):titleBgmIdx)+1)%n;
+  musicSet('map'+titleBgmIdx);
+}
+function musicToggleMute(){
+  musicMuted=!musicMuted;
+  if(musicMuted){
+    if(MUS.timer){ clearInterval(MUS.timer); MUS.timer=null; }
+    MUS.track=null; MUS.name='';
+    if(MGAIN) MGAIN.gain.value=0;
+  }else{
+    if(MGAIN) MGAIN.gain.value=0.5;
+    musicResume();
+  }
+}
 function mCompile(tr){
   if(tr._steps) return tr._steps;
   const steps=[]; let len=0;
@@ -260,6 +324,7 @@ function mPlay(ev,t,sd){
   ev.t.split('+').forEach(nm=>{ const f=mNote(nm); if(f) fn(f,t,dur,ev.vol); });
 }
 function mStart(name){
+  if(musicMuted) return;
   const tr=MUSIC[name]; if(!tr||!AC) return;
   if(MUS.name===name&&MUS.timer) return;      // 已在播放同一轨 → 不打断
   mCompile(tr);
@@ -269,9 +334,9 @@ function mStart(name){
 function musicSet(name){
   if(!name||MUS.want===name) return;
   MUS.want=name;
-  if(AC) mStart(name);                        // AC 未就绪时仅记录,待 musicResume 补起
+  if(AC&&!musicMuted) mStart(name);           // AC 未就绪时仅记录,待 musicResume 补起
 }
-function musicResume(){ if(AC&&MUS.want) mStart(MUS.want); }
+function musicResume(){ if(AC&&!musicMuted&&MUS.want) mStart(MUS.want); }
 function musicTick(){
   if(!AC||!MUS.track) return;
   const tr=MUS.track, sd=60/tr.bpm/(tr.div||4), ahead=AC.currentTime+0.35;
@@ -299,18 +364,22 @@ function heroMusic(){                    // 隐藏机体专属 MIDI:湮灭(终�
 }
 function desiredMusic(){
   const s=game.state;
-  if(s==='title') return 'title';
+  if(s==='title'){                                  // 主界面:随机地图 BGM(M 切换)
+    if(titleBgmIdx<0) titleBgmIdx=ri(0,MAPS.length-1);
+    return 'map'+titleBgmIdx;
+  }
   if(s==='storyChar'||s==='story'||s==='scenario') return 'story';
-  if(s==='diff'||s==='cpuPick'||s==='map'||s==='vs') return 'menu';
+  if(s==='cpuPick'||s==='map') return 'menu';
+  if(s==='vs') return game.mode===3?'map'+(game.mapIdx|0):'menu';
   if(s==='select') return 'select';                 // 选人界面专属 BGM
   if(s==='intro'||s==='fight'||s==='ko'){
-    if(game.mode===3) return 'spectate';
+    if(game.mode===3) return 'map'+(game.mapIdx|0); // 观赏模式:忽略隐藏机体专属 BGM,始终使用地图音轨
     const h=heroMusic();                            // 隐藏机体专属 MIDI 优先于地图音轨
     if(h) return h;
     if(game.storyMode&&isBossWave()) return 'boss';
     return 'map'+(game.mapIdx|0);                   // 各战场专属 mini 音轨
   }
   if(s==='sresult') return game.storyMode?'story':'menu';
-  if(s==='end') return game.mode===3?'spectate':'menu';
+  if(s==='end') return game.mode===3?'map'+(game.mapIdx|0):'menu';
   return 'menu';
 }

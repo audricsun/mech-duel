@@ -8,16 +8,16 @@
 'use strict';
 /* ---------------- 9. 比赛流程 ---------------- */
 const game={
-  state:'title',        // title | diff | select | cpuPick | map | vs | intro | fight | ko | end
-  mode:0,               // 0=双人 1=人机
-  diffObj:DIFFS[1], select:null, mapIdx:0,
+  state:'title',        // title | select | cpuPick | map | vs | intro | fight | ko | end
+  mode:0,               // 0=对战 1=街机 2=训练 3=观赏
+  diffObj:DIFFS[0], select:null, mapIdx:0,
   round:1, timer:ROUND_TIME, koT:0, koWinner:null,
   shake:0, ann:null, pause:false, t:0,
   mechs:[],
   storyMode:false, storyIdx:0, storySel:{cursor:0}, storyWave:0, storyWaves:[], storyScenT:0,
   storyHero:0, storyPick:{cursor:0},
   storyWin:false, storyResT:0, storyUnlockMsg:null, storyMode0:false,
-  challengeStreak:0,   // 挑战 AI 模式:当前连胜场数(玩家取胜后自动换对手继续)
+  challengeStreak:0,   // 街机 Arcade 模式:当前连胜场数(玩家取胜后自动换对手继续)
   spectateNextT:0,     // 观赏模式:当前场结束后自动换人续场的倒计时
   spectateWinner:null, // 观赏模式:上一场获胜方(结算界面用)
   spectateStreak:0,    // 观赏模式:当前擂主连续守擂场数
@@ -47,15 +47,15 @@ const game={
     return best;
   },
   setAnn(text,size,dur,col){ this.ann={text,size,dur,t:dur,col:col||'#ffffff'}; },
-  beginFlow(mode){        // 标题进入:0 双人 → 直接选人;1 人机 → 先选难度
+  beginFlow(mode){        // 标题进入:0 对战 / 1 街机 → 均直接进入选人(难度在主界面统一设置)
     this.mode=mode;
     this.storyMode=false;
     this.mechs=[]; bullets=[]; particles=[];
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.select={cursor:0,idx1:-1,idx2:-1,phase:'p1',t:0,pickT:0};
     this.mapIdx=0;
     this.challengeStreak=0;
-    this.state = mode===1?'diff':'select';
+    this.state='select';
     sfx.ui();
   },
   setupMatch(){           // 双方机体确定后开赛
@@ -73,7 +73,7 @@ const game={
   startRound(){
     this.mechs[0].reset(120,1); this.mechs[1].reset(360,-1);
     bullets=[]; particles=[]; dmgTexts=[]; resetHazards();
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.timer=ROUND_TIME; this.koWinner=null;
     this.state='intro'; this.introT=1.7;
     this.setAnn('ROUND '+this.round,24,1.1,'#ffe27a');
@@ -94,7 +94,7 @@ const game={
       return;
     }
     if(winner && winner.wins>=2){
-      if(this.mode===1){                       // 挑战 AI:玩家取胜 → 换对手续战;AI 取胜 → 挑战结束
+      if(this.mode===1){                       // 街机 Arcade:玩家取胜 → 换对手续战;AI 取胜 → 挑战结束
         if(winner===this.mechs[0]){ this.challengeStreak++; this.nextChallenger(); return; }
         this.state='end';
         this.setAnn(mechLabel(winner)+' '+winner.ch.name+' 获胜!',20,99,'#ffe27a');
@@ -108,7 +108,7 @@ const game={
       this.startRound();
     }
   },
-  nextChallenger(){        // 挑战 AI:随机抽一位新对手,直接展开下一场
+  nextChallenger(){        // 街机 Arcade:随机抽一位新对手,直接展开下一场
     const S=this.select, c1=CHARS[S.idx1];
     const pool=[];
     for(let i=0;i<CHARS.length;i++) if(i!==S.idx2 && charUnlocked(i)) pool.push(i);
@@ -126,7 +126,7 @@ const game={
   beginTraining(){         // 标题进入:选择练习用机体
     this.mode=2; this.storyMode=false;
     this.mechs=[]; bullets=[]; particles=[]; dmgTexts=[];
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.select={cursor:0,idx1:-1,idx2:-1,phase:'p1',t:0,pickT:0};
     this.mapIdx=ri(0,MAPS.length-1);
     this.state='select'; sfx.ui();
@@ -136,7 +136,7 @@ const game={
     this.mechs=[ new Mech(0,CHARS[S.idx1],'p1'), new Mech(1,TRAIN_DUMMY,'cpu') ];
     const d=this.mechs[1]; d.invincible=true; d.passive=true; d.isDummy=true;
     bullets=[]; particles=[]; dmgTexts=[]; resetHazards();
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.mechs[0].reset(120,1); d.reset(360,-1);
     this.timer=0; this.koWinner=null; this.round=1;
     this.state='intro'; this.introT=1.2;
@@ -146,7 +146,7 @@ const game={
   beginSpectate(){         // 标题进入:随机抽两位机体对峙(含隐藏机体)
     this.mode=3; this.storyMode=false;
     this.mechs=[]; bullets=[]; particles=[]; dmgTexts=[];
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.select={cursor:0,idx1:-1,idx2:-1,phase:'vs',t:0,pickT:0};
     this.pickSpectators(); this.mapIdx=ri(0,MAPS.length-1);
     this.spectateStreak=0; this.spectateLastSlot=-1;
@@ -182,7 +182,7 @@ const game={
   /* ---- 故事模式 ---- */
   beginStory(){           // 标题 / 更换机师 → 选择出击机师
     this.mode=0; this.storyMode=false; this.mechs=[]; bullets=[]; particles=[]; dmgTexts=[];
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.storyPick={cursor:clamp(this.storyHero,0,CHARS.length-1)};
     this.state='storyChar';
     sfx.ui();
@@ -210,7 +210,7 @@ const game={
     const lv=STORY[this.storyIdx];
     this.storyMode=true;
     bullets=[]; particles=[]; dmgTexts=[]; resetHazards();
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.mechs=[ new Mech(0, CHARS[this.storyHero], 'p1') ];
     this.mechs[0].reset(70,1);
     const half=Math.ceil(lv.count/2);
@@ -238,7 +238,7 @@ const game={
       defs.push({ ch:mobChar(t), mob:true, boss:false });
     }
     if(w.boss){
-      defs.push({ ch:bossChar(lv, this.storyHero), mob:false, boss:true });
+      defs.push({ ch:bossChar(lv), mob:false, boss:true });
     }
     let nid=this.mechs.reduce((a,m)=>Math.max(a,m.id),0)+1;
     const N=defs.length;
@@ -298,7 +298,7 @@ const game={
   exitStory(){
     this.storyMode=false;
     this.mechs=[]; bullets=[]; particles=[]; dmgTexts=[];
-    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[];
+    fireZones=[]; drones=[]; covers=[]; iceballs=[]; emorbs=[]; lightnings=[]; blasts=[];
     this.storySel={cursor:this.storyIdx};
     this.mapIdx=STORY[this.storyIdx].map;
     this.state='story';
@@ -339,14 +339,16 @@ function updateGame(dt){
   musicSet(desiredMusic());          // 依据当前状态切换背景音轨(AC 未就绪时静默记录)
 
   // 全局按键
-  if(pressed['KeyR']&&game.state!=='title'){ game.storyMode=false; game.state='title'; game.ladderOpen=false; game.pause=false; sfx.ui(); }
+  if(pressed['KeyR']&&game.state!=='title'){ game.storyMode=false; game.state='title'; game.ladderOpen=false; game.pause=false; titleBgmIdx=ri(0,MAPS.length-1); sfx.ui(); }
   if(pressed['Escape']&&game.mode===3&&game.state!=='title'){ game.ladderOpen=!game.ladderOpen; sfx.ui(); }   // 观赏模式:ESC 唤出/收起胜率天梯,不暂停对战
   else if((pressed['KeyP']||pressed['Escape'])&&(game.state==='fight'||game.state==='intro')){ game.pause=!game.pause; sfx.ui(); }
 
   switch(game.state){
     case 'title':
-      if(pressed['Digit1']||pressed['Numpad1']){ game.beginFlow(0); break; }
-      if(pressed['Digit2']||pressed['Numpad2']){ game.beginFlow(1); break; }
+      if(pressed['KeyT']){ const di=DIFFS.indexOf(game.diffObj); game.diffObj=DIFFS[(di+1)%DIFFS.length]; sfx.ui(); break; }
+      if(pressed['KeyM']){ titleBgmNext(); break; }
+      if(pressed['Digit1']||pressed['Numpad1']){ game.beginFlow(1); break; }   // 街机
+      if(pressed['Digit2']||pressed['Numpad2']){ game.beginFlow(0); break; }   // 对战
       if(pressed['Digit3']||pressed['Numpad3']){ game.beginStory(); break; }
       if(pressed['Digit4']||pressed['Numpad4']){ game.beginTraining(); break; }
       if(pressed['Digit5']||pressed['Numpad5']){ game.beginSpectate(); break; }
@@ -355,7 +357,8 @@ function updateGame(dt){
       const S=game.storyPick, N=CHARS.length;
       if(pressed['KeyA']||pressed['ArrowLeft']) S.cursor=(S.cursor+N-1)%N;
       else if(pressed['KeyD']||pressed['ArrowRight']) S.cursor=(S.cursor+1)%N;
-      else if(pressed['KeyW']||pressed['ArrowUp']||pressed['KeyS']||pressed['ArrowDown']) S.cursor=(S.cursor+7)%N;
+      else if(pressed['KeyW']||pressed['ArrowUp']) S.cursor=(S.cursor+N-SEL_COLS)%N;
+      else if(pressed['KeyS']||pressed['ArrowDown']) S.cursor=(S.cursor+SEL_COLS)%N;
       else if(pressed['KeyJ']||pressed['Comma']||pressed['Enter']||pressed['Space']) game.confirmStoryHero(S.cursor);
       else for(let i=0;i<9;i++) if(pressed['Digit'+(i+1)]||pressed['Numpad'+(i+1)]){ S.cursor=i; game.confirmStoryHero(i); break; }
       break;}
@@ -373,13 +376,6 @@ function updateGame(dt){
       game.storyScenT+=dt;
       if(game.storyScenT>0.25&&(pressed['KeyJ']||pressed['Comma']||pressed['Enter']||pressed['Space'])) game.startStoryFight();
       break;
-    case 'diff':{
-      let d=-1;
-      if(pressed['Digit1']||pressed['Numpad1']) d=0;
-      else if(pressed['Digit2']||pressed['Numpad2']) d=1;
-      else if(pressed['Digit3']||pressed['Numpad3']) d=2;
-      if(d>=0){ game.diffObj=DIFFS[d]; game.state='select'; sfx.ui(); }
-      break;}
     case 'select':{
       const S=game.select, N=CHARS.length+1;      // 15 格:14 机体 + 随机
       if(S.phase==='p1'||S.phase==='p2'){
@@ -441,6 +437,7 @@ function updateGame(dt){
       updateIceballs(dt,game.mechs);
       updateEmorbs(dt,game.mechs);
       updateLightnings(dt,game.mechs);
+      updateBlasts(dt);
       if(!game.storyMode && game.mode<2){    // 训练/观赏模式不计时、不触发地图机关
         updateHazards(dt);
         game.timer-=dt;
@@ -464,6 +461,7 @@ function updateGame(dt){
       updateIceballs(dt,game.mechs);
       updateEmorbs(dt,game.mechs);
       updateLightnings(dt,game.mechs);
+      updateBlasts(dt);
       game.koT-=dt;
       if(game.koT<=0) game.endRound(game.koWinner);
       break;
@@ -477,6 +475,7 @@ function updateGame(dt){
       updateIceballs(dt,game.mechs);
       updateEmorbs(dt,game.mechs);
       updateLightnings(dt,game.mechs);
+      updateBlasts(dt);
       if(game.storyResT>0.8&&(pressed['KeyJ']||pressed['Comma']||pressed['Enter']||pressed['Space'])) game.exitStory();
       break;
     case 'end':

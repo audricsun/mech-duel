@@ -57,21 +57,30 @@ cv.addEventListener('pointerdown',e=>{
   const r=cv.getBoundingClientRect();
   const x=(e.clientX-r.left)/r.width*W, y=(e.clientY-r.top)/r.height*H;
   if(game.state==='title'){
-    if(y>=110&&y<200){
-      const i=clamp(Math.floor((y-110)/18),0,4);
-      if(i===0) game.beginFlow(0);
-      else if(i===1) game.beginFlow(1);
+    // 左下角难度选项
+    for(let i=0;i<DIFFS.length;i++){
+      const bx=DIFFSEL_X+i*(DIFFSEL_W+DIFFSEL_GAP);
+      if(x>=bx&&x<bx+DIFFSEL_W&&y>=DIFFSEL_Y&&y<DIFFSEL_Y+DIFFSEL_H){
+        game.diffObj=DIFFS[i]; sfx.ui(); return;
+      }
+    }
+    // 右下角 BGM 开关
+    if(x>=MUSICBTN_X&&x<MUSICBTN_X+MUSICBTN_W&&y>=MUSICBTN_Y&&y<MUSICBTN_Y+MUSICBTN_H){
+      musicToggleMute(); sfx.ui(); return;
+    }
+    if(y>=116&&y<216){
+      const i=clamp(Math.floor((y-116)/20),0,4);
+      if(i===0) game.beginFlow(1);          // 街机
+      else if(i===1) game.beginFlow(0);     // 对战
       else if(i===2) game.beginStory();
       else if(i===3) game.beginTraining();
       else game.beginSpectate();
     }
-  }else if(game.state==='diff'){
-    if(y>=100&&y<=200){ game.diffObj=DIFFS[clamp(Math.floor((y-100)/32),0,2)]; game.state='select'; sfx.ui(); }
   }else if(game.state==='select'){
     const S=game.select;
-    if((S.phase==='p1'||S.phase==='p2')&&x>=SEL_CX&&x<SEL_CX+SEL_COLS*SEL_GX&&y>=SEL_CY&&y<SEL_CY+3*SEL_GY){
+    if((S.phase==='p1'||S.phase==='p2')&&x>=SEL_CX&&x<SEL_CX+SEL_COLS*SEL_GX&&y>=SEL_CY&&y<SEL_CY+SEL_ROWS*SEL_GY){
       const col=clamp(Math.floor((x-SEL_CX)/SEL_GX),0,SEL_COLS-1);
-      const row=clamp(Math.floor((y-SEL_CY)/SEL_GY),0,2);
+      const row=clamp(Math.floor((y-SEL_CY)/SEL_GY),0,SEL_ROWS-1);
       S.cursor=row*SEL_COLS+col;
       confirmSelect();
     }
@@ -84,9 +93,11 @@ cv.addEventListener('pointerdown',e=>{
       confirmMap();
     }
   }else if(game.state==='storyChar'){
-    if(x>=14&&x<474&&y>=52&&y<224){
-      const i=clamp(Math.floor((y-52)/86),0,1)*5+clamp(Math.floor((x-14)/92),0,4);
-      game.storyPick.cursor=i; game.confirmStoryHero(i);
+    if(x>=SEL_CX&&x<SEL_CX+SEL_COLS*SEL_GX&&y>=SEL_CY&&y<SEL_CY+SEL_ROWS*SEL_GY){
+      const col=clamp(Math.floor((x-SEL_CX)/SEL_GX),0,SEL_COLS-1);
+      const row=clamp(Math.floor((y-SEL_CY)/SEL_GY),0,SEL_ROWS-1);
+      const i=row*SEL_COLS+col;
+      if(i<CHARS.length){ game.storyPick.cursor=i; game.confirmStoryHero(i); }
     }
   }else if(game.state==='story'){
     if(x>=14&&x<474&&y>=52&&y<224){
@@ -103,7 +114,9 @@ cv.addEventListener('pointerdown',e=>{
 function humanInput(map){
   return { left:!!keys[map.left], right:!!keys[map.right], guard:!!keys[map.guard],
            up:!!keys[map.jump], down:!!keys[map.guard],
+           leftEdge:!!pressed[map.left], rightEdge:!!pressed[map.right],
            upEdge:!!pressed[map.jump], downEdge:!!pressed[map.guard],
-           jump:!!pressed[map.jump], atk:!!pressed[map.atk], shoot:!!pressed[map.shoot] };
+           jump:!!pressed[map.jump], atk:!!pressed[map.atk], shoot:!!pressed[map.shoot],
+           ult:!!(keys[map.atk]&&keys[map.shoot]) };
 }
-const NO_INP = { left:false,right:false,guard:false,up:false,down:false,upEdge:false,downEdge:false,jump:false,atk:false,shoot:false };
+const NO_INP = { left:false,right:false,guard:false,up:false,down:false,leftEdge:false,rightEdge:false,upEdge:false,downEdge:false,jump:false,atk:false,shoot:false,ult:false };

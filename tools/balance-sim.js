@@ -161,7 +161,7 @@ function loadGame(opts) {
     // 不提供 AudioContext → AC 恒为 null → 全部音效函数提前 return
   };
 
-  const EXPORTS = '{CHARS,DIFFS,MAPS,WEAPONS,MELEE_WEP,SKILLS,SKILL_RATING,game,updateGame,charUnlocked,storyProg,balanceReport,balanceOf,bossChar,STORY}';
+  const EXPORTS = '{CHARS,DIFFS,MAPS,WEAPONS,MELEE_WEP,SKILLS,SKILL_RATING,SKILL_VARIANTS,ULTIMATES,MUSIC,game,updateGame,charUnlocked,storyProg,balanceReport,balanceOf,bossChar,STORY}';
   const factory = new Function(
     'window', 'document', 'localStorage', 'requestAnimationFrame', 'performance',
     'addEventListener', 'removeEventListener', 'Math',
@@ -178,18 +178,29 @@ function loadGame(opts) {
 }
 
 /* ------------------------- 单场模拟 ------------------------- */
+function emptyTelemetry() {
+  return {
+    damage: {}, taken: {}, hits: {}, hitsTaken: {}, blocked: {}, blocks: {},
+    kills: {}, deaths: {}, healing: {}, neutralDamage: 0,
+    casts: {}, ultCasts: {}, skillCasts: {}, skillDamage: {}, skillHits: {}, skillHealing: {},
+  };
+}
 /**
  * 驱动一场 1v1 对战直到结束。
- * @returns {{winner:0|1|null, capped:boolean, frames:number, taken:[number,number]}}
+ * @param {object} [opts] {telemetry:boolean}
+ * @returns {{winner:0|1|null, capped:boolean, frames:number, taken:[number,number], chars?:string[], telemetry?:object}}
  */
-function playMatch(api, A, B, diffIdx, capFrames) {
+function playMatch(api, A, B, diffIdx, capFrames, opts) {
+  opts = opts || {};
   const { game, updateGame, DIFFS } = api;
+  game.telemetry = opts.telemetry ? emptyTelemetry() : null;
   game.mode = 3;
   game.storyMode = false;
   game.pause = false;
   game.diffObj = DIFFS[diffIdx];
   game.mapIdx = 0;
   game.timer = 9999;
+  game.spectateWinner = null;
   game.select = { cursor: 0, idx1: A, idx2: B, phase: 'vs', t: 0, pickT: 0 };
   game.setupMatch();
 
@@ -220,7 +231,7 @@ function playMatch(api, A, B, diffIdx, capFrames) {
     const p = [mechs[0].hp / mechs[0].maxHp, mechs[1].hp / mechs[1].maxHp];
     if (Math.abs(p[0] - p[1]) > 0.02) winner = p[0] > p[1] ? 0 : 1;
   }
-  return { winner, capped, frames, taken };
+  return { winner, capped, frames, taken, chars: [mechs[0].ch.name, mechs[1].ch.name], telemetry: game.telemetry };
 }
 
 /* ------------------------- 配对统计(可在子进程执行) ------------------------- */
@@ -669,4 +680,4 @@ if (require.main === module) {
   else main();
 }
 module.exports = { loadGame, simulate, simulateMulti, playMatch, computePair, aggregate, buildPairs,
-  printReport, printCompare, FAST_WIN_SEC, FAST_WIN_WARN, HIDDEN_NAMES, DEFAULT_JOBS };
+  emptyTelemetry, printReport, printCompare, FAST_WIN_SEC, FAST_WIN_WARN, HIDDEN_NAMES, DEFAULT_JOBS };
